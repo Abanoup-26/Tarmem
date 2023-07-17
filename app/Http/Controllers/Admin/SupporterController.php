@@ -61,7 +61,8 @@ class SupporterController extends Controller
     }
 
     public function create()
-    {
+    {   
+       
         abort_if(Gate::denies('supporter_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -71,7 +72,22 @@ class SupporterController extends Controller
 
     public function store(StoreSupporterRequest $request)
     {
-        $supporter = Supporter::create($request->all());
+         // create supporter user 
+        $user=User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'approved'       => 0,
+            'position'       => $request->position,
+            'user_type'      => 'suppoter',
+            'mobile_number'  => $request->mobile_number,
+        ]); 
+        // validate supporter user id 
+         // validate user id 
+         $validated_request = $request->all();
+         $validated_request['user_id'] = $user->id;
+
+        $supporter = Supporter::create($validated_request);
 
         return redirect()->route('admin.supporters.index');
     }
@@ -88,7 +104,21 @@ class SupporterController extends Controller
     }
 
     public function update(UpdateSupporterRequest $request, Supporter $supporter)
-    {
+    {   
+        //update supporter User 
+        
+        $user = User::find($supporter->user_id);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            // check if new password != null 
+            'password' => $request->password != null ? bcrypt($request->password) : $user->password,
+            'approved'       => 0,
+            'position'       => $request->position,
+            'user_type'      => 'supporter',
+            'mobile_number'  => $request->mobile_number,
+        ]);
+        
         $supporter->update($request->all());
 
         return redirect()->route('admin.supporters.index');

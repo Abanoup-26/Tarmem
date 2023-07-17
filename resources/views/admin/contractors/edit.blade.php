@@ -10,15 +10,46 @@
         <form method="POST" action="{{ route("admin.contractors.update", [$contractor->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
+            <input type="hidden" name="user_id" value="{{ $contractor->user_id }}">
             <div class="form-group">
-                <label class="required" for="position">{{ trans('cruds.contractor.fields.position') }}</label>
-                <input class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" type="text" name="position" id="position" value="{{ old('position', $contractor->position) }}" required>
+                <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $contractor->user->name) }}" required>
+                @if($errors->has('name'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('name') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email"  value="{{ old('email', $contractor->user->email) }}" required>
+                @if($errors->has('email'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
+                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password"   value="{{ old('password', $contractor->user->password) }}"required>
+                @if($errors->has('password'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('password') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="position">{{ trans('cruds.user.fields.position') }}</label>
+                <input class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" type="text" name="position" id="position"  value="{{ old('position', $contractor->user->position) }}">
                 @if($errors->has('position'))
                     <div class="invalid-feedback">
                         {{ $errors->first('position') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.position_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.user.fields.position_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="website">{{ trans('cruds.contractor.fields.website') }}</label>

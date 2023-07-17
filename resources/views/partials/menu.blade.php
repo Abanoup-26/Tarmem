@@ -103,7 +103,7 @@
             </li>
         @endcan
         @can('beneficiary_management_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/beneficiaries*") ? "c-show" : "" }} {{ request()->is("admin/beneficiary-families*") ? "c-show" : "" }} {{ request()->is("admin/beneficiary-needs*") ? "c-show" : "" }} {{ request()->is("admin/buildings*") ? "c-show" : "" }} {{ request()->is("admin/building-contractors*") ? "c-show" : "" }} {{ request()->is("admin/building-supporters*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/beneficiaries*") ? "c-show" : "" }} {{ request()->is("admin/buildings*") ? "c-show" : "" }}  ">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-male c-sidebar-nav-icon">
 
@@ -121,26 +121,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('beneficiary_family_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.beneficiary-families.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/beneficiary-families") || request()->is("admin/beneficiary-families/*") ? "c-active" : "" }}">
-                                <i class="fa-fw far fa-grin-alt c-sidebar-nav-icon">
 
-                                </i>
-                                {{ trans('cruds.beneficiaryFamily.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('beneficiary_need_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.beneficiary-needs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/beneficiary-needs") || request()->is("admin/beneficiary-needs/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-university c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.beneficiaryNeed.title') }}
-                            </a>
-                        </li>
-                    @endcan
                     @can('building_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.buildings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/buildings") || request()->is("admin/buildings/*") ? "c-active" : "" }}">
@@ -151,26 +132,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('building_contractor_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.building-contractors.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/building-contractors") || request()->is("admin/building-contractors/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-user-cog c-sidebar-nav-icon">
 
-                                </i>
-                                {{ trans('cruds.buildingContractor.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('building_supporter_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.building-supporters.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/building-supporters") || request()->is("admin/building-supporters/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-money-check c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.buildingSupporter.title') }}
-                            </a>
-                        </li>
-                    @endcan
                 </ul>
             </li>
         @endcan

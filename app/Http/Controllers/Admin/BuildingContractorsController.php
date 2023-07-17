@@ -100,7 +100,7 @@ class BuildingContractorsController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $buildingContractor->id]);
         }
-
+        Alert::success(trans('flash.store.title'),trans('flash.store.body'));
         return redirect()->route('admin.building-contractors.index');
     }
 
@@ -131,7 +131,7 @@ class BuildingContractorsController extends Controller
         } elseif ($buildingContractor->contract) {
             $buildingContractor->contract->delete();
         }
-
+        Alert::success(trans('flash.update.title'),trans('flash.update.body'));
         return redirect()->route('admin.building-contractors.index');
     }
 
@@ -149,7 +149,7 @@ class BuildingContractorsController extends Controller
         abort_if(Gate::denies('building_contractor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $buildingContractor->delete();
-
+        Alert::success(trans('flash.destroy.title'),trans('flash.destroy.body'));
         return back();
     }
 

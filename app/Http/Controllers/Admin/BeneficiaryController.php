@@ -104,7 +104,7 @@ class BeneficiaryController extends Controller
     {
         abort_if(Gate::denies('beneficiary_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $beneficiary->load('illness_type', 'building', 'beneficiaryBeneficiaryFamilies');
+        $beneficiary->load('illness_type', 'building', 'beneficiaryBeneficiaryFamilies','beneficiaryBeneficiaryNeeds');
 
         return view('admin.beneficiaries.show', compact('beneficiary'));
     }

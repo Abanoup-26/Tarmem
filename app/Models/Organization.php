@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
+use App\Models\User;
 class Organization extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
@@ -35,6 +35,7 @@ class Organization extends Model implements HasMedia
         'phone_number',
         'email',
         'organization_type_id',
+        'user_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -65,4 +66,10 @@ class Organization extends Model implements HasMedia
     {
         return $this->getMedia('partnership_agreement')->last();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
 }

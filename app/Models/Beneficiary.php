@@ -78,8 +78,14 @@ class Beneficiary extends Model implements HasMedia
 
     public function beneficiaryBeneficiaryFamilies()
     {
-        return $this->hasMany(BeneficiaryFamily::class, 'beneficiary_id', 'id');
+        return $this->hasMany(BeneficiaryFamily::class, 'beneficiary_id');
     }
+    
+    public function beneficiaryBeneficiaryNeeds()
+    {
+        return $this->hasMany(BeneficiaryNeed::class, 'beneficiary_id');
+    }
+
 
     public function getBirthDateAttribute($value)
     {

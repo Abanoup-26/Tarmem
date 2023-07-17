@@ -10,14 +10,54 @@
         <form method="POST" action="{{ route("admin.organizations.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.organization.fields.name') }}</label>
+                <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.organization.fields.name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email') }}" required>
+                @if($errors->has('email'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
+                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password" required>
+                @if($errors->has('password'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('password') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="position">{{ trans('cruds.user.fields.position') }}</label>
+                <input class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" type="text" name="position" id="position" value="{{ old('position', '') }}">
+                @if($errors->has('position'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('position') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.position_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="mobile_number">{{ trans('cruds.user.fields.mobile_number') }}</label>
+                <input class="form-control {{ $errors->has('mobile_number') ? 'is-invalid' : '' }}" type="text" name="mobile_number" id="mobile_number" value="{{ old('mobile_number', '') }}">
+                @if($errors->has('mobile_number'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('mobile_number') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.mobile_number_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="website">{{ trans('cruds.organization.fields.website') }}</label>
@@ -30,16 +70,6 @@
                 <span class="help-block">{{ trans('cruds.organization.fields.website_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="mobile_number">{{ trans('cruds.organization.fields.mobile_number') }}</label>
-                <input class="form-control {{ $errors->has('mobile_number') ? 'is-invalid' : '' }}" type="text" name="mobile_number" id="mobile_number" value="{{ old('mobile_number', '') }}">
-                @if($errors->has('mobile_number'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('mobile_number') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.organization.fields.mobile_number_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="phone_number">{{ trans('cruds.organization.fields.phone_number') }}</label>
                 <input class="form-control {{ $errors->has('phone_number') ? 'is-invalid' : '' }}" type="text" name="phone_number" id="phone_number" value="{{ old('phone_number', '') }}">
                 @if($errors->has('phone_number'))
@@ -49,16 +79,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organization.fields.phone_number_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="email">{{ trans('cruds.organization.fields.email') }}</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email') }}" required>
-                @if($errors->has('email'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.organization.fields.email_helper') }}</span>
-            </div>
+        
             <div class="form-group">
                 <label class="required" for="organization_type_id">{{ trans('cruds.organization.fields.organization_type') }}</label>
                 <select class="form-control select2 {{ $errors->has('organization_type') ? 'is-invalid' : '' }}" name="organization_type_id" id="organization_type_id" required>

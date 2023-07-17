@@ -125,4 +125,5 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->getMedia('identity_photos');
     }
+
 }

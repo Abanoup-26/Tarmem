@@ -1,8 +1,24 @@
 @extends('layouts.admin')
 @section('content')
 
+@section('styles')
+<style>
+    th
+    {
+        width:25px;
+        background-color: rgba(96, 250, 173, 0.512);
+        text-align: center;
+    }
+    td{
+        text-align: center;
+    }
+    .card-header{
+        font-size: 25px;
+    }
+</style>
+@endsection
 <div class="card">
-    <div class="card-header">
+    <div class="card-header" >
         {{ trans('global.show') }} {{ trans('cruds.beneficiary.title') }}
     </div>
 
@@ -13,6 +29,7 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
+
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
@@ -23,8 +40,8 @@
                             {{ $beneficiary->id }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
+                    <tr >
+                        <th class="w-25 p-2">
                             {{ trans('cruds.beneficiary.fields.name') }}
                         </th>
                         <td>
@@ -154,18 +171,17 @@
     <div class="card-header">
         {{ trans('global.relatedData') }}
     </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#beneficiary_beneficiary_families" role="tab" data-toggle="tab">
-                {{ trans('cruds.beneficiaryFamily.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="beneficiary_beneficiary_families">
-            @includeIf('admin.beneficiaries.relationships.beneficiaryBeneficiaryFamilies', ['beneficiaryFamilies' => $beneficiary->beneficiaryBeneficiaryFamilies])
+        <div class="row">
+            <div class="col-6">
+                @includeIf('admin.beneficiaries.relationships.beneficiaryBeneficiaryFamilies', ['beneficiaryFamilies' =>
+                $beneficiary->beneficiaryBeneficiaryFamilies])
+            </div>
+            <div class="col-6">
+                @includeIf('admin.beneficiaries.relationships.beneficiaryBeneficiaryNeeds', ['beneficiaryNeeds' =>
+                $beneficiary->beneficiaryBeneficiaryNeeds])
+            </div>
         </div>
-    </div>
 </div>
+
 
 @endsection

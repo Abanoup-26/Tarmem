@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateOrganizationRequest;
 use App\Models\Organization;
 use App\Models\OrganizationType;
 use Gate;
+use Alert;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,8 +75,11 @@ class OrganizationsController extends Controller
             $table->editColumn('partnership_agreement', function ($row) {
                 return $row->partnership_agreement ? '<a href="' . $row->partnership_agreement->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
+            $table->addColumn('user_name', function ($row) {
+                return $row->user ? $row->user->name : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'organization_type', 'commercial_record', 'partnership_agreement']);
+            $table->rawColumns(['actions', 'placeholder', 'organization_type', 'commercial_record', 'partnership_agreement' , 'user']);
 
             return $table->make(true);
         }
@@ -87,14 +92,27 @@ class OrganizationsController extends Controller
         abort_if(Gate::denies('organization_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organization_types = OrganizationType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.organizations.create', compact('organization_types'));
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
+        return view('admin.organizations.create', compact('organization_types','users'));
     }
 
     public function store(StoreOrganizationRequest $request)
-    {
-        $organization = Organization::create($request->all());
-
+    {   
+        // create organization user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'approved'       => 0,
+            'position'       => $request->position,
+            'user_type'      => 'organization',
+            'mobile_number'  => $request->mobile_number,
+        ]);
+        // validate user id 
+        $validated_request = $request->all();
+        $validated_request['user_id'] = $user->id;
+        $organization = Organization::create($validated_request);
         if ($request->input('commercial_record', false)) {
             $organization->addMedia(storage_path('tmp/uploads/' . basename($request->input('commercial_record'))))->toMediaCollection('commercial_record');
         }
@@ -106,7 +124,7 @@ class OrganizationsController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $organization->id]);
         }
-
+        Alert::success(trans('flash.store.title'),trans('flash.store.body'));
         return redirect()->route('admin.organizations.index');
     }
 
@@ -116,15 +134,27 @@ class OrganizationsController extends Controller
 
         $organization_types = OrganizationType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $organization->load('organization_type');
-
-        return view('admin.organizations.edit', compact('organization', 'organization_types'));
+        $organization->load('organization_type','user');
+         
+        return view('admin.organizations.edit', compact('organization', 'organization_types' ));
     }
 
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
         $organization->update($request->all());
 
+        //update the user 
+        $user = User::find($organization->user_id);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            // check if new password != null 
+            'password' => $request->password != null ? bcrypt($request->password) : $user->password,
+            'approved'       => 0,
+            'position'       => $request->position,
+            'user_type'      => 'organization',
+            'mobile_number'  => $request->mobile_number,
+        ]);
         if ($request->input('commercial_record', false)) {
             if (! $organization->commercial_record || $request->input('commercial_record') !== $organization->commercial_record->file_name) {
                 if ($organization->commercial_record) {
@@ -146,7 +176,7 @@ class OrganizationsController extends Controller
         } elseif ($organization->partnership_agreement) {
             $organization->partnership_agreement->delete();
         }
-
+        Alert::success(trans('flash.update.title'),trans('flash.update.body'));
         return redirect()->route('admin.organizations.index');
     }
 
@@ -154,7 +184,7 @@ class OrganizationsController extends Controller
     {
         abort_if(Gate::denies('organization_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organization->load('organization_type');
+        $organization->load('organization_type','user');
 
         return view('admin.organizations.show', compact('organization'));
     }
@@ -164,7 +194,7 @@ class OrganizationsController extends Controller
         abort_if(Gate::denies('organization_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organization->delete();
-
+        Alert::success(trans('flash.delete.title'),trans('flash.delete.body'));
         return back();
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyContractorRequest;
+use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreContractorRequest;
 use App\Http\Requests\UpdateContractorRequest;
 use App\Models\Contractor;
@@ -112,8 +113,23 @@ class ContractorsController extends Controller
     }
 
     public function store(StoreContractorRequest $request)
-    {
-        $contractor = Contractor::create($request->all());
+    {   
+        // Create Contractor User 
+        $user=User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'approved'       => 0,
+            'position'       => $request->position,
+            'user_type'      => 'contractor',
+            'mobile_number'  => $request->mobile_number,
+        ]);
+
+        // validate user id 
+        $validated_request = $request->all();
+        $validated_request['user_id'] = $user->id;
+
+        $contractor = Contractor::create($validated_request);
         $contractor->services()->sync($request->input('services', []));
         if ($request->input('commercial_record', false)) {
             $contractor->addMedia(storage_path('tmp/uploads/' . basename($request->input('commercial_record'))))->toMediaCollection('commercial_record');
@@ -168,7 +184,21 @@ class ContractorsController extends Controller
     }
 
     public function update(UpdateContractorRequest $request, Contractor $contractor)
-    {
+    {       
+        //update Contractor User 
+        
+        $user = User::find($contractor->user_id);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            // check if new password != null 
+            'password' => $request->password != null ? bcrypt($request->password) : $user->password,
+            'approved'       => 0,
+            'position'       => $request->position,
+            'user_type'      => 'contractor',
+            'mobile_number'  => $request->mobile_number,
+        ]);
+
         $contractor->update($request->all());
         $contractor->services()->sync($request->input('services', []));
         if ($request->input('commercial_record', false)) {
@@ -280,7 +310,7 @@ class ContractorsController extends Controller
         return back();
     }
 
-    public function massDestroy(MassDestroyContractorRequest $request)
+    public function massDestroy(MassDestroyContractorRequest $request )
     {
         $contractors = Contractor::find(request('ids'));
 
