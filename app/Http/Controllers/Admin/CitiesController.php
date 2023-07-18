@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCityRequest;
 use App\Http\Requests\UpdateCityRequest;
 use App\Models\City;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +33,7 @@ class CitiesController extends Controller
     public function store(StoreCityRequest $request)
     {
         $city = City::create($request->all());
-
+        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
         return redirect()->route('admin.cities.index');
     }
 
@@ -46,7 +47,7 @@ class CitiesController extends Controller
     public function update(UpdateCityRequest $request, City $city)
     {
         $city->update($request->all());
-
+        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
         return redirect()->route('admin.cities.index');
     }
 
@@ -62,7 +63,7 @@ class CitiesController extends Controller
         abort_if(Gate::denies('city_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $city->delete();
-
+        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
         return back();
     }
 

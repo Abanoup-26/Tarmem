@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
 use App\Models\Unit;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +33,7 @@ class UnitsController extends Controller
     public function store(StoreUnitRequest $request)
     {
         $unit = Unit::create($request->all());
-
+        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
         return redirect()->route('admin.units.index');
     }
 
@@ -46,7 +47,7 @@ class UnitsController extends Controller
     public function update(UpdateUnitRequest $request, Unit $unit)
     {
         $unit->update($request->all());
-
+        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
         return redirect()->route('admin.units.index');
     }
 
@@ -62,7 +63,7 @@ class UnitsController extends Controller
         abort_if(Gate::denies('unit_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $unit->delete();
-
+        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
         return back();
     }
 

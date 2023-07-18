@@ -8,6 +8,7 @@ use App\Http\Requests\StoreIllnesstypeRequest;
 use App\Http\Requests\UpdateIllnesstypeRequest;
 use App\Models\Illnesstype;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +33,7 @@ class IllnesstypeController extends Controller
     public function store(StoreIllnesstypeRequest $request)
     {
         $illnesstype = Illnesstype::create($request->all());
-
+        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
         return redirect()->route('admin.illnesstypes.index');
     }
 
@@ -46,7 +47,7 @@ class IllnesstypeController extends Controller
     public function update(UpdateIllnesstypeRequest $request, Illnesstype $illnesstype)
     {
         $illnesstype->update($request->all());
-
+        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
         return redirect()->route('admin.illnesstypes.index');
     }
 
@@ -62,7 +63,7 @@ class IllnesstypeController extends Controller
         abort_if(Gate::denies('illnesstype_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $illnesstype->delete();
-
+        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
         return back();
     }
 

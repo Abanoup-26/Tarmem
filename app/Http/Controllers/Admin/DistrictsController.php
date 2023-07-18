@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateDistrictRequest;
 use App\Models\City;
 use App\Models\District;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,7 +36,7 @@ class DistrictsController extends Controller
     public function store(StoreDistrictRequest $request)
     {
         $district = District::create($request->all());
-
+        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
         return redirect()->route('admin.districts.index');
     }
 
@@ -53,7 +54,7 @@ class DistrictsController extends Controller
     public function update(UpdateDistrictRequest $request, District $district)
     {
         $district->update($request->all());
-
+        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
         return redirect()->route('admin.districts.index');
     }
 
@@ -71,7 +72,7 @@ class DistrictsController extends Controller
         abort_if(Gate::denies('district_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $district->delete();
-
+        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
         return back();
     }
 

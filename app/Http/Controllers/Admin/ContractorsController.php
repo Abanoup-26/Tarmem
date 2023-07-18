@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyContractorRequest;
-use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreContractorRequest;
 use App\Http\Requests\UpdateContractorRequest;
 use App\Models\Contractor;
 use App\Models\ContractorServieceType;
 use App\Models\User;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -113,23 +113,8 @@ class ContractorsController extends Controller
     }
 
     public function store(StoreContractorRequest $request)
-    {   
-        // Create Contractor User 
-        $user=User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'approved'       => 0,
-            'position'       => $request->position,
-            'user_type'      => 'contractor',
-            'mobile_number'  => $request->mobile_number,
-        ]);
-
-        // validate user id 
-        $validated_request = $request->all();
-        $validated_request['user_id'] = $user->id;
-
-        $contractor = Contractor::create($validated_request);
+    {
+        $contractor = Contractor::create($request->all());
         $contractor->services()->sync($request->input('services', []));
         if ($request->input('commercial_record', false)) {
             $contractor->addMedia(storage_path('tmp/uploads/' . basename($request->input('commercial_record'))))->toMediaCollection('commercial_record');
@@ -166,7 +151,7 @@ class ContractorsController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $contractor->id]);
         }
-
+        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
         return redirect()->route('admin.contractors.index');
     }
 
@@ -184,21 +169,7 @@ class ContractorsController extends Controller
     }
 
     public function update(UpdateContractorRequest $request, Contractor $contractor)
-    {       
-        //update Contractor User 
-        
-        $user = User::find($contractor->user_id);
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            // check if new password != null 
-            'password' => $request->password != null ? bcrypt($request->password) : $user->password,
-            'approved'       => 0,
-            'position'       => $request->position,
-            'user_type'      => 'contractor',
-            'mobile_number'  => $request->mobile_number,
-        ]);
-
+    {
         $contractor->update($request->all());
         $contractor->services()->sync($request->input('services', []));
         if ($request->input('commercial_record', false)) {
@@ -288,7 +259,7 @@ class ContractorsController extends Controller
         } elseif ($contractor->commitment_letter) {
             $contractor->commitment_letter->delete();
         }
-
+        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
         return redirect()->route('admin.contractors.index');
     }
 
@@ -306,11 +277,11 @@ class ContractorsController extends Controller
         abort_if(Gate::denies('contractor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $contractor->delete();
-
+        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
         return back();
     }
 
-    public function massDestroy(MassDestroyContractorRequest $request )
+    public function massDestroy(MassDestroyContractorRequest $request)
     {
         $contractors = Contractor::find(request('ids'));
 

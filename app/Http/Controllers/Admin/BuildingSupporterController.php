@@ -10,6 +10,7 @@ use App\Models\Building;
 use App\Models\BuildingSupporter;
 use App\Models\Supporter;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,7 +39,7 @@ class BuildingSupporterController extends Controller
     public function store(StoreBuildingSupporterRequest $request)
     {
         $buildingSupporter = BuildingSupporter::create($request->all());
-
+        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
         return redirect()->route('admin.building-supporters.index');
     }
 
@@ -58,7 +59,7 @@ class BuildingSupporterController extends Controller
     public function update(UpdateBuildingSupporterRequest $request, BuildingSupporter $buildingSupporter)
     {
         $buildingSupporter->update($request->all());
-
+        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
         return redirect()->route('admin.building-supporters.index');
     }
 
@@ -76,7 +77,7 @@ class BuildingSupporterController extends Controller
         abort_if(Gate::denies('building_supporter_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $buildingSupporter->delete();
-
+        Alert::success(trans('flash.destroy.success_title'),trans('flash.destroy.success_body'));
         return back();
     }
 
