@@ -65,119 +65,119 @@
                 <span class="help-block">{{ trans('cruds.contractor.fields.website_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="commercial_record">{{ trans('cruds.contractor.fields.commercial_record')
-                    }}</label>
-                <div class="needsclick dropzone {{ $errors->has('commercial_record') ? 'is-invalid' : '' }}"
-                    id="commercial_record-dropzone">
-                </div>
-                @if($errors->has('commercial_record'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('commercial_record') }}
-                </div>
+                <label for="mobile_number">{{ trans('cruds.user.fields.mobile_number') }}</label>
+                <input class="form-control {{ $errors->has('mobile_number') ? 'is-invalid' : '' }}" type="text" name="mobile_number" id="mobile_number" value="{{ old('mobile_number', '') }}">
+                @if($errors->has('mobile_number'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('mobile_number') }}
+                    </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.commercial_record_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.user.fields.mobile_number_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="safety_certificate">{{ trans('cruds.contractor.fields.safety_certificate')
-                    }}</label>
-                <div class="needsclick dropzone {{ $errors->has('safety_certificate') ? 'is-invalid' : '' }}"
-                    id="safety_certificate-dropzone">
-                </div>
-                @if($errors->has('safety_certificate'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('safety_certificate') }}
-                </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.safety_certificate_helper') }}</span>
+
+            <div class="row justify-content-around">
+                    <div class="form-group">
+                        <label class="required" for="commercial_record">{{ trans('cruds.contractor.fields.commercial_record')
+                            }}</label>
+                        <div class="needsclick dropzone {{ $errors->has('commercial_record') ? 'is-invalid' : '' }}"
+                            id="commercial_record-dropzone">
+                        </div>
+                        @if($errors->has('commercial_record'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('commercial_record') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.contractor.fields.commercial_record_helper') }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required" for="safety_certificate">{{ trans('cruds.contractor.fields.safety_certificate')
+                            }}</label>
+                        <div class="needsclick dropzone {{ $errors->has('safety_certificate') ? 'is-invalid' : '' }}"
+                            id="safety_certificate-dropzone">
+                        </div>
+                        @if($errors->has('safety_certificate'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('safety_certificate') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.contractor.fields.safety_certificate_helper') }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required" for="tax">{{ trans('cruds.contractor.fields.tax') }}</label>
+                        <div class="needsclick dropzone {{ $errors->has('tax') ? 'is-invalid' : '' }}" id="tax-dropzone">
+                        </div>
+                        @if($errors->has('tax'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('tax') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.contractor.fields.tax_helper') }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required" for="income">{{ trans('cruds.contractor.fields.income') }}</label>
+                        <div class="needsclick dropzone {{ $errors->has('income') ? 'is-invalid' : '' }}" id="income-dropzone">
+                        </div>
+                        @if($errors->has('income'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('income') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.contractor.fields.income_helper') }}</span>
+                    </div>  
             </div>
-            <div class="form-group">
-                <label class="required" for="tax">{{ trans('cruds.contractor.fields.tax') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('tax') ? 'is-invalid' : '' }}" id="tax-dropzone">
+            <div class="row justify-content-around">
+                <div class="form-group">
+                    <label class="required" for="social_insurance">{{ trans('cruds.contractor.fields.social_insurance')
+                        }}</label>
+                    <div class="needsclick dropzone {{ $errors->has('social_insurance') ? 'is-invalid' : '' }}"
+                        id="social_insurance-dropzone">
+                    </div>
+                    @if($errors->has('social_insurance'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('social_insurance') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.contractor.fields.social_insurance_helper') }}</span>
                 </div>
-                @if($errors->has('tax'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('tax') }}
+                <div class="form-group">
+                    <label class="required" for="human_resources">{{ trans('cruds.contractor.fields.human_resources')
+                        }}</label>
+                    <div class="needsclick dropzone {{ $errors->has('human_resources') ? 'is-invalid' : '' }}"
+                        id="human_resources-dropzone">
+                    </div>
+                    @if($errors->has('human_resources'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('human_resources') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.contractor.fields.human_resources_helper') }}</span>
                 </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.tax_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="income">{{ trans('cruds.contractor.fields.income') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('income') ? 'is-invalid' : '' }}" id="income-dropzone">
+                <div class="form-group">
+                    <label class="required" for="bank_certificate">{{ trans('cruds.contractor.fields.bank_certificate')
+                        }}</label>
+                    <div class="needsclick dropzone {{ $errors->has('bank_certificate') ? 'is-invalid' : '' }}"
+                        id="bank_certificate-dropzone">
+                    </div>
+                    @if($errors->has('bank_certificate'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('bank_certificate') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.contractor.fields.bank_certificate_helper') }}</span>
                 </div>
-                @if($errors->has('income'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('income') }}
+                <div class="form-group">
+                    <label class="required" for="commitment_letter">{{ trans('cruds.contractor.fields.commitment_letter')
+                        }}</label>
+                    <div class="needsclick dropzone {{ $errors->has('commitment_letter') ? 'is-invalid' : '' }}"
+                        id="commitment_letter-dropzone">
+                    </div>
+                    @if($errors->has('commitment_letter'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('commitment_letter') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.contractor.fields.commitment_letter_helper') }}</span>
                 </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.income_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="social_insurance">{{ trans('cruds.contractor.fields.social_insurance')
-                    }}</label>
-                <div class="needsclick dropzone {{ $errors->has('social_insurance') ? 'is-invalid' : '' }}"
-                    id="social_insurance-dropzone">
-                </div>
-                @if($errors->has('social_insurance'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('social_insurance') }}
-                </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.social_insurance_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="human_resources">{{ trans('cruds.contractor.fields.human_resources')
-                    }}</label>
-                <div class="needsclick dropzone {{ $errors->has('human_resources') ? 'is-invalid' : '' }}"
-                    id="human_resources-dropzone">
-                </div>
-                @if($errors->has('human_resources'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('human_resources') }}
-                </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.human_resources_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="bank_certificate">{{ trans('cruds.contractor.fields.bank_certificate')
-                    }}</label>
-                <div class="needsclick dropzone {{ $errors->has('bank_certificate') ? 'is-invalid' : '' }}"
-                    id="bank_certificate-dropzone">
-                </div>
-                @if($errors->has('bank_certificate'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('bank_certificate') }}
-                </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.bank_certificate_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="commitment_letter">{{ trans('cruds.contractor.fields.commitment_letter')
-                    }}</label>
-                <div class="needsclick dropzone {{ $errors->has('commitment_letter') ? 'is-invalid' : '' }}"
-                    id="commitment_letter-dropzone">
-                </div>
-                @if($errors->has('commitment_letter'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('commitment_letter') }}
-                </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.commitment_letter_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="user_id">{{ trans('cruds.contractor.fields.user') }}</label>
-                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id"
-                    id="user_id" required>
-                    @foreach($users as $id => $entry)
-                    <option value="{{ $id }}" {{ old('user_id')==$id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('user') }}
-                </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.contractor.fields.user_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="services">{{ trans('cruds.contractor.fields.services') }}</label>

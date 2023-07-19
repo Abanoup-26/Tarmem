@@ -17,6 +17,17 @@ class StoreContractorRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => [
+                'string',
+                'required',
+            ],
+            'email' => [
+                'required',
+                'unique:users',
+            ],
+            'password' => [
+                'required',
+            ],
             'position' => [
                 'string',
                 'required',
@@ -48,10 +59,6 @@ class StoreContractorRequest extends FormRequest
             ],
             'commitment_letter' => [
                 'required',
-            ],
-            'user_id' => [
-                'required',
-                'integer',
             ],
             'services.*' => [
                 'integer',

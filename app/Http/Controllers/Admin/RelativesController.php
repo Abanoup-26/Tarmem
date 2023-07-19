@@ -8,7 +8,6 @@ use App\Http\Requests\StoreRelativeRequest;
 use App\Http\Requests\UpdateRelativeRequest;
 use App\Models\Relative;
 use Gate;
-use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +32,7 @@ class RelativesController extends Controller
     public function store(StoreRelativeRequest $request)
     {
         $relative = Relative::create($request->all());
-        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
+        Alert::success(trans('flash.store.title'),trans('flash.store.body'));
         return redirect()->route('admin.relatives.index');
     }
 
@@ -47,7 +46,7 @@ class RelativesController extends Controller
     public function update(UpdateRelativeRequest $request, Relative $relative)
     {
         $relative->update($request->all());
-        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
+        Alert::success(trans('flash.update.title'),trans('flash.update.body'));
         return redirect()->route('admin.relatives.index');
     }
 
@@ -63,7 +62,7 @@ class RelativesController extends Controller
         abort_if(Gate::denies('relative_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $relative->delete();
-        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
+        Alert::success(trans('flash.destroy.title'),trans('flash.destroy.body'));
         return back();
     }
 

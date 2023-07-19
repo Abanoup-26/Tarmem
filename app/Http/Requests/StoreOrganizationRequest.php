@@ -21,6 +21,17 @@ class StoreOrganizationRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'email' => [
+                'required',
+                'unique:users',
+            ],
+            'password' => [
+                'required',
+            ],
+            'organization_name' => [
+                'string',
+                'required',
+            ],
             'website' => [
                 'string',
                 'required',

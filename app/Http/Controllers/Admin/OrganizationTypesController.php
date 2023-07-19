@@ -8,7 +8,6 @@ use App\Http\Requests\StoreOrganizationTypeRequest;
 use App\Http\Requests\UpdateOrganizationTypeRequest;
 use App\Models\OrganizationType;
 use Gate;
-use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +32,7 @@ class OrganizationTypesController extends Controller
     public function store(StoreOrganizationTypeRequest $request)
     {
         $organizationType = OrganizationType::create($request->all());
-        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
+        Alert::success(trans('flash.store.title'),trans('flash.store.body'));
         return redirect()->route('admin.organization-types.index');
     }
 
@@ -47,7 +46,7 @@ class OrganizationTypesController extends Controller
     public function update(UpdateOrganizationTypeRequest $request, OrganizationType $organizationType)
     {
         $organizationType->update($request->all());
-        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
+        Alert::success(trans('flash.update.title'),trans('flash.update.body'));
         return redirect()->route('admin.organization-types.index');
     }
 
@@ -63,7 +62,7 @@ class OrganizationTypesController extends Controller
         abort_if(Gate::denies('organization_type_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizationType->delete();
-        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
+        Alert::success(trans('flash.destroy.title'),trans('flash.destroy.body'));
         return back();
     }
 

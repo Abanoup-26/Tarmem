@@ -8,7 +8,6 @@ use App\Http\Requests\StoreContractorTypeRequest;
 use App\Http\Requests\UpdateContractorTypeRequest;
 use App\Models\ContractorType;
 use Gate;
-use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +32,7 @@ class ContractorTypesController extends Controller
     public function store(StoreContractorTypeRequest $request)
     {
         $contractorType = ContractorType::create($request->all());
-        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
+        Alert::success(trans('flash.store.title'),trans('flash.store.body'));
         return redirect()->route('admin.contractor-types.index');
     }
 
@@ -47,7 +46,7 @@ class ContractorTypesController extends Controller
     public function update(UpdateContractorTypeRequest $request, ContractorType $contractorType)
     {
         $contractorType->update($request->all());
-        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
+        Alert::success(trans('flash.update.title'),trans('flash.update.body'));
         return redirect()->route('admin.contractor-types.index');
     }
 
@@ -63,7 +62,7 @@ class ContractorTypesController extends Controller
         abort_if(Gate::denies('contractor_type_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $contractorType->delete();
-        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
+        Alert::success(trans('flash.destroy.title'),trans('flash.destroy.body'));
         return back();
     }
 

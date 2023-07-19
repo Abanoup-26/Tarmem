@@ -25,7 +25,10 @@
                         {{ trans('cruds.organization.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.organization.fields.name') }}
+                        {{ trans('cruds.organization.fields.organization_name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.user.fields.name') }}
                     </th>
                     <th>
                         {{ trans('cruds.organization.fields.website') }}
@@ -105,7 +108,8 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
+{ data: 'name', name: 'organization_name' },
+{ data: 'user_name', name: 'user_name' },
 { data: 'website', name: 'website' },
 { data: 'mobile_number', name: 'mobile_number' },
 { data: 'phone_number', name: 'phone_number' },

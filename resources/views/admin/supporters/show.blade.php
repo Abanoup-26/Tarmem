@@ -25,20 +25,29 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.supporter.fields.user') }}
+                            {{ trans('cruds.user.fields.name') }}
                         </th>
                         <td>
-                            {{ $supporter->user->name ?? '' }}
+                            {{ $supporter->user->name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.supporter.fields.name') }}
+                            {{ trans('cruds.user.fields.email') }}
                         </th>
                         <td>
-                            {{ $supporter->name }}
+                            {{ $supporter->user->email }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.mobile_number') }}
+                        </th>
+                        <td>
+                            {{ $supporter->user->mobile_number }}
+                        </td>
+                    </tr>
+                    
                 </tbody>
             </table>
             <div class="form-group">

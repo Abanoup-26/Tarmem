@@ -17,12 +17,15 @@ class StoreSupporterRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => [
-                'required',
-                'integer',
-            ],
             'name' => [
                 'string',
+                'required',
+            ],
+            'email' => [
+                'required',
+                'unique:users',
+            ],
+            'password' => [
                 'required',
             ],
         ];

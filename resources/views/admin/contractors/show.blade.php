@@ -25,6 +25,42 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.user.fields.name') }}
+                        </th>
+                        <td>
+                            {{ $contractor->user->name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.email') }}
+                        </th>
+                        <td>
+                            {{ $contractor->user->email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.mobile_number') }}
+                        </th>
+                        <td>
+                            {{ $contractor->user->mobile_number }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.identity_photos') }}
+                        </th>
+                        <td>
+                            @foreach($contractor->user->identity_photos as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                    {{ trans('global.view_file') }}
+                                </a>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.contractor.fields.position') }}
                         </th>
                         <td>
@@ -133,14 +169,6 @@
                                     {{ trans('global.view_file') }}
                                 </a>
                             @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.contractor.fields.user') }}
-                        </th>
-                        <td>
-                            {{ $contractor->user->name ?? '' }}
                         </td>
                     </tr>
                     <tr>

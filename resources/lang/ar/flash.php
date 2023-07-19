@@ -2,16 +2,16 @@
 
 return [
     'store' => [
-        'success_title' => 'تم بنجاح',
-        'success_body' => '',
+        'title' => ' تسجيل ناجح ',
+        'body'  => ' تم التسجيل بنجاح'
+    ],
+    'destroy'   => [
+        'title' => 'حذف ناجح ',
+        'body'  => ' تم الحذف بنجاح '
     ],
     'update' => [
-        'success_title' => 'تم التعديل بنجاح',
-        'success_body' => '',
-    ],
-    'destory' => [
-        'success_title' => 'تم الحذف بنجاح',
-        'success_body' => '',
+        'title' => ' نحديث ناجح    ',
+        'body'  => '  تم التحديث بنجاح '
     ],
 
 ];

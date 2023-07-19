@@ -86,17 +86,17 @@ class Building extends Model implements HasMedia
 
     public function buildingBuildingContractors()
     {
-        return $this->hasMany(BuildingContractor::class, 'building_id', 'id');
+        return $this->hasMany(BuildingContractor::class, 'building_id');
     }
 
     public function buildingBeneficiaries()
     {
-        return $this->hasMany(Beneficiary::class, 'building_id', 'id');
+        return $this->hasMany(Beneficiary::class, 'building_id');
     }
 
     public function buildingBuildingSupporters()
     {
-        return $this->hasMany(BuildingSupporter::class, 'building_id', 'id');
+        return $this->hasMany(BuildingSupporter::class, 'building_id');
     }
 
     public function getBirthDataAttribute($value)

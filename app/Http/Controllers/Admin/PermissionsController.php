@@ -8,7 +8,6 @@ use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Permission;
 use Gate;
-use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +32,7 @@ class PermissionsController extends Controller
     public function store(StorePermissionRequest $request)
     {
         $permission = Permission::create($request->all());
-        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
+
         return redirect()->route('admin.permissions.index');
     }
 
@@ -47,7 +46,7 @@ class PermissionsController extends Controller
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
         $permission->update($request->all());
-        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
+
         return redirect()->route('admin.permissions.index');
     }
 
@@ -63,7 +62,7 @@ class PermissionsController extends Controller
         abort_if(Gate::denies('permission_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permission->delete();
-        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
+
         return back();
     }
 

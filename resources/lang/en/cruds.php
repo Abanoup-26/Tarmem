@@ -191,8 +191,8 @@ return [
         'fields'         => [
             'id'                           => 'ID',
             'id_helper'                    => ' ',
-            'name'                         => 'Name',
-            'name_helper'                  => ' ',
+            'organization_name'                         => 'Organization Name',
+            'organization_name_helper'                  => ' ',
             'website'                      => 'Website',
             'website_helper'               => ' ',
             'mobile_number'                => 'Mobile Number',

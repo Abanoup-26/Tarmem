@@ -25,10 +25,13 @@
                         {{ trans('cruds.supporter.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.supporter.fields.user') }}
+                        {{ trans('cruds.user.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.supporter.fields.name') }}
+                        {{ trans('cruds.user.fields.email') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.user.fields.mobile_number') }}
                     </th>
                     <th>
                         &nbsp;
@@ -85,11 +88,12 @@
     aaSorting: [],
     ajax: "{{ route('admin.supporters.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'user_name', name: 'user.name' },
-{ data: 'name', name: 'name' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    { data: 'placeholder', name: 'placeholder' },
+    { data: 'id', name: 'id' },
+    { data: 'name', name: 'name' },
+    { data: 'email', name: 'email' },
+    { data: 'mobile_number', name: 'mobile_number' },
+    { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateSupporterRequest;
 use App\Models\Supporter;
 use App\Models\User;
 use Gate;
-use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -45,12 +44,15 @@ class SupporterController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->addColumn('user_name', function ($row) {
+            $table->addColumn('name', function ($row) {
                 return $row->user ? $row->user->name : '';
             });
 
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
+            $table->addColumn('email', function ($row) {
+                return $row->user ? $row->user->email : '';
+            });
+            $table->addColumn('mobile_number', function ($row) {
+                return $row->user ? $row->user->mobile_number : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'user']);
@@ -62,7 +64,8 @@ class SupporterController extends Controller
     }
 
     public function create()
-    {
+    {   
+       
         abort_if(Gate::denies('supporter_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -72,8 +75,20 @@ class SupporterController extends Controller
 
     public function store(StoreSupporterRequest $request)
     {
-        $supporter = Supporter::create($request->all());
-        Alert::success(trans('flash.store.success_title'),trans('flash.store.success_body'));
+         // create supporter user 
+        $user=User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'user_type'      => 'suppoter',
+            'approved'       => 0,
+            'mobile_number'  => $request->mobile_number,
+        ]); 
+        // create supporter 
+        $supporter = Supporter::create([
+            'user_id'=>$user->id 
+        ]);
+        Alert::success(trans('flash.store.title'),trans('flash.store.body'));
         return redirect()->route('admin.supporters.index');
     }
 
@@ -89,9 +104,19 @@ class SupporterController extends Controller
     }
 
     public function update(UpdateSupporterRequest $request, Supporter $supporter)
-    {
-        $supporter->update($request->all());
-        Alert::success(trans('flash.update.success_title'),trans('flash.update.success_body'));
+    {   
+        //update supporter User 
+        
+        $user = User::find($supporter->user_id);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            // check if new password != null 
+            'password' => $request->password != null ? bcrypt($request->password) : $user->password,
+            'user_type'      => 'supporter',
+            'mobile_number'  => $request->mobile_number,
+        ]);
+        Alert::success(trans('flash.update.title'),trans('flash.update.body'));
         return redirect()->route('admin.supporters.index');
     }
 
@@ -109,7 +134,8 @@ class SupporterController extends Controller
         abort_if(Gate::denies('supporter_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $supporter->delete();
-        Alert::success(trans('flash.destory.success_title'),trans('flash.destory.success_body'));
+        Alert::success(trans('flash.destroy.title'),trans('flash.destroy.body'));
+
         return back();
     }
 

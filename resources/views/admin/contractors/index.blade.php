@@ -25,7 +25,13 @@
                         {{ trans('cruds.contractor.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.user.fields.name') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.contractor.fields.position') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.user.fields.mobile_number') }}
                     </th>
                     <th>
                         {{ trans('cruds.contractor.fields.website') }}
@@ -54,9 +60,7 @@
                     <th>
                         {{ trans('cruds.contractor.fields.commitment_letter') }}
                     </th>
-                    <th>
-                        {{ trans('cruds.contractor.fields.user') }}
-                    </th>
+                   
                     <th>
                         {{ trans('cruds.contractor.fields.services') }}
                     </th>
@@ -117,7 +121,9 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'user_name', name: 'name' },
 { data: 'position', name: 'position' },
+{ data: 'mobile_number', name: 'mobile_number' },
 { data: 'website', name: 'website' },
 { data: 'commercial_record', name: 'commercial_record', sortable: false, searchable: false },
 { data: 'safety_certificate', name: 'safety_certificate', sortable: false, searchable: false },
@@ -127,7 +133,6 @@
 { data: 'human_resources', name: 'human_resources', sortable: false, searchable: false },
 { data: 'bank_certificate', name: 'bank_certificate', sortable: false, searchable: false },
 { data: 'commitment_letter', name: 'commitment_letter', sortable: false, searchable: false },
-{ data: 'user_name', name: 'user.name' },
 { data: 'services', name: 'services.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

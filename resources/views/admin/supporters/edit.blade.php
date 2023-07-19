@@ -42,29 +42,16 @@
                 <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="user_id">{{ trans('cruds.supporter.fields.user') }}</label>
-                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
-                    @foreach($users as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $supporter->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user'))
+                <label for="mobile_number">{{ trans('cruds.user.fields.mobile_number') }}</label>
+                <input class="form-control {{ $errors->has('mobile_number') ? 'is-invalid' : '' }}" type="text" name="mobile_number" id="mobile_number" value="{{ old('mobile_number', $supporter->user->mobile_number) }}">
+                @if($errors->has('mobile_number'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('user') }}
+                        {{ $errors->first('mobile_number') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.supporter.fields.user_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.user.fields.mobile_number_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.supporter.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $supporter->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.supporter.fields.name_helper') }}</span>
-            </div>
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
