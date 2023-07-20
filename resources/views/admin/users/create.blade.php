@@ -80,17 +80,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.identity_photos_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="position">{{ trans('cruds.user.fields.position') }}</label>
-                <input class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" type="text" name="position" id="position" value="{{ old('position', '') }}">
-                @if($errors->has('position'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('position') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.position_helper') }}</span>
-            </div>
+            </div> 
             <div class="form-group">
                 <label for="mobile_number">{{ trans('cruds.user.fields.mobile_number') }}</label>
                 <input class="form-control {{ $errors->has('mobile_number') ? 'is-invalid' : '' }}" type="text" name="mobile_number" id="mobile_number" value="{{ old('mobile_number', '') }}">

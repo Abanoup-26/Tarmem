@@ -12,6 +12,8 @@ use App\Models\Contractor;
 use App\Models\ContractorServieceType;
 use App\Models\User;
 use Gate;
+use Alert;
+use App\Models\ContractorType;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,42 +64,21 @@ class ContractorsController extends Controller
             $table->editColumn('website', function ($row) {
                 return $row->website ? $row->website : '';
             });
-            $table->editColumn('commercial_record', function ($row) {
-                return $row->commercial_record ? '<a href="' . $row->commercial_record->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            
+            $table->addColumn('contractor_type_name', function ($row) {
+                return $row->contractor_type ? $row->contractor_type->name : '';
             });
-            $table->editColumn('safety_certificate', function ($row) {
-                return $row->safety_certificate ? '<a href="' . $row->safety_certificate->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('tax', function ($row) {
-                return $row->tax ? '<a href="' . $row->tax->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('income', function ($row) {
-                return $row->income ? '<a href="' . $row->income->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('social_insurance', function ($row) {
-                return $row->social_insurance ? '<a href="' . $row->social_insurance->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('human_resources', function ($row) {
-                return $row->human_resources ? '<a href="' . $row->human_resources->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('bank_certificate', function ($row) {
-                return $row->bank_certificate ? '<a href="' . $row->bank_certificate->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('commitment_letter', function ($row) {
-                return $row->commitment_letter ? '<a href="' . $row->commitment_letter->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-           
 
             $table->editColumn('services', function ($row) {
                 $labels = [];
                 foreach ($row->services as $service) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $service->name);
+                    $labels[] = sprintf('<span class="badge badge-info">%s</span>', $service->name);
                 }
 
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'commercial_record', 'safety_certificate', 'tax', 'income', 'social_insurance', 'human_resources', 'bank_certificate', 'commitment_letter', 'user', 'services']);
+            $table->rawColumns(['actions', 'placeholder', 'user','services','contractor_type']);
 
             return $table->make(true);
         }
@@ -111,9 +92,11 @@ class ContractorsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $contractor_types = ContractorType::pluck('name', 'id');
+
         $services = ContractorServieceType::pluck('name', 'id');
 
-        return view('admin.contractors.create', compact('services', 'users'));
+        return view('admin.contractors.create', compact('services', 'users','contractor_types'));
     }
 
     public function store(StoreContractorRequest $request)
@@ -134,6 +117,7 @@ class ContractorsController extends Controller
             'position' =>$user->position,
             'website'  => $request->website,
             'user_id'  =>$user->id,
+            'contractor_type_id'  =>$request->contractor_type_id,
         ]);
         $contractor->services()->sync($request->input('services', []));
         if ($request->input('commercial_record', false)) {
@@ -183,9 +167,11 @@ class ContractorsController extends Controller
 
         $services = ContractorServieceType::pluck('name', 'id');
 
+        $contractor_types = ContractorType::pluck('name', 'id');
+
         $contractor->load('user', 'services');
 
-        return view('admin.contractors.edit', compact('contractor', 'services', 'users'));
+        return view('admin.contractors.edit', compact('contractor', 'services', 'users','contractor_types'));
     }
 
     public function update(UpdateContractorRequest $request, Contractor $contractor)
@@ -197,16 +183,15 @@ class ContractorsController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             // check if new password != null 
-            'password' => $request->password != null ? bcrypt($request->password) : $user->password,
-            'approved'       => 0,
-            'position'       => $request->position,
-            'user_type'      => 'contractor',
+            'password' => $request->password != null ? bcrypt($request->password) : $user->password, 
+            'position'       => $request->position, 
             'mobile_number'  => $request->mobile_number,
         ]);
 
         $contractor->update([
             'position' =>$user->position,
             'website'  => $request->website,
+            'contractor_type_id'  =>$request->contractor_type_id,
         ]);
         $contractor->services()->sync($request->input('services', []));
         if ($request->input('commercial_record', false)) {

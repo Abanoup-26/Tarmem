@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateSupporterRequest;
 use App\Models\Supporter;
 use App\Models\User;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;

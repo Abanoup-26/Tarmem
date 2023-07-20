@@ -76,15 +76,7 @@
                                 </a>
                             @endforeach
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.user.fields.position') }}
-                        </th>
-                        <td>
-                            {{ $user->position }}
-                        </td>
-                    </tr>
+                    </tr> 
                     <tr>
                         <th>
                             {{ trans('cruds.user.fields.mobile_number') }}

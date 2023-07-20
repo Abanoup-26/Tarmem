@@ -8,6 +8,7 @@ use App\Http\Requests\StoreOrganizationTypeRequest;
 use App\Http\Requests\UpdateOrganizationTypeRequest;
 use App\Models\OrganizationType;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

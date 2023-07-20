@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateDistrictRequest;
 use App\Models\City;
 use App\Models\District;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

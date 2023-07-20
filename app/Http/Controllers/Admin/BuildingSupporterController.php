@@ -10,6 +10,7 @@ use App\Models\Building;
 use App\Models\BuildingSupporter;
 use App\Models\Supporter;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

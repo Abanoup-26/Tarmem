@@ -46,19 +46,7 @@
                         <td>
                             {{ $contractor->user->mobile_number }}
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.user.fields.identity_photos') }}
-                        </th>
-                        <td>
-                            @foreach($contractor->user->identity_photos as $key => $media)
-                                <a href="{{ $media->getUrl() }}" target="_blank">
-                                    {{ trans('global.view_file') }}
-                                </a>
-                            @endforeach
-                        </td>
-                    </tr>
+                    </tr> 
                     <tr>
                         <th>
                             {{ trans('cruds.contractor.fields.position') }}

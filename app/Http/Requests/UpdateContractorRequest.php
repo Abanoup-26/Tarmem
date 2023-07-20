@@ -37,6 +37,9 @@ class UpdateContractorRequest extends FormRequest
             'income' => [
                 'required',
             ],
+            'contractor_type_id' => [
+                'required',
+            ],
             'social_insurance' => [
                 'required',
             ],

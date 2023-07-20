@@ -27,6 +27,7 @@ class Contractor extends Model implements HasMedia
         'position',
         'website',
         'user_id',
+        'contractor_type_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -102,5 +103,10 @@ class Contractor extends Model implements HasMedia
     public function services()
     {
         return $this->belongsToMany(ContractorServieceType::class);
+    }
+    
+    public function contractor_type()
+    {
+        return $this->belongsTo(ContractorType::class, 'contractor_type_id');
     }
 }

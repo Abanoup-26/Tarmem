@@ -25,7 +25,7 @@ class UsersController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = User::with(['roles'])->select(sprintf('%s.*', (new User)->table));
+            $query = User::with(['roles'])->where('user_type','staff')->select(sprintf('%s.*', (new User)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -66,21 +66,7 @@ class UsersController extends Controller
                 }
 
                 return implode(' ', $labels);
-            });
-            $table->editColumn('identity_photos', function ($row) {
-                if (! $row->identity_photos) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->identity_photos as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-            $table->editColumn('position', function ($row) {
-                return $row->position ? $row->position : '';
-            });
+            }); 
             $table->editColumn('mobile_number', function ($row) {
                 return $row->mobile_number ? $row->mobile_number : '';
             });

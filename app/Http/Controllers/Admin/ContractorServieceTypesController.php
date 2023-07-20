@@ -8,6 +8,7 @@ use App\Http\Requests\StoreContractorServieceTypeRequest;
 use App\Http\Requests\UpdateContractorServieceTypeRequest;
 use App\Models\ContractorServieceType;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

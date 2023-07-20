@@ -42,6 +42,9 @@ class StoreContractorRequest extends FormRequest
             'safety_certificate' => [
                 'required',
             ],
+            'contractor_type_id' => [
+                'required',
+            ],
             'tax' => [
                 'required',
             ],

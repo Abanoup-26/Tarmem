@@ -8,6 +8,7 @@ use App\Http\Requests\StoreIllnesstypeRequest;
 use App\Http\Requests\UpdateIllnesstypeRequest;
 use App\Models\Illnesstype;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -53,34 +53,15 @@ class OrganizationsController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
             $table->editColumn('website', function ($row) {
                 return $row->website ? $row->website : '';
-            });
-            $table->editColumn('mobile_number', function ($row) {
-                return $row->mobile_number ? $row->mobile_number : '';
-            });
-            $table->editColumn('phone_number', function ($row) {
-                return $row->phone_number ? $row->phone_number : '';
-            });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
             });
             $table->addColumn('organization_type_name', function ($row) {
                 return $row->organization_type ? $row->organization_type->name : '';
             });
 
-            $table->editColumn('commercial_record', function ($row) {
-                return $row->commercial_record ? '<a href="' . $row->commercial_record->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('partnership_agreement', function ($row) {
-                return $row->partnership_agreement ? '<a href="' . $row->partnership_agreement->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            
 
-            $table->rawColumns(['actions', 'placeholder', 'organization_type', 'commercial_record', 'partnership_agreement' , 'user']);
+            $table->rawColumns(['actions', 'placeholder', 'organization_type']);
 
             return $table->make(true);
         }
@@ -94,12 +75,12 @@ class OrganizationsController extends Controller
 
         $organization_types = OrganizationType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
-        return view('admin.organizations.create', compact('organization_types','users'));
+
+        return view('admin.organizations.create', compact('organization_types', 'users'));
     }
 
     public function store(StoreOrganizationRequest $request)
-    {   
+    {
         // create organization user
         $user = User::create([
             'name' => $request->name,
@@ -110,13 +91,17 @@ class OrganizationsController extends Controller
             'user_type'      => 'organization',
             'mobile_number'  => $request->mobile_number,
         ]);
-        
+
+        foreach ($request->input('identity_photos', []) as $file) {
+            $user->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photos');
+        }
+
         // create Organization 
         $organization = Organization::create([
-            'name' =>$request->organization_name,
-            'website'=>$request->website,
-            'mobile_number' =>$request->mobile_number,
-            'phone_number'=>$request->phone_number,
+            'name' => $request->organization_name,
+            'website' => $request->website,
+            'mobile_number' => $request->mobile_number,
+            'phone_number' => $request->phone_number,
             'email' => $request->email,
             'organization_type_id' => $request->organization_type_id,
             'user_id' => $user->id
@@ -134,7 +119,7 @@ class OrganizationsController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $organization->id]);
         }
-        Alert::success(trans('flash.store.title'),trans('flash.store.body'));
+        Alert::success(trans('flash.store.title'), trans('flash.store.body'));
         return redirect()->route('admin.organizations.index');
     }
 
@@ -144,18 +129,18 @@ class OrganizationsController extends Controller
 
         $organization_types = OrganizationType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $organization->load('organization_type','user');
-         
-        return view('admin.organizations.edit', compact('organization', 'organization_types' ));
+        $organization->load('organization_type', 'user');
+
+        return view('admin.organizations.edit', compact('organization', 'organization_types'));
     }
 
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
         $organization->update([
-            'name' =>$request->organization_name,
-            'website'=>$request->website,
-            'mobile_number' =>$request->mobile_number,
-            'phone_number'=>$request->phone_number,
+            'name' => $request->organization_name,
+            'website' => $request->website,
+            'mobile_number' => $request->mobile_number,
+            'phone_number' => $request->phone_number,
             'email' => $request->email,
             'organization_type_id' => $request->organization_type_id,
         ]);
@@ -169,10 +154,25 @@ class OrganizationsController extends Controller
             'password' => $request->password != null ? bcrypt($request->password) : $user->password,
             'position'       => $request->position,
             'mobile_number'  => $request->mobile_number,
-            
+
         ]);
+
+        if (count($user->identity_photos) > 0) {
+            foreach ($user->identity_photos as $media) {
+                if (!in_array($media->file_name, $request->input('identity_photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $user->identity_photos->pluck('file_name')->toArray();
+        foreach ($request->input('identity_photos', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $user->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photos');
+            }
+        }
+
         if ($request->input('commercial_record', false)) {
-            if (! $organization->commercial_record || $request->input('commercial_record') !== $organization->commercial_record->file_name) {
+            if (!$organization->commercial_record || $request->input('commercial_record') !== $organization->commercial_record->file_name) {
                 if ($organization->commercial_record) {
                     $organization->commercial_record->delete();
                 }
@@ -183,7 +183,7 @@ class OrganizationsController extends Controller
         }
 
         if ($request->input('partnership_agreement', false)) {
-            if (! $organization->partnership_agreement || $request->input('partnership_agreement') !== $organization->partnership_agreement->file_name) {
+            if (!$organization->partnership_agreement || $request->input('partnership_agreement') !== $organization->partnership_agreement->file_name) {
                 if ($organization->partnership_agreement) {
                     $organization->partnership_agreement->delete();
                 }
@@ -192,7 +192,7 @@ class OrganizationsController extends Controller
         } elseif ($organization->partnership_agreement) {
             $organization->partnership_agreement->delete();
         }
-        Alert::success(trans('flash.update.title'),trans('flash.update.body'));
+        Alert::success(trans('flash.update.title'), trans('flash.update.body'));
         return redirect()->route('admin.organizations.index');
     }
 
@@ -200,7 +200,7 @@ class OrganizationsController extends Controller
     {
         abort_if(Gate::denies('organization_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organization->load('organization_type','user');
+        $organization->load('organization_type', 'user');
 
         return view('admin.organizations.show', compact('organization'));
     }
@@ -210,7 +210,7 @@ class OrganizationsController extends Controller
         abort_if(Gate::denies('organization_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organization->delete();
-        Alert::success(trans('flash.destroy.title'),trans('flash.destroy.body'));
+        Alert::success(trans('flash.destroy.title'), trans('flash.destroy.body'));
         return back();
     }
 

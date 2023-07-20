@@ -251,6 +251,8 @@ return [
             'user_helper'               => ' ',
             'services'                  => 'Services',
             'services_helper'           => ' ',
+            'contractor_type'                  => 'Contractor Type',
+            'contractor_type_helper'           => ' ',
         ],
     ],
     'supporter' => [

@@ -9,7 +9,7 @@ return [
         'title'          => 'الصلاحيات',
         'title_singular' => 'الصلاحية',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'title'             => 'العنوان',
             'title_helper'      => ' ',
@@ -25,7 +25,7 @@ return [
         'title'          => 'المجموعات',
         'title_singular' => 'مجموعة',
         'fields'         => [
-            'id'                 => 'المعرف',
+            'id'                 => 'id',
             'id_helper'          => ' ',
             'title'              => 'العنوان',
             'title_helper'       => ' ',
@@ -43,7 +43,7 @@ return [
         'title'          => 'المستخدمين',
         'title_singular' => 'مستخدم',
         'fields'         => [
-            'id'                       => 'المعرف',
+            'id'                       => 'id',
             'id_helper'                => ' ',
             'name'                     => 'الأسم',
             'name_helper'              => ' ',
@@ -76,10 +76,10 @@ return [
         ],
     ],
     'auditLog' => [
-        'title'          => 'سجلات التدقيق',
-        'title_singular' => 'سجل التدقيق',
+        'title'          => 'Audit Logs',
+        'title_singular' => 'Audit Log',
         'fields'         => [
-            'id'                  => 'المعرف',
+            'id'                  => 'id',
             'id_helper'           => ' ',
             'description'         => 'الوصف',
             'description_helper'  => ' ',
@@ -103,7 +103,7 @@ return [
         'title'          => 'تنبيهات المستخدمين',
         'title_singular' => 'تنبيه المستخدم',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'alert_text'        => 'نص التنبيه',
             'alert_text_helper' => ' ',
@@ -125,7 +125,7 @@ return [
         'title'          => 'نوع المرض',
         'title_singular' => 'نوع المرض',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'name'              => 'الاسم',
             'name_helper'       => ' ',
@@ -141,7 +141,7 @@ return [
         'title'          => 'أنواع المقاولين',
         'title_singular' => 'نوع المقاول',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'name'              => 'الاسم',
             'name_helper'       => ' ',
@@ -157,7 +157,7 @@ return [
         'title'          => 'أنواع خدمات المقاولين',
         'title_singular' => 'نوع خدمة المقاول',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'name'              => 'الاسم',
             'name_helper'       => ' ',
@@ -170,10 +170,10 @@ return [
         ],
     ],
     'organizationType' => [
-        'title'          => 'أنواع خدمات المقاولين',
-        'title_singular' => 'نوع خدمة المقاول',
+        'title'          => 'أنواع المؤسسات',
+        'title_singular' => 'نوع مؤسسة',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'name'              => 'الاسم',
             'name_helper'       => ' ',
@@ -189,10 +189,10 @@ return [
         'title'          => 'المؤسسات',
         'title_singular' => 'المؤسسة',
         'fields'         => [
-            'id'                           => 'المعرف',
+            'id'                           => 'id',
             'id_helper'                    => ' ',
-            'name'                         => 'الاسم',
-            'name_helper'                  => ' ',
+            'organization_name'                         => 'أسم الجهة',
+            'organization_name_helper'                  => ' ',
             'website'                      => 'الموقع الإلكتروني',
             'website_helper'               => ' ',
             'mobile_number'                => 'رقم الجوال',
@@ -219,7 +219,7 @@ return [
         'title'          => 'المقاولين',
         'title_singular' => 'المقاول',
         'fields'         => [
-            'id'                        => 'المعرف',
+            'id'                        => 'id',
             'id_helper'                 => ' ',
             'position'                  => 'المنصب',
             'position_helper'           => ' ',
@@ -251,13 +251,15 @@ return [
             'user_helper'               => ' ',
             'services'                  => 'الخدمات',
             'services_helper'           => ' ',
+            'contractor_type'                  => 'نوع المقاول',
+            'contractor_type_helper'           => ' ',
         ],
     ],
     'supporter' => [
-        'title'          => 'المساند',
-        'title_singular' => 'المساند',
+        'title'          => 'المانحين',
+        'title_singular' => 'مانح',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'user'              => 'المستخدم',
             'user_helper'       => ' ',
@@ -279,7 +281,7 @@ return [
         'title'          => 'المباني',
         'title_singular' => 'المبنى',
         'fields'         => [
-            'id'                             => 'المعرف',
+            'id'                             => 'id',
             'id_helper'                      => ' ',
             'building_type'                  => 'نوع المبنى',
             'building_type_helper'           => ' ',
@@ -323,7 +325,7 @@ return [
         'title'          => 'المستفيد',
         'title_singular' => 'المستفيد',
         'fields'         => [
-            'id'                        => 'المعرف',
+            'id'                        => 'id',
             'id_helper'                 => ' ',
             'name'                      => 'الاسم',
             'name_helper'               => ' ',
@@ -365,7 +367,7 @@ return [
         'title'          => 'العائلة المستفيدة',
         'title_singular' => 'العائلة المستفيدة',
         'fields'         => [
-            'id'                     => 'المعرف',
+            'id'                     => 'id',
             'id_helper'              => ' ',
             'name'                   => 'الاسم',
             'name_helper'            => ' ',
@@ -403,7 +405,7 @@ return [
         'title'          => 'مقاولين المباني',
         'title_singular' => 'مقاول المبنى',
         'fields'         => [
-            'id'                                 => 'المعرف',
+            'id'                                 => 'id',
             'id_helper'                          => ' ',
             'visit_date'                         => 'تاريخ الزيارة',
             'visit_date_helper'                  => ' ',
@@ -431,7 +433,7 @@ return [
         'title'          => 'المدن',
         'title_singular' => 'المدينة',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'name'              => 'الاسم',
             'name_helper'       => ' ',
@@ -447,7 +449,7 @@ return [
         'title'          => 'الأحياء',
         'title_singular' => 'الحي',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'name'              => 'الاسم',
             'name_helper'       => ' ',
@@ -462,10 +464,10 @@ return [
         ],
     ],
     'relative' => [
-        'title'          => 'الأقارب',
+        'title'          => 'صلات القرابة',
         'title_singular' => 'صلة القرابة',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'name'              => 'الاسم',
             'name_helper'       => ' ',
@@ -478,10 +480,10 @@ return [
         ],
     ],
     'unit' => [
-        'title'          => 'الوحدات',
-        'title_singular' => 'الوحدة',
+        'title'          => 'أنواع الوحدات',
+        'title_singular' => 'نوع وحدة',
         'fields'         => [
-            'id'                => 'المعرف',
+            'id'                => 'id',
             'id_helper'         => ' ',
             'name'              => 'الاسم',
             'name_helper'       => ' ',
@@ -497,7 +499,7 @@ return [
         'title'          => 'مساعد المبنى',
         'title_singular' => 'مساعد المبنى',
         'fields'         => [
-            'id'                      => 'المعرف',
+            'id'                      => 'id',
             'id_helper'               => ' ',
             'supporter'               => 'المساعد',
             'supporter_helper'        => ' ',
@@ -517,7 +519,7 @@ return [
         'title'          => 'احتياجات المستفيد',
         'title_singular' => 'احتياج المستفيد',
         'fields'         => [
-            'id'                   => 'المعرف',
+            'id'                   => 'id',
             'id_helper'            => ' ',
             'unit'                 => 'الوحدة',
             'unit_helper'          => ' ',

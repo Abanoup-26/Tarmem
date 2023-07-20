@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRelativeRequest;
 use App\Http\Requests\UpdateRelativeRequest;
 use App\Models\Relative;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
