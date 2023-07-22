@@ -34,6 +34,9 @@
                             {{ trans('cruds.organization.fields.organization_type') }}
                         </th>
                         <th>
+                            {{ trans('cruds.user.fields.approved') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -113,6 +116,10 @@
                     {
                         data: 'organization_type_name',
                         name: 'organization_type.name'
+                    }, 
+                    {
+                        data: 'user_approved',
+                        name: 'user.approved'
                     }, 
                     {
                         data: 'actions',

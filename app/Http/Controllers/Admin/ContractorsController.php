@@ -28,7 +28,7 @@ class ContractorsController extends Controller
         abort_if(Gate::denies('contractor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Contractor::with(['user', 'services'])->select(sprintf('%s.*', (new Contractor)->table));
+            $query = Contractor::with(['user', 'services' , 'contractor_type'])->select(sprintf('%s.*', (new Contractor)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -77,8 +77,15 @@ class ContractorsController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('user_approved', function ($row) {
+                return  '<label class="c-switch c-switch-pill c-switch-success">
+                            <input onchange="update_statuses(this,\'approved\')" value="' . $row->user->id . '" 
+                                type="checkbox" class="c-switch-input" ' . ($row->user->approved ? "checked" : null) . '>
+                            <span class="c-switch-slider"></span>
+                        </label>';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'user','services','contractor_type']);
+            $table->rawColumns(['actions', 'placeholder', 'user','services','contractor_type' , 'user_approved']);
 
             return $table->make(true);
         }

@@ -27,7 +27,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('users/ckmedia', 'UsersController@storeCKEditorImages')->name('users.storeCKEditorImages');
     Route::post('users/parse-csv-import', 'UsersController@parseCsvImport')->name('users.parseCsvImport');
     Route::post('users/process-csv-import', 'UsersController@processCsvImport')->name('users.processCsvImport');
+    Route::post('users/update_statuses', 'UsersController@update_statuses')->name('users.update_statuses');
     Route::resource('users', 'UsersController');
+
 
     // Audit Logs
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);

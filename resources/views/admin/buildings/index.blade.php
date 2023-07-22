@@ -13,13 +13,13 @@
                     <th width="10">
 
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.building.fields.id') }}
-                    </th>
+                    </th> --}}
                     <th>
                         {{ trans('cruds.building.fields.building_type') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.building.fields.building_number') }}
                     </th>
                     <th>
@@ -39,28 +39,28 @@
                     </th>
                     <th>
                         {{ trans('cruds.building.fields.building_photos') }}
-                    </th>
+                    </th> --}}
                     <th>
                         {{ trans('cruds.building.fields.management_statuses') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.building.fields.rejected_reson') }}
-                    </th>
+                    </th> --}}
                     <th>
                         {{ trans('cruds.building.fields.stages') }}
                     </th>
                     <th>
                         {{ trans('cruds.building.fields.research_vist_date') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.building.fields.research_vist_result') }}
-                    </th>
+                    </th> --}}
                     <th>
                         {{ trans('cruds.building.fields.engineering_vist_date') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.building.fields.engineering_vist_result') }}
-                    </th>
+                    </th> --}}
                     <th>
                         &nbsp;
                     </th>
@@ -88,22 +88,22 @@
     ajax: "{{ route('admin.buildings.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
+// { data: 'id', name: 'id' },
 { data: 'building_type', name: 'building_type' },
-{ data: 'building_number', name: 'building_number' },
-{ data: 'floor_count', name: 'floor_count' },
-{ data: 'apartments_count', name: 'apartments_count' },
-{ data: 'birth_data', name: 'birth_data' },
-{ data: 'latitude', name: 'latitude' },
-{ data: 'longtude', name: 'longtude' },
-{ data: 'building_photos', name: 'building_photos', sortable: false, searchable: false },
+// { data: 'building_number', name: 'building_number' },
+// { data: 'floor_count', name: 'floor_count' },
+// { data: 'apartments_count', name: 'apartments_count' },
+// { data: 'birth_data', name: 'birth_data' },
+// { data: 'latitude', name: 'latitude' },
+// { data: 'longtude', name: 'longtude' },
+// { data: 'building_photos', name: 'building_photos', sortable: false, searchable: false },
 { data: 'management_statuses', name: 'management_statuses' },
-{ data: 'rejected_reson', name: 'rejected_reson' },
+// { data: 'rejected_reson', name: 'rejected_reson' },
 { data: 'stages', name: 'stages' },
 { data: 'research_vist_date', name: 'research_vist_date' },
-{ data: 'research_vist_result', name: 'research_vist_result', sortable: false, searchable: false },
+// { data: 'research_vist_result', name: 'research_vist_result', sortable: false, searchable: false },
 { data: 'engineering_vist_date', name: 'engineering_vist_date' },
-{ data: 'engineering_vist_result', name: 'engineering_vist_result', sortable: false, searchable: false },
+// { data: 'engineering_vist_result', name: 'engineering_vist_result', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -43,6 +43,9 @@
                             {{ trans('cruds.contractor.fields.services') }}
                         </th>
                         <th>
+                            {{ trans('cruds.user.fields.approved') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -134,6 +137,10 @@
                     {
                         data: 'services',
                         name: 'services.name'
+                    },
+                    {
+                        data: 'user_approved',
+                        name: 'user.approved'
                     },
                     {
                         data: 'actions',

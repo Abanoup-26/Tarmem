@@ -4,7 +4,66 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-beneficiaryBeneficiaryFamilies">
+
+            <table class=" table table-bordered table-striped table-hover datatable datatable-beneficiarybeneficiaryNeeds">
+                <thead>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.beneficiaryNeed.fields.unit') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.beneficiaryNeed.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.beneficiaryNeed.fields.trmem_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.beneficiaryNeed.fields.photos_before') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.beneficiaryNeed.fields.photos_after') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($beneficiaryNeeds as $key => $beneficiaryNeed)
+                        <tr data-entry-id="{{ $beneficiaryNeed->id }}">
+                            <td>
+                                {{ $beneficiaryNeed->unit->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $beneficiaryNeed->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $beneficiaryNeed->trmem_type ?? '' }}
+                            </td>
+                            <td>
+                                {{ $beneficiaryNeed->photos_before ?? '' }}
+                            </td>
+                            <td>
+                                {{ $beneficiaryNeed->photos_after ?? '' }}
+                            </td>
+                            
+                            <td>
+                                @can('beneficiary_family_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.beneficiary-families.show', $beneficiaryNeed->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            {{-- <table class=" table table-bordered table-striped table-hover datatable datatable-beneficiarybeneficiaryNeeds">
                 <tbody>
                     <tr>
                         <th>
@@ -63,7 +122,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
         </div>
     </div>
 </div>

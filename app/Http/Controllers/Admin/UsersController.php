@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,17 @@ use Yajra\DataTables\Facades\DataTables;
 class UsersController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
+
+
+    function update_statuses(Request $request)
+    {
+        $column_name = $request->column_name;
+        $user = User::find($request->id);
+        $user->$column_name = $request->approved;
+        $user->save();
+        return 1;
+
+    }
 
     public function index(Request $request)
     {
@@ -56,8 +68,15 @@ class UsersController extends Controller
                 return $row->email ? $row->email : '';
             });
 
+            // $table->editColumn('approved', function ($row) {
+            //     return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
+            // });
             $table->editColumn('approved', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
+                return  ' <label class="c-switch c-switch-pill c-switch-success">
+                        <input onchange="update_statuses(this,\'approved\')" value="' . $row->id . '" 
+                            type="checkbox" class="c-switch-input" ' . ($row->approved ? "checked" : null) . '>
+                        <span class="c-switch-slider"></span>
+                    </label>';
             });
             $table->editColumn('roles', function ($row) {
                 $labels = [];
@@ -90,7 +109,7 @@ class UsersController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        $user = User::create($request->all());
+        $user = User::create([$request->all()]);
         $user->roles()->sync($request->input('roles', []));
         foreach ($request->input('identity_photos', []) as $file) {
             $user->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photos');

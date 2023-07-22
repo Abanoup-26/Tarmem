@@ -23,7 +23,7 @@ class StoreContractorRequest extends FormRequest
             ],
             'email' => [
                 'required',
-                'unique:users',
+                'unique:users,email,' . request()->user_id,
             ],
             'password' => [
                 'required',

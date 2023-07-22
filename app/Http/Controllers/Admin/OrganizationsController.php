@@ -26,7 +26,7 @@ class OrganizationsController extends Controller
         abort_if(Gate::denies('organization_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Organization::with(['organization_type'])->select(sprintf('%s.*', (new Organization)->table));
+            $query = Organization::with(['organization_type', 'user'])->select(sprintf('%s.*', (new Organization)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -60,8 +60,15 @@ class OrganizationsController extends Controller
                 return $row->organization_type ? $row->organization_type->name : '';
             });
 
-
-            $table->rawColumns(['actions', 'placeholder', 'organization_type']);
+            $table->editColumn('user_approved', function ($row) {
+                return  '<label class="c-switch c-switch-pill c-switch-success">
+                            <input onchange="update_statuses(this,\'approved\')" value="' . $row->user->id . '" 
+                                type="checkbox" class="c-switch-input" ' . ($row->user->approved ? "checked" : null) . '>
+                            <span class="c-switch-slider"></span>
+                        </label>';
+            });
+          
+            $table->rawColumns(['actions', 'placeholder', 'organization_type' , 'user_approved']);
 
             return $table->make(true);
         }

@@ -34,6 +34,9 @@
                         {{ trans('cruds.user.fields.mobile_number') }}
                     </th>
                     <th>
+                        {{ trans('cruds.user.fields.approved') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -93,6 +96,8 @@
     { data: 'name', name: 'name' },
     { data: 'email', name: 'email' },
     { data: 'mobile_number', name: 'mobile_number' },
+    { data: 'user_approved', name: 'user.pproved '},
+
     { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

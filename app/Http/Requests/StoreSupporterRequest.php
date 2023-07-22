@@ -23,7 +23,7 @@ class StoreSupporterRequest extends FormRequest
             ],
             'email' => [
                 'required',
-                'unique:users',
+                'unique:users,email,' . request()->user_id,
             ],
             'password' => [
                 'required',
