@@ -305,7 +305,7 @@ return [
             'building_photos_helper'         => ' ',
             'building_number'                => 'رقم المبنى',
             'building_number_helper'         => ' ',
-            'management_statuses'            => 'حالات الإدارة',
+            'management_statuses'            => 'الحاله الاداريه',
             'management_statuses_helper'     => ' ',
             'rejected_reson'                 => 'سبب الرفض',
             'rejected_reson_helper'          => ' ',

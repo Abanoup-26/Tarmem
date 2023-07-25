@@ -39,20 +39,20 @@ class Building extends Model implements HasMedia
     ];
 
     public const MANAGEMENT_STATUSES_SELECT = [
-        'pending'   => 'Pending',
-        'on_review' => 'On Review',
-        'accepted'  => 'Accepted',
+        'pending'   => 'Pending',  // لسه عند الجهه 
+        'on_review' => 'On Review', // تم الارسال من الجهة للاداره للمراجعه 
+        'accepted'  => 'مقبول',
         'rejected'  => 'Rejected',
     ];
 
     public const STAGES_SELECT = [
-        'managment'          => 'Managment',
-        'engineering'        => 'Engineering',
-        'research_visit'     => 'Research Visit',
-        'engineering_visit'  => 'Engineering Visit',
-        'send_to_contractor' => 'send_to_contractor',
-        'done'               => 'Done',
-        'supporting'         => 'Supporting',
+        'managment'          => 'فى الاداره ',
+        'engineering'        => 'القسم الهندسي ',
+        'research_visit'     => 'الزيارة البحثيه',
+        'engineering_visit'  => 'الزياره الهندسيه',
+        'send_to_contractor' => 'ارسال الى المقاولين',
+        'done'               => 'تم',
+        'supporting'         => 'ارسال للمناحين',
     ];
 
     protected $fillable = [

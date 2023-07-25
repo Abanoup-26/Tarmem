@@ -11,45 +11,14 @@ class UpdateBuildingRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('building_edit');
+        return Gate::allows('Review_and_Approval');
     }
 
     public function rules()
     {
         return [
-            'building_number' => [
-                'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
-            ],
-            'floor_count' => [
-                'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
-            ],
-            'apartments_count' => [
-                'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
-            ],
-            'birth_data' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            'latitude' => [
-                'string',
-                'nullable',
-            ],
-            'longtude' => [
-                'string',
-                'nullable',
-            ],
-            'building_photos' => [
-                'array',
-            ],
+            'stages' => 'required|in:' . implode(',', array_keys(Building::STAGES_SELECT)),
+            'management_statuses' => 'required|in:' . implode(',', array_keys(Building::MANAGEMENT_STATUSES_SELECT)),
             'rejected_reson' => [
                 'string',
                 'nullable',

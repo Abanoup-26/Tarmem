@@ -11,7 +11,7 @@ class CreateBuildingContractorsTable extends Migration
         Schema::create('building_contractors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('visit_date');
-            $table->string('stages');
+            $table->string('stages')->default('pending');
             $table->decimal('quotation_with_materials', 15, 2)->nullable();
             $table->decimal('quotation_without_materials', 15, 2)->nullable();
             $table->timestamps();

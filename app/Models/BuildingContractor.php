@@ -30,10 +30,11 @@ class BuildingContractor extends Model implements HasMedia
     ];
 
     public const STAGES_SELECT = [
-        'request_quotation' => 'Request Quotation',
-        'send_quotation'    => 'Send Quotation',
-        'accepted'          => 'Accepted',
-        'rejected'          => 'Rejected',
+        'pending'          => 'قيد الانتظار ', //لسه ضايف المقاول للمبني 
+        'request_quotation' => 'طلب عرض سعر', //
+        'send_quotation'    => 'تم تحديد السعر ',
+        'accepted'          => 'قبول',
+        'rejected'          => 'رفض',
     ];
 
     protected $fillable = [

@@ -1,13 +1,57 @@
-@can('building_contractor_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.building-contractors.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.buildingContractor.title_singular') }}
-            </a>
-        </div>
+{{-- BuildingContractorForm --}}
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.create') }} {{ trans('cruds.buildingContractor.title_singular') }}
     </div>
-@endcan
 
+    <div class="card-body">
+        <form method="POST" action="{{ route("admin.building-contractors.store") }}" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="stages" value="request_quotation">
+            <input type="hidden" name="building_id" value="{{$building->id}}">
+            <div class="form-group">
+                <label class="required" for="visit_date">{{ trans('cruds.buildingContractor.fields.visit_date') }}</label>
+                <input class="form-control date {{ $errors->has('visit_date') ? 'is-invalid' : '' }}" type="text" name="visit_date" id="visit_date" value="{{ old('visit_date') }}" required>
+                @if($errors->has('visit_date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('visit_date') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.buildingContractor.fields.visit_date_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                @if($errors->has('name'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('name') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="contractor_id">{{ trans('cruds.buildingContractor.fields.contractor') }}</label>
+                <select class="form-control select2 {{ $errors->has('contractor') ? 'is-invalid' : '' }}" name="contractor_id" id="contractor_id" required>
+                    @foreach($contractors as $id => $entry)
+                        <option value="{{ $id }}" {{ old('contractor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('contractor'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('contractor') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.buildingContractor.fields.contractor_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{{-- Contractors --}}
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.buildingContractor.title_singular') }} {{ trans('global.list') }}
@@ -15,7 +59,8 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-buildingBuildingContractors">
+            <table
+                class=" table table-bordered table-striped table-hover datatable datatable-buildingBuildingContractors">
                 <thead>
                     <tr>
                         <th width="10">
@@ -40,24 +85,18 @@
                             {{ trans('cruds.buildingContractor.fields.quotation_without_materials') }}
                         </th>
                         <th>
-                            {{ trans('cruds.buildingContractor.fields.contractor') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.buildingContractor.fields.building') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($buildingContractors as $key => $buildingContractor)
+                    @foreach ($buildingContractors as $key => $buildingContractor)
                         <tr data-entry-id="{{ $buildingContractor->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $buildingContractor->id ?? '' }}
+                                {{ $buildingContractor->contractor_id ?? '' }}
                             </td>
                             <td>
                                 {{ $buildingContractor->visit_date ?? '' }}
@@ -66,7 +105,7 @@
                                 {{ App\Models\BuildingContractor::STAGES_SELECT[$buildingContractor->stages] ?? '' }}
                             </td>
                             <td>
-                                @if($buildingContractor->contract)
+                                @if ($buildingContractor->contract)
                                     <a href="{{ $buildingContractor->contract->getUrl() }}" target="_blank">
                                         {{ trans('global.view_file') }}
                                     </a>
@@ -85,23 +124,33 @@
                                 {{ $buildingContractor->building->building_number ?? '' }}
                             </td>
                             <td>
-                                @can('building_contractor_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.building-contractors.show', $buildingContractor->id) }}">
-                                        {{ trans('global.view') }}
+                                @if ($buildingContractor->stages == 'pending')
+                                    <a class="btn btn-xs btn-primary"
+                                        href="{{ route('admin.building-contractors.show', $buildingContractor->id) }}">
+                                        طلب عرض سعر
                                     </a>
-                                @endcan
+                                @endif
+                                @if ($buildingContractor->stages == 'send_quotation')
+                                    <a class="btn btn-xs btn-primary"
+                                        href="{{ route('admin.building-contractors.show', $buildingContractor->id) }}">
+                                        قبول
+                                    </a>
+                                    <a class="btn btn-xs btn-primary"
+                                        href="{{ route('admin.building-contractors.show', $buildingContractor->id) }}">
+                                        رفض
+                                    </a>
+                                @endif
 
-                                @can('building_contractor_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.building-contractors.edit', $buildingContractor->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
 
                                 @can('building_contractor_delete')
-                                    <form action="{{ route('admin.building-contractors.destroy', $buildingContractor->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form
+                                        action="{{ route('admin.building-contractors.destroy', $buildingContractor->id) }}"
+                                        method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                        style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                            value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
 
@@ -116,52 +165,65 @@
 </div>
 
 @section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('building_contractor_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.building-contractors.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+    @parent
+    <script>
+        $(function() {
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+            @can('building_contractor_delete')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.building-contractors.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).nodes(), function(entry) {
+                            return $(entry).data('entry-id')
+                        });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-        return
-      }
+                            return
+                        }
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
+                }
+                dtButtons.push(deleteButton)
+            @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  });
-  let table = $('.datatable-buildingBuildingContractors:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  
-})
+            $.extend(true, $.fn.dataTable.defaults, {
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+                pageLength: 100,
+            });
+            let table = $('.datatable-buildingBuildingContractors:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
+            });
 
-</script>
+        })
+    </script>
 @endsection

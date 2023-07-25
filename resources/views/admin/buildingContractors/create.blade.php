@@ -56,16 +56,6 @@
                 <span class="help-block">{{ trans('cruds.buildingContractor.fields.quotation_with_materials_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="quotation_without_materials">{{ trans('cruds.buildingContractor.fields.quotation_without_materials') }}</label>
-                <input class="form-control {{ $errors->has('quotation_without_materials') ? 'is-invalid' : '' }}" type="number" name="quotation_without_materials" id="quotation_without_materials" value="{{ old('quotation_without_materials', '') }}" step="0.01">
-                @if($errors->has('quotation_without_materials'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quotation_without_materials') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.buildingContractor.fields.quotation_without_materials_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required" for="contractor_id">{{ trans('cruds.buildingContractor.fields.contractor') }}</label>
                 <select class="form-control select2 {{ $errors->has('contractor') ? 'is-invalid' : '' }}" name="contractor_id" id="contractor_id" required>
                     @foreach($contractors as $id => $entry)
@@ -80,18 +70,14 @@
                 <span class="help-block">{{ trans('cruds.buildingContractor.fields.contractor_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="building_id">{{ trans('cruds.buildingContractor.fields.building') }}</label>
-                <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id" required>
-                    @foreach($buildings as $id => $entry)
-                        <option value="{{ $id }}" {{ old('building_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('building'))
+                <label for="quotation_without_materials">{{ trans('cruds.buildingContractor.fields.quotation_without_materials') }}</label>
+                <input class="form-control {{ $errors->has('quotation_without_materials') ? 'is-invalid' : '' }}" type="number" name="quotation_without_materials" id="quotation_without_materials" value="{{ old('quotation_without_materials', '') }}" step="0.01">
+                @if($errors->has('quotation_without_materials'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('building') }}
+                        {{ $errors->first('quotation_without_materials') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.buildingContractor.fields.building_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.buildingContractor.fields.quotation_without_materials_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

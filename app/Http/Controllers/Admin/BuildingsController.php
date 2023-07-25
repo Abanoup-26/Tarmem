@@ -7,6 +7,9 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Models\Building;
 use Gate;
 use Alert;
+use App\Http\Requests\UpdateBuildingRequest;
+use App\Models\BuildingContractor;
+use App\Models\Contractor;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +24,7 @@ class BuildingsController extends Controller
         abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Building::query()->select(sprintf('%s.*', (new Building)->table));
+            $query = Building::query()->where('management_statuses', '!=', 'pending')->select(sprintf('%s.*', (new Building)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -29,7 +32,7 @@ class BuildingsController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'building_show';
-                $editGate      = 'building_edit';
+                $editGate      = 'Review_and_Approval';
                 $deleteGate    = 'building_delete';
                 $crudRoutePart = 'buildings';
 
@@ -42,56 +45,29 @@ class BuildingsController extends Controller
                 ));
             });
 
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : '';
-            // });
+
             $table->editColumn('building_type', function ($row) {
                 return $row->building_type ? Building::BUILDING_TYPE_SELECT[$row->building_type] : '';
             });
-            // $table->editColumn('building_number', function ($row) {
-            //     return $row->building_number ? $row->building_number : '';
-            // });
-            // $table->editColumn('floor_count', function ($row) {
-            //     return $row->floor_count ? $row->floor_count : '';
-            // });
-            // $table->editColumn('apartments_count', function ($row) {
-            //     return $row->apartments_count ? $row->apartments_count : '';
-            // });
 
-            // $table->editColumn('latitude', function ($row) {
-            //     return $row->latitude ? $row->latitude : '';
-            // });
-            // $table->editColumn('longtude', function ($row) {
-            //     return $row->longtude ? $row->longtude : '';
-            // });
-            // $table->editColumn('building_photos', function ($row) {
-            //     if (! $row->building_photos) {
-            //         return '';
-            //     }
-            //     $links = [];
-            //     foreach ($row->building_photos as $media) {
-            //         $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-            //     }
 
-            //     return implode(', ', $links);
-            // });
             $table->editColumn('management_statuses', function ($row) {
                 return $row->management_statuses ? Building::MANAGEMENT_STATUSES_SELECT[$row->management_statuses] : '';
             });
-            // $table->editColumn('rejected_reson', function ($row) {
-            //     return $row->rejected_reson ? $row->rejected_reson : '';
-            // });
+            $table->editColumn('rejected_reson', function ($row) {
+                return $row->rejected_reson ? $row->rejected_reson : '';
+            });
             $table->editColumn('stages', function ($row) {
                 return $row->stages ? Building::STAGES_SELECT[$row->stages] : '';
             });
 
-            // $table->editColumn('research_vist_result', function ($row) {
-            //     return $row->research_vist_result ? '<a href="' . $row->research_vist_result->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            // });
+            $table->editColumn('research_vist_result', function ($row) {
+                return $row->research_vist_result ? '<a href="' . $row->research_vist_result->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
 
-            // $table->editColumn('engineering_vist_result', function ($row) {
-            //     return $row->engineering_vist_result ? '<a href="' . $row->engineering_vist_result->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            // });
+            $table->editColumn('engineering_vist_result', function ($row) {
+                return $row->engineering_vist_result ? '<a href="' . $row->engineering_vist_result->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'building_photos', 'research_vist_result', 'engineering_vist_result']);
 
@@ -101,18 +77,68 @@ class BuildingsController extends Controller
         return view('admin.buildings.index');
     }
 
-    public function show(Building $building)
+    public function show(Building $building )
     {
         abort_if(Gate::denies('building_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $contractors = Contractor::pluck('position', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $building->load('buildingBuildingContractors', 'buildingBeneficiaries', 'buildingBuildingSupporters');
-
-        return view('admin.buildings.show', compact('building'));
+        $building->load('buildingBuildingContractors.contractor' , 'buildingBuildingContractors.building', 'buildingBeneficiaries', 'buildingBuildingSupporters');
+        return view('admin.buildings.show', compact('building' ,'contractors'));
     }
+
+    public function edit(Building $building)
+    {
+        abort_if(Gate::denies('Review_and_Approval'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('admin.buildings.edit', compact('building'));
+    }
+    
+    public function update(UpdateBuildingRequest $request, Building $building)
+    {
+        $building->update($request->all());
+
+        if (count($building->building_photos) > 0) {
+            foreach ($building->building_photos as $media) {
+                if (! in_array($media->file_name, $request->input('building_photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $building->building_photos->pluck('file_name')->toArray();
+        foreach ($request->input('building_photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $building->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('building_photos');
+            }
+        }
+
+        if ($request->input('research_vist_result', false)) {
+            if (! $building->research_vist_result || $request->input('research_vist_result') !== $building->research_vist_result->file_name) {
+                if ($building->research_vist_result) {
+                    $building->research_vist_result->delete();
+                }
+                $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('research_vist_result'))))->toMediaCollection('research_vist_result');
+            }
+        } elseif ($building->research_vist_result) {
+            $building->research_vist_result->delete();
+        }
+
+        if ($request->input('engineering_vist_result', false)) {
+            if (! $building->engineering_vist_result || $request->input('engineering_vist_result') !== $building->engineering_vist_result->file_name) {
+                if ($building->engineering_vist_result) {
+                    $building->engineering_vist_result->delete();
+                }
+                $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('engineering_vist_result'))))->toMediaCollection('engineering_vist_result');
+            }
+        } elseif ($building->engineering_vist_result) {
+            $building->engineering_vist_result->delete();
+        }
+        Alert::success(trans('flash.update.title'), trans('flash.update.body'));
+        return redirect()->route('admin.buildings.show', $building->id);
+    }
+   
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('building_create') && Gate::denies('building_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('building_create') && Gate::denies('Review_and_Approval'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model         = new Building();
         $model->id     = $request->input('crud_id', 0);

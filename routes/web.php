@@ -74,7 +74,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Buildings
     Route::post('buildings/media', 'BuildingsController@storeMedia')->name('buildings.storeMedia');
     Route::post('buildings/ckmedia', 'BuildingsController@storeCKEditorImages')->name('buildings.storeCKEditorImages');
-    Route::resource('buildings', 'BuildingsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+    Route::resource('buildings', 'BuildingsController');
 
     // Beneficiary
     Route::post('beneficiaries/media', 'BeneficiaryController@storeMedia')->name('beneficiaries.storeMedia');

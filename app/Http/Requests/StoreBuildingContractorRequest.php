@@ -25,7 +25,7 @@ class StoreBuildingContractorRequest extends FormRequest
                 'required',
             ],
             'contract' => [
-                'required',
+                'nullable',
             ],
             'contractor_id' => [
                 'required',

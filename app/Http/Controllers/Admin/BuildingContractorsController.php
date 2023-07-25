@@ -91,7 +91,8 @@ class BuildingContractorsController extends Controller
     }
 
     public function store(StoreBuildingContractorRequest $request)
-    {
+    {   
+        $building_id = $request->building_id ;
         $buildingContractor = BuildingContractor::create($request->all());
 
         if ($request->input('contract', false)) {
@@ -102,7 +103,7 @@ class BuildingContractorsController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $buildingContractor->id]);
         }
         Alert::success(trans('flash.store.title'),trans('flash.store.body'));
-        return redirect()->route('admin.building-contractors.index');
+        return redirect()->route('admin.buildings.show',$building_id);
     }
 
     public function edit(BuildingContractor $buildingContractor)
