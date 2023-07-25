@@ -237,7 +237,7 @@
             </div>
             <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" href="#building_building_contractors" role="tab" data-toggle="tab">
+                    <a class="nav-link active" href="#building_building_contractors" role="tab" data-toggle="tab">
                         {{ trans('cruds.buildingContractor.title') }}
                     </a>
                 </li>
@@ -254,7 +254,7 @@
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane" role="tabpanel" id="building_building_contractors">
+                <div class="tab-pane active" role="tabpanel" id="building_building_contractors">
                     @includeIf('admin.buildings.relationships.buildingBuildingContractors', [
                         'buildingContractors' => $building->buildingBuildingContractors,
                         'contractors' =>$contractors,

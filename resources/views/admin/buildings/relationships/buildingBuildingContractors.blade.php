@@ -9,45 +9,47 @@
             @csrf
             <input type="hidden" name="stages" value="request_quotation">
             <input type="hidden" name="building_id" value="{{$building->id}}">
-            <div class="form-group">
-                <label class="required" for="visit_date">{{ trans('cruds.buildingContractor.fields.visit_date') }}</label>
-                <input class="form-control date {{ $errors->has('visit_date') ? 'is-invalid' : '' }}" type="text" name="visit_date" id="visit_date" value="{{ old('visit_date') }}" required>
-                @if($errors->has('visit_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('visit_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.buildingContractor.fields.visit_date_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="contractor_id">{{ trans('cruds.buildingContractor.fields.contractor') }}</label>
-                <select class="form-control select2 {{ $errors->has('contractor') ? 'is-invalid' : '' }}" name="contractor_id" id="contractor_id" required>
-                    @foreach($contractors as $id => $entry)
-                        <option value="{{ $id }}" {{ old('contractor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('contractor'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('contractor') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.buildingContractor.fields.contractor_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label class="required" for="visit_date">{{ trans('cruds.buildingContractor.fields.visit_date') }}</label>
+                    <input class="form-control date {{ $errors->has('visit_date') ? 'is-invalid' : '' }}" type="text" name="visit_date" id="visit_date" value="{{ old('visit_date') }}" required>
+                    @if($errors->has('visit_date'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('visit_date') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.buildingContractor.fields.visit_date_helper') }}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
+                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                    @if($errors->has('name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('name') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="required" for="contractor_id">{{ trans('cruds.buildingContractor.fields.contractor') }}</label>
+                    <select class="form-control select2 {{ $errors->has('contractor') ? 'is-invalid' : '' }}" name="contractor_id" id="contractor_id" required>
+                        @foreach($contractors as $id => $entry)
+                            <option value="{{ $id }}" {{ old('contractor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('contractor'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('contractor') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.buildingContractor.fields.contractor_helper') }}</span>
+                </div> 
+                <div class="form-group col-md-3">
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
+            </div> 
         </form>
     </div>
 </div>
@@ -96,7 +98,7 @@
 
                             </td>
                             <td>
-                                {{ $buildingContractor->contractor_id ?? '' }}
+                                {{ $buildingContractor->id ?? '' }}
                             </td>
                             <td>
                                 {{ $buildingContractor->visit_date ?? '' }}
@@ -116,13 +118,7 @@
                             </td>
                             <td>
                                 {{ $buildingContractor->quotation_without_materials ?? '' }}
-                            </td>
-                            <td>
-                                {{ $buildingContractor->contractor->position ?? '' }}
-                            </td>
-                            <td>
-                                {{ $buildingContractor->building->building_number ?? '' }}
-                            </td>
+                            </td> 
                             <td>
                                 @if ($buildingContractor->stages == 'pending')
                                     <a class="btn btn-xs btn-primary"
