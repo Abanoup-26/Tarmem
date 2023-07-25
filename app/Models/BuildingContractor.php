@@ -30,7 +30,7 @@ class BuildingContractor extends Model implements HasMedia
     ];
 
     public const STAGES_SELECT = [
-        'pending'          => 'قيد الانتظار ', //لسه ضايف المقاول للمبني 
+        'pending'          => 'زيارة هندسية', //لسه ضايف المقاول للمبني 
         'request_quotation' => 'طلب عرض سعر', //
         'send_quotation'    => 'تم تحديد السعر ',
         'accepted'          => 'قبول',

@@ -16,25 +16,11 @@ class UpdateBuildingContractorRequest extends FormRequest
 
     public function rules()
     {
-        return [
-            'visit_date' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
-            ],
+        return [ 
             'stages' => [
-                'required',
-            ],
-            'contract' => [
-                'required',
-            ],
-            'contractor_id' => [
-                'required',
-                'integer',
-            ],
-            'building_id' => [
-                'required',
-                'integer',
-            ],
+                'nullable',
+                'in:'. implode(',', array_keys(BuildingContractor::STAGES_SELECT)),
+            ], 
         ];
     }
 }

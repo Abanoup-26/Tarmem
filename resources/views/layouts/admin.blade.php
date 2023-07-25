@@ -62,9 +62,7 @@
                     <li class="c-header-nav-item dropdown notifications-menu">
                         <a href="#" class="c-header-nav-link" data-toggle="dropdown">
                             <i class="far fa-bell"></i>
-                            @php(
-    $alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count(),
-)
+                            @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
                             @if ($alertsCount > 0)
                                 <span class="badge badge-warning navbar-badge">
                                     {{ $alertsCount }}

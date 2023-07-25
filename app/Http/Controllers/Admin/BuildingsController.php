@@ -80,9 +80,9 @@ class BuildingsController extends Controller
     public function show(Building $building )
     {
         abort_if(Gate::denies('building_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $contractors = Contractor::pluck('position', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $contractors = Contractor::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), ''); 
 
-        $building->load('buildingBuildingContractors.contractor' , 'buildingBuildingContractors.building', 'buildingBeneficiaries', 'buildingBuildingSupporters');
+        $building->load('buildingBuildingContractors.contractor.user' , 'buildingBuildingContractors.building', 'buildingBeneficiaries', 'buildingBuildingSupporters');
         return view('admin.buildings.show', compact('building' ,'contractors'));
     }
 
@@ -94,6 +94,13 @@ class BuildingsController extends Controller
     
     public function update(UpdateBuildingRequest $request, Building $building)
     {
+        if($request->stages == 'send_to_contractor'){
+            if(BuildingContractor::where('building_id',$building->id)->where('stages','request_quotation')->count() < 3){
+                Alert::warning('You Must add at least 3 contractor with stage request quotation','');
+                return redirect()->route('admin.buildings.show', $building->id);
+            }
+        } 
+
         $building->update($request->all());
 
         if (count($building->building_photos) > 0) {
@@ -110,31 +117,35 @@ class BuildingsController extends Controller
             }
         }
 
-        if ($request->input('research_vist_result', false)) {
-            if (! $building->research_vist_result || $request->input('research_vist_result') !== $building->research_vist_result->file_name) {
-                if ($building->research_vist_result) {
-                    $building->research_vist_result->delete();
+        if ($building->stages == 'research_visit' && $building->research_vist_result == null  ){
+            if ($request->input('research_vist_result', false)) {
+                if (! $building->research_vist_result || $request->input('research_vist_result') !== $building->research_vist_result->file_name) {
+                    if ($building->research_vist_result) {
+                        $building->research_vist_result->delete();
+                    }
+                    $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('research_vist_result'))))->toMediaCollection('research_vist_result');
                 }
-                $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('research_vist_result'))))->toMediaCollection('research_vist_result');
+            } elseif ($building->research_vist_result) {
+                $building->research_vist_result->delete();
             }
-        } elseif ($building->research_vist_result) {
-            $building->research_vist_result->delete();
         }
 
-        if ($request->input('engineering_vist_result', false)) {
-            if (! $building->engineering_vist_result || $request->input('engineering_vist_result') !== $building->engineering_vist_result->file_name) {
-                if ($building->engineering_vist_result) {
-                    $building->engineering_vist_result->delete();
+
+        if ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null){ 
+            if ($request->input('engineering_vist_result', false)) {
+                if (! $building->engineering_vist_result || $request->input('engineering_vist_result') !== $building->engineering_vist_result->file_name) {
+                    if ($building->engineering_vist_result) {
+                        $building->engineering_vist_result->delete();
+                    }
+                    $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('engineering_vist_result'))))->toMediaCollection('engineering_vist_result');
                 }
-                $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('engineering_vist_result'))))->toMediaCollection('engineering_vist_result');
+            } elseif ($building->engineering_vist_result) {
+                $building->engineering_vist_result->delete();
             }
-        } elseif ($building->engineering_vist_result) {
-            $building->engineering_vist_result->delete();
         }
         Alert::success(trans('flash.update.title'), trans('flash.update.body'));
         return redirect()->route('admin.buildings.show', $building->id);
-    }
-   
+    } 
 
     public function storeCKEditorImages(Request $request)
     {

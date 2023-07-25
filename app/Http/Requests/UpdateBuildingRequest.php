@@ -17,11 +17,17 @@ class UpdateBuildingRequest extends FormRequest
     public function rules()
     {
         return [
-            'stages' => 'required|in:' . implode(',', array_keys(Building::STAGES_SELECT)),
-            'management_statuses' => 'required|in:' . implode(',', array_keys(Building::MANAGEMENT_STATUSES_SELECT)),
+            'stages' => 'nullable|in:' . implode(',', array_keys(Building::STAGES_SELECT)),
+            'management_statuses' => 'nullable|in:' . implode(',', array_keys(Building::MANAGEMENT_STATUSES_SELECT)),
             'rejected_reson' => [
                 'string',
                 'nullable',
+            ],
+            'research_vist_result' => [
+                request()->has('research_result_req') ? 'required' : 'nullable',
+            ],
+            'engineering_vist_result' => [
+                request()->has('engineering_result_req') ? 'required' : 'nullable',
             ],
             'research_vist_date' => [
                 'date_format:' . config('panel.date_format'),

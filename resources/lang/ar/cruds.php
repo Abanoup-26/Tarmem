@@ -322,7 +322,7 @@ return [
         ],
     ],
     'beneficiary' => [
-        'title'          => 'المستفيد',
+        'title'          => 'المستفيدون',
         'title_singular' => 'المستفيد',
         'fields'         => [
             'id'                        => 'id',
@@ -496,16 +496,16 @@ return [
         ],
     ],
     'buildingSupporter' => [
-        'title'          => 'مساعد المبنى',
-        'title_singular' => 'مساعد المبنى',
+        'title'          => 'المانحين',
+        'title_singular' => 'المانح',
         'fields'         => [
             'id'                      => 'id',
             'id_helper'               => ' ',
-            'supporter'               => 'المساعد',
+            'supporter'               => 'المانح',
             'supporter_helper'        => ' ',
             'building'                => 'المبنى',
             'building_helper'         => ' ',
-            'supporter_status'        => 'حالة المساعد',
+            'supporter_status'        => 'حالة المانح',
             'supporter_status_helper' => ' ',
             'created_at'              => 'تم الإنشاء في',
             'created_at_helper'       => ' ',

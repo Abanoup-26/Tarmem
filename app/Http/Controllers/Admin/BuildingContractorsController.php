@@ -91,8 +91,14 @@ class BuildingContractorsController extends Controller
     }
 
     public function store(StoreBuildingContractorRequest $request)
-    {   
-        $building_id = $request->building_id ;
+    {    
+
+        // prevent from adding the contractor to the same building mutliple times
+        if(BuildingContractor::where('contractor_id',$request->contractor_id)->where('building_id',$request->building_id)->first()){
+            Alert::warning('The Contractor Already Exsist','');
+            return redirect()->route('admin.buildings.show',$request->building_id);
+        }
+
         $buildingContractor = BuildingContractor::create($request->all());
 
         if ($request->input('contract', false)) {
@@ -103,7 +109,7 @@ class BuildingContractorsController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $buildingContractor->id]);
         }
         Alert::success(trans('flash.store.title'),trans('flash.store.body'));
-        return redirect()->route('admin.buildings.show',$building_id);
+        return redirect()->route('admin.buildings.show',$buildingContractor->building_id);
     }
 
     public function edit(BuildingContractor $buildingContractor)
@@ -134,7 +140,7 @@ class BuildingContractorsController extends Controller
             $buildingContractor->contract->delete();
         }
         Alert::success(trans('flash.update.title'),trans('flash.update.body'));
-        return redirect()->route('admin.building-contractors.index');
+        return redirect()->route('admin.buildings.show',$buildingContractor->building_id);
     }
 
     public function show(BuildingContractor $buildingContractor)
