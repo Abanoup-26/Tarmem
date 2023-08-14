@@ -1,9 +1,12 @@
 <?php
 
 
-Route::group(['as' => 'frontend.', 'namespace' => 'Frontend' ,'middleware' => 'web'], function () {
-        Route::get('/', 'HomeController@index')->name('home');
-        Route::get('register', 'RegisterController@index')->name('register');
+Route::group(['as' => 'frontend.', 'namespace' => 'Frontend' ], function () {
+
+        // organization
+        Route::post('organizations/media', 'RegisterController@storeMedia')->name('organizations.storeMedia');
+        Route::post('organizations/ckmedia', 'RegisterController@storeCKEditorImages')->name('organizations.storeCKEditorImages');
+        Route::post('users/media', 'RegisterController@storeMedia')->name('users.storeMedia');
         // beneficiaries
         Route::get('beneficiaries', 'BeneficiaryController@index')->name('beneficiary.index');
         Route::get('beneficiaries/show', 'BeneficiaryController@show')->name('beneficiary.show');

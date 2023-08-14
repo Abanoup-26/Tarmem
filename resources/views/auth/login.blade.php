@@ -1,81 +1,76 @@
 @extends('layouts.app')
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card mx-4">
-            <div class="card-body p-4">
-                <h1>{{ trans('panel.site_title') }}</h1>
-
-                <p class="text-muted">{{ trans('global.login') }}</p>
-
-                @if(session('message'))
+<div class="mn-vh-100 d-flex align-items-center ">
+    <div class="container">
+        <!-- Card -->
+        <div class="card justify-content-center auth-card">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-9">
+                    <img class="logo mb-20" src="{{asset('frontend/img/logo.png')}}">
+                    @if($errors->count() > 0)
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled">
+                            @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                    @if(session('message'))
                     <div class="alert alert-info" role="alert">
                         {{ session('message') }}
                     </div>
-                @endif
-
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-user"></i>
-                            </span>
-                        </div>
-
-                        <input id="email" name="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}" value="{{ old('email', null) }}">
-
-                        @if($errors->has('email'))
+                    @endif
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <!-- Form Group -->
+                        <div class="form-group mb-20">
+                            <label for="email" class="mb-2 font-14 bold black">البريد الإلكتروني</label>
+                            <input class="theme-input-style" type="email" name="email" value="{{ old('email') }}"
+                                placeholder="البريد الألكتروني" required autofocus autocomplete="email" />
+                            @if($errors->has('email'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('email') }}
                             </div>
-                        @endif
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                            @endif
                         </div>
+                        <!-- End Form Group -->
 
-                        <input id="password" name="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" required placeholder="{{ trans('global.login_password') }}">
-
-                        @if($errors->has('password'))
+                        <!-- Form Group -->
+                        <div class="form-group mb-20">
+                            <label for="password" class="mb-2 font-14 bold black">كلمة المرور</label>
+                            <input class="theme-input-style" type="password" name="password" placeholder="كلمة المرور"
+                                required />
+                            @if($errors->has('password'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('password') }}
                             </div>
-                        @endif
-                    </div>
-
-                    <div class="input-group mb-4">
-                        <div class="form-check checkbox">
-                            <input class="form-check-input" name="remember" type="checkbox" id="remember" style="vertical-align: middle;" />
-                            <label class="form-check-label" for="remember" style="vertical-align: middle;">
-                                {{ trans('global.remember_me') }}
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-primary px-4">
-                                {{ trans('global.login') }}
-                            </button>
-                        </div>
-                        <div class="col-6 text-right">
-                            @if(Route::has('password.request'))
-                                <a class="btn btn-link px-0" href="{{ route('password.request') }}">
-                                    {{ trans('global.forgot_password') }}
-                                </a><br>
                             @endif
-                            <a class="btn btn-link px-0" href="{{ route('register') }}">
-                                {{ trans('global.register') }}
-                            </a>
                         </div>
-                    </div>
-                </form>
+                        <!-- End Form Group -->
+                        <div class="d-flex justify-content-between mb-20">
+                            <div class="d-flex align-items-center">
+                                <!-- Custom Checkbox -->
+                                <label class="custom-checkbox position-relative ml-2">
+                                    <input class="theme-input-style" type="checkbox" name="remember" />
+                                    <span class="checkmark"></span>
+                                </label>
+                                <!-- End Custom Checkbox -->
+                                <a class="flote-none" href="javascript:void(0)">تذكرني</a>
+                            </div>
+                            <a href="" class="font-12 text_color">نسيت كلمه المرور</a>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <button type="submit" class="btn long ml-20">تسجيل الدخول</button>
+                            <span class="font-12 d-block"><a href="{{route('register')}}" class="bold">تسجيل
+                                    جهه جديدة</a>
+                            </span>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+        <!-- End Card -->
     </div>
 </div>
 @endsection

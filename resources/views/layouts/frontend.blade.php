@@ -36,17 +36,20 @@
 </head>
 
 <body class="main_grediant_bg">
-    @auth
+    
     <!-- Offcanval Overlay -->
     <div class="offcanvas-overlay"></div>
     <!-- Offcanval Overlay -->
+
     <div class="wrapper">
         <!-- Header -->
         <header class="header white-bg fixed-top d-flex align-content-center flex-wrap">
             <!-- Logo -->
             <div class="logo">
+               
                 <a href="" class="default-logo"><img src="{{asset('frontend/img/logo.png')}}" alt=""></a>
                 <a href="" class="mobile-logo"><img src="{{asset('frontend/img/mobile-logo.png')}}" alt=""></a>
+               
             </div>
             <!-- End Logo -->
 
@@ -57,6 +60,8 @@
                         <div class="col-3 col-lg-1 col-xl-4">
                             <!-- Header Left -->
                             <div class="main-header-left h-100 d-flex align-items-center">
+                                @auth
+                                
                                 <!-- Main Header User -->
                                 <div class="main-header-user">
                                     <a href="#" class="d-flex align-items-center" data-toggle="dropdown">
@@ -75,21 +80,20 @@
 
                                             <!-- User Info -->
                                             <div class="user-info">
-                                                <h4 class="user-name">Mohamed badeeb</h4>
-                                                <p class="user-email">Mohamed_badeeb@gmail.com</p>
+                                                <h4 class="user-name">{{auth()->user->name}}</h4>
+                                                <p class="user-email">{{auth()->user->email}}</p>
                                             </div>
                                             <!-- End User Info -->
                                         </div>
                                     </a>
                                     <div class="dropdown-menu">
                                         <a href="#">الملف الشخصي</a>
-
                                         <a href="#">الإعدادات</a>
-                                        <a href="#">تسجيل الخروج</a>
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">تسجيل الخروج</a>
                                     </div>
                                 </div>
                                 <!-- End Main Header User -->
-
+                                @endauth
                                 <!-- Main Header Menu -->
                                 <div class="main-header-menu d-block d-lg-none">
                                     <div class="header-toogle-menu">
@@ -230,7 +234,7 @@
             <!-- End Main Header -->
         </header>
         <!-- End Header -->
-        @endauth
+        
 
 
         @yield('content')
@@ -245,9 +249,11 @@
 
 
 
-
+    <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
+    
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
-    @yield('scripts')
     <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
     <script src="{{asset('frontend/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
@@ -257,6 +263,8 @@
     <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
     <script src="{{asset('frontend/plugins/apex/apexcharts.min.js')}}"></script>
     <script src="{{asset('frontend/plugins/apex/custom-apexcharts.js')}}"></script>
+    <script src="{{asset('frontend/plugins/apex/custom-apexchart2.js')}}"></script>
     <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-
+    @include('sweetalert::alert')
+    @yield('scripts')
 </body>

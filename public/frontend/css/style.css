@@ -9530,7 +9530,7 @@ body.sidebar-folded .main-content {
 }
 
 .dropzone.style--three {
-  min-height: 275px;
+  min-height: 75px ;
   width: 100%;
   max-width: 100%;
   border-color: #CAC6FB;
