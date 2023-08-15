@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.css')}}">
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/dropzone.min.css') }}">
     <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
-
+    @include('sweetalert::alert')
     <!-- ======= MAIN STYLES ======= -->
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     <!-- ======= END MAIN STYLES ======= -->

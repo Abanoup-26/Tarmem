@@ -1,11 +1,11 @@
 <?php
 
 
-Route::group(['as' => 'frontend.', 'namespace' => 'Frontend' ], function () {
-
+Route::group(['prefix' => 'organization','as' => 'organization.', 'namespace' => 'Organization' ,'middleware' =>['auth','organization']], function () {
+        Route::get('/', 'HomeController@index')->name('dashboard');
         // organization
-        Route::post('organizations/media', 'RegisterController@storeMedia')->name('organizations.storeMedia');
-        Route::post('organizations/ckmedia', 'RegisterController@storeCKEditorImages')->name('organizations.storeCKEditorImages');
+        Route::post('organizations/media', 'RegisterController@storeMedia')->name('storeMedia');
+        Route::post('organizations/ckmedia', 'RegisterController@storeCKEditorImages')->name('storeCKEditorImages');
         Route::post('users/media', 'RegisterController@storeMedia')->name('users.storeMedia');
         // beneficiaries
         Route::get('beneficiaries', 'BeneficiaryController@index')->name('beneficiary.index');
@@ -14,7 +14,5 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend' ], function () {
         // building
         Route::get('building', 'BuildingController@index')->name('building.index');
         Route::get('add-building', 'BuildingController@create')->name('building.create');
-        // agency 
-        Route::get('agency', 'AgencyController@index')->name('agency.index');
+        
 });
-

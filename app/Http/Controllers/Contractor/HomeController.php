@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\frontend;
+namespace App\Http\Controllers\Contractor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-
-
-    public function show()
+    public function index()
     {
-        return view('frontend.beneficiaries');    
+        return view('contractor.agency');    
     }
 
 }

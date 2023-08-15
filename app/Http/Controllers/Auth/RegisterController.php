@@ -7,7 +7,6 @@ use App\Models\Organization;
 use App\Models\OrganizationType;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -107,7 +106,6 @@ class RegisterController extends Controller
             'organization_type_id' => $data['organization_type_id'],
             'user_id' => $organization_user->id,
         ]);
-        Alert::success('Success Registeration', 'You have registerd successfully ');
         return $organization_user;
     }
 }
