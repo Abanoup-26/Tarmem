@@ -1,4 +1,9 @@
 <?php
+
+use \App\Http\Controllers\Auth\ContractorRegisterController;
+use \App\Http\Controllers\Auth\RegisterController;
+
+Route::redirect('/', 'login');
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
@@ -8,8 +13,17 @@ Route::get('/home', function () {
 });
 
 Auth::routes();
+// Users Registration 
+Route::get('register-contractor', [ContractorRegisterController::class, 'showRegistrationForm'])->name('register-contractor');
+Route::post('register-contractor', [ContractorRegisterController::class, 'register']);
+Route::post('media', [ContractorRegisterController::class, 'storeMedia'])->name('contractors.storeMedia');
+Route::post('ckmedia', [ContractorRegisterController::class, 'storeCKEditorImages'])->name('contractors.storeCKEditorImages');
+// organization
+Route::post('media', [RegisterController::class, 'storeMedia'])->name('organizations.storeMedia');
+Route::post('ckmedia', [RegisterController::class, 'storeCKEditorImages'])->name('organizations.storeCKEditorImages');
+Route::post('users/media', [RegisterController::class, 'storeMedia'])->name('organizations.users.storeMedia');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth','staff']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'staff']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');

@@ -62,9 +62,16 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <button type="submit" class="btn long ml-20">تسجيل الدخول</button>
-                            <span class="font-12 d-block"><a href="{{route('register')}}" class="bold">تسجيل
+                            <span class="font-12 d-block "><a href="{{route('register')}}" class="bold">تسجيل
                                     جهه جديدة</a>
                             </span>
+                            <span class="font-12 d-block m-2"><a href="{{route('register-contractor')}}" class="bold">تسجيل
+                                    مقاول جديد</a>
+                            </span>
+                            <span class="font-12 d-block m-2"><a href="{{route('register')}}" class="bold">تسجيل
+                                    مانح جديد</a>
+                            </span>
+                            
                         </div>
                     </form>
                 </div>

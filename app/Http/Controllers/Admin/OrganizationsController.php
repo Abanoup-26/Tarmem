@@ -99,10 +99,7 @@ class OrganizationsController extends Controller
             'mobile_number'  => $request->mobile_number,
         ]);
 
-        foreach ($request->input('identity_photos', []) as $file) {
-            $user->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photos');
-        }
-
+        
         // create Organization 
         $organization = Organization::create([
             'name' => $request->organization_name,
@@ -113,7 +110,10 @@ class OrganizationsController extends Controller
             'organization_type_id' => $request->organization_type_id,
             'user_id' => $user->id
         ]);
-
+        
+        foreach ($request->input('identity_photos', []) as $file) {
+            $user->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photos');
+        }
 
         if ($request->input('commercial_record', false)) {
             $organization->addMedia(storage_path('tmp/uploads/' . basename($request->input('commercial_record'))))->toMediaCollection('commercial_record');

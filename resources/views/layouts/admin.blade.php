@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/bootstrap-datetimepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/coreui.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboard_offline/css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/dropzone.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/perfect-scrollbar.min.css') }}">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />

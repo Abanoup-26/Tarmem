@@ -3,10 +3,6 @@
 
 Route::group(['prefix' => 'organization','as' => 'organization.', 'namespace' => 'Organization' ,'middleware' =>['auth','organization']], function () {
         Route::get('/', 'HomeController@index')->name('dashboard');
-        // organization
-        Route::post('organizations/media', 'RegisterController@storeMedia')->name('storeMedia');
-        Route::post('organizations/ckmedia', 'RegisterController@storeCKEditorImages')->name('storeCKEditorImages');
-        Route::post('users/media', 'RegisterController@storeMedia')->name('users.storeMedia');
         // beneficiaries
         Route::get('beneficiaries', 'BeneficiaryController@index')->name('beneficiary.index');
         Route::get('beneficiaries/show', 'BeneficiaryController@show')->name('beneficiary.show');

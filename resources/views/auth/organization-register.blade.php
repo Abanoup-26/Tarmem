@@ -285,7 +285,7 @@
 @section('scripts')
 <script>
     Dropzone.options.commercialRecordDropzone = {
-            url: '{{ route('frontend.organizations.storeMedia') }}',
+            url: '{{ route('organizations.storeMedia') }}',
             maxFilesize: 2, // MB
             maxFiles: 1,
             addRemoveLinks: true,
@@ -336,7 +336,7 @@
 </script>
 <script>
     Dropzone.options.partnershipAgreementDropzone = {
-            url: '{{ route('frontend.organizations.storeMedia') }}',
+            url: '{{ route('organizations.storeMedia') }}',
             maxFilesize: 2, // MB
             maxFiles: 1,
             addRemoveLinks: true,
@@ -387,7 +387,7 @@
 <script>
     var uploadedIdentityPhotosMap = {}
         Dropzone.options.identityPhotosDropzone = {
-            url: '{{ route('frontend.users.storeMedia') }}',
+            url: '{{ route('organizations.users.storeMedia') }}',
             maxFilesize: 2, // MB
             addRemoveLinks: true,
             headers: {
