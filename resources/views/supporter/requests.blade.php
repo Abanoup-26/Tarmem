@@ -1,4 +1,9 @@
 @extends('layouts.supporter')
+@section('styles')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="assets/plugins/apex/apexcharts.css">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+@endsection
 @section('content')
     <!-- Main Content -->
     <div class="main-content">
@@ -64,4 +69,10 @@
         </div>
     </div>
     <!-- End Main Content -->
+@endsection
+@section('scripts')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="assets/plugins/apex/apexcharts.min.js"></script>
+    <script src="assets/plugins/apex/custom-apexcharts.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 @endsection

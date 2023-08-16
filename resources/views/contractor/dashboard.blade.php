@@ -1,4 +1,9 @@
 @extends('layouts.contractor')
+@section('styles')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="{{ asset('frontend/plugins/apex/apexcharts.css') }}">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+@endsection
 @section('content')
     <!-- Main Content -->
     <div class="main-content">
@@ -19,7 +24,7 @@
                                     <p class="font-16">You've finished all of your tasks for this week.</p>
                                 </div>
                                 <div class="congratulation-img">
-                                    <img src="{{asset('frontend/img/media/congratulation-img.png')}}" alt="">
+                                    <img src="{{ asset('frontend/img/user.jpg') }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -124,4 +129,10 @@
         </div>
     </div>
     <!-- End Main Content -->
+@endsection
+@section('scripts')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 @endsection

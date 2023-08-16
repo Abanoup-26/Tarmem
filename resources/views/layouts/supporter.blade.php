@@ -24,13 +24,10 @@
     <link rel="stylesheet" href="{{asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.css')}}" />
     <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
 
-    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
-    <link rel="stylesheet" href="{{asset('frontend/plugins/apex/apexcharts.css')}}" />
-    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
-
     <!-- ======= MAIN STYLES ======= -->
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}" />
     <!-- ======= END MAIN STYLES ======= -->
+    @yield('styles')
 </head>
 
 <body>
@@ -294,10 +291,7 @@
     <script src="{{asset('frontend/js/script.js')}}"></script>
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
 
-    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-    <script src="{{asset('frontend/plugins/apex/apexcharts.min.js')}}"></script>
-    <script src="{{asset('frontend/plugins/apex/custom-apexcharts.js')}}"></script>
-    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+   @yield('scripts')
 </body>
 
 </html>

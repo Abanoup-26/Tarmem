@@ -11,6 +11,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class RegisterController extends Controller
@@ -92,7 +94,7 @@ class RegisterController extends Controller
      *
      * @param  array  $data
 
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {

@@ -1,4 +1,10 @@
 @extends('layouts.organization')
+@section('styles')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link href=" {{ asset('frontend/plugins/jquery-smartwizard/smart_wizard_all.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+@endsection
 @section('content')
     <!-- Main Content -->
     <div class="main-content">
@@ -59,8 +65,8 @@
                                                         <!-- Date Picker -->
                                                         <div class="dashboard-date style--three">
                                                             <span class="input-group-addon">
-                                                                <img src="{{asset('frontend/img/svg/calender.svg')}}" alt=""
-                                                                    class="svg">
+                                                                <img src="{{ asset('frontend/img/svg/calender.svg') }}"
+                                                                    alt="" class="svg">
                                                             </span>
 
                                                             <input type="text" id="default-date"
@@ -218,8 +224,8 @@
                                                         <!-- Date Picker -->
                                                         <div class="dashboard-date style--three">
                                                             <span class="input-group-addon">
-                                                                <img src="{{asset('frontend/img/svg/calender.svg')}}" alt=""
-                                                                    class="svg">
+                                                                <img src="{{ asset('frontend/img/svg/calender.svg') }}"
+                                                                    alt="" class="svg">
                                                             </span>
 
                                                             <input type="text" id="default-date"
@@ -308,8 +314,8 @@
                                                         <!-- Date Picker -->
                                                         <div class="dashboard-date style--three">
                                                             <span class="input-group-addon">
-                                                                <img src="{{asset('frontend/img/svg/calender.svg')}/" alt=""
-                                                                    class="svg">
+                                                                <img src="{{ asset('frontend/img/svg/calender.svg') }}/"
+                                                                    alt="" class="svg">
                                                             </span>
 
                                                             <input type="text" id="default-date"
@@ -478,4 +484,13 @@
         </div>
     </div>
     <!-- End Main Content -->
+@endsection
+
+@section('scripts')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src=" {{ asset('frontend/plugins/jquery-smartwizard/jquery.smartWizard.min.js') }}"></script>
+    <script src=" {{ asset('frontend/plugins/jquery-smartwizard/custom-smartWizard.js') }}"></script>
+    <script src=" {{ asset('frontend/plugins/jquery.steps/jquery.steps.min.js') }}"></script>
+    <script src=" {{ asset('frontend/plugins/jquery.steps/custom-jquery-step.js') }}"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 @endsection

@@ -1,4 +1,9 @@
 @extends('layouts.organization')
+@section('styles')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="{{ asset('frontend/plugins/apex/apexcharts.css') }}">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+@endsection
 @section('content')
     <!-- Main Content -->
     <div class="main-content">
@@ -48,7 +53,8 @@
                                 <!-- Date Picker -->
                                 <div class="dashboard-date style--three">
                                     <span class="input-group-addon">
-                                        <img src="{{asset('frontend/img/svg/calender.svg')}}" alt="" class="svg">
+                                        <img src="{{ asset('frontend/img/svg/calender.svg') }}" alt=""
+                                            class="svg">
                                     </span>
 
                                     <input type="text" id="default-date" placeholder="28 October 2023">
@@ -130,4 +136,11 @@
         </div>
     </div>
     <!-- End Main Content -->
+@endsection
+
+@section('scripts')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 @endsection

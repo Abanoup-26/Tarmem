@@ -15,4 +15,8 @@ class BuildingController extends Controller
     {
         return view('organization.add-building');
     }
+    public function show()
+    {
+        return view('organization.building-show');
+    }
 }

@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\ContractorServieceType;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Models\Contractor;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Models\ContractorServieceType;
 use App\Models\ContractorType;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ContractorRegisterController extends Controller
 {
@@ -53,7 +53,7 @@ class ContractorRegisterController extends Controller
         $model->exists = true;
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
-        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], \Illuminate\Http\Response::HTTP_CREATED);
     }
 
     /**
@@ -82,7 +82,7 @@ class ContractorRegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     ** @return \App\User
      */
     protected function create(array $data)
     {

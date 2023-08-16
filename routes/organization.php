@@ -10,5 +10,6 @@ Route::group(['prefix' => 'organization','as' => 'organization.', 'namespace' =>
         // building
         Route::get('building', 'BuildingController@index')->name('building.index');
         Route::get('add-building', 'BuildingController@create')->name('building.create');
+        Route::get('show-building', 'BuildingController@show')->name('building.show');
         
 });

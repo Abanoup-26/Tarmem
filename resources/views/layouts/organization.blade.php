@@ -72,10 +72,11 @@
                                                     <img src="{{ asset('frontend/img/img-placeholder.png') }}" alt="">
                                                 </div>
                                                 <!-- End User Avatar -->
+                                                
                                                 <!-- User Info -->
                                                 <div class="user-info">
-                                                    <h4 class="user-name">{{ auth()->user->name }}</h4>
-                                                    <p class="user-email">{{ auth()->user->email }}</p>
+                                                    <h4 class="user-name">{{ auth()->user()->name }}</h4>
+                                                    <p class="user-email">{{ auth()->user()->email }}</p>
                                                 </div>
                                                 <!-- End User Info -->
                                             </div>
@@ -147,7 +148,7 @@
                                             <a href="#" class="header-icon notification-icon"
                                                 data-toggle="dropdown">
                                                 <span class="count"
-                                                    data-bg-img="{{ asset('frontend/سimg/count-bg.png') }}س">22</span>
+                                                    data-bg-img="{{ asset('frontend/img/count-bg.png') }}">22</span>
                                                 <img src="{{ asset('frontend/img/svg/notification-icon.svg') }}"
                                                     alt="" class="svg">
                                             </a>
@@ -320,12 +321,7 @@
     <script src="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('frontend/js/script.js') }}"></script>
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
-
-    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-    <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/apex/custom-apexchart2.js') }}"></script>
-    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
     @include('sweetalert::alert')
+
     @yield('scripts')
 </body>

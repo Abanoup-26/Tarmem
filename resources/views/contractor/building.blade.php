@@ -1,4 +1,9 @@
 @extends('layouts.contractor')
+@section('styles')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="{{ asset('frontend/plugins/apex/apexcharts.css') }}">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+@endsection
 @section('content')
     <!-- Main Content -->
     <div class="main-content">
@@ -149,4 +154,10 @@
         </div>
         <!------- Building Details ------>
     </div>
+@endsection
+@section('scripts')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 @endsection

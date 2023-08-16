@@ -1,4 +1,9 @@
 @extends('layouts.contractor')
+@section('styles')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="{{ asset('frontend/plugins/apex/apexcharts.css') }}">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+@endsection
 @section('content')
     <!-- Main Content -->
     <div class="main-content">
@@ -26,7 +31,7 @@
                                     <td>5</td>
                                     <td>الحالة</td>
                                     <td> 28/8/2023</td>
-                                    <td><a href="{{route('contractor.building.show')}}" class="details-btn">عرض التفاصيل<i
+                                    <td><a href="{{ route('contractor.building.show') }}" class="details-btn">عرض التفاصيل<i
                                                 class="icofont-arrow-left"></i></a></td>
                                 </tr>
                                 <tr>
@@ -67,4 +72,10 @@
         </div>
     </div>
     <!-- End Main Content -->
+@endsection
+@section('scripts')
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 @endsection
