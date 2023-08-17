@@ -95,6 +95,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.building.fields.building_photos_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label>{{ trans('cruds.building.fields.management_statuses') }}</label>
                 <select class="form-control {{ $errors->has('management_statuses') ? 'is-invalid' : '' }}" name="management_statuses" id="management_statuses">
@@ -185,166 +186,162 @@
         </form>
     </div>
 </div>
-
-
-
 @endsection
-
 @section('scripts')
 <script>
-    var uploadedBuildingPhotosMap = {}
-Dropzone.options.buildingPhotosDropzone = {
-    url: '{{ route('admin.buildings.storeMedia') }}',
-    maxFilesize: 2, // MB
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2
-    },
-    success: function (file, response) {
-      $('form').append('<input type="hidden" name="building_photos[]" value="' + response.name + '">')
-      uploadedBuildingPhotosMap[file.name] = response.name
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedBuildingPhotosMap[file.name]
-      }
-      $('form').find('input[name="building_photos[]"][value="' + name + '"]').remove()
-    },
-    init: function () {
-@if(isset($building) && $building->building_photos)
-          var files =
-            {!! json_encode($building->building_photos) !!}
-              for (var i in files) {
-              var file = files[i]
-              this.options.addedfile.call(this, file)
-              file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="building_photos[]" value="' + file.file_name + '">')
+        var uploadedBuildingPhotosMap = {}
+    Dropzone.options.buildingPhotosDropzone = {
+        url: '{{ route('admin.buildings.storeMedia') }}',
+        maxFilesize: 2, // MB
+        addRemoveLinks: true,
+        headers: {
+        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        params: {
+        size: 2
+        },
+        success: function (file, response) {
+        $('form').append('<input type="hidden" name="building_photos[]" value="' + response.name + '">')
+        uploadedBuildingPhotosMap[file.name] = response.name
+        },
+        removedfile: function (file) {
+        file.previewElement.remove()
+        var name = ''
+        if (typeof file.file_name !== 'undefined') {
+            name = file.file_name
+        } else {
+            name = uploadedBuildingPhotosMap[file.name]
+        }
+        $('form').find('input[name="building_photos[]"][value="' + name + '"]').remove()
+        },
+        init: function () {
+    @if(isset($building) && $building->building_photos)
+            var files =
+                {!! json_encode($building->building_photos) !!}
+                for (var i in files) {
+                var file = files[i]
+                this.options.addedfile.call(this, file)
+                file.previewElement.classList.add('dz-complete')
+                $('form').append('<input type="hidden" name="building_photos[]" value="' + file.file_name + '">')
+                }
+    @endif
+        },
+        error: function (file, response) {
+            if ($.type(response) === 'string') {
+                var message = response //dropzone sends it's own error messages in string
+            } else {
+                var message = response.errors.file
             }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
+            file.previewElement.classList.add('dz-error')
+            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+            _results = []
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                node = _ref[_i]
+                _results.push(node.textContent = message)
+            }
 
-         return _results
-     }
-}
+            return _results
+        }
+    }
 </script>
 <script>
     Dropzone.options.researchVistResultDropzone = {
-    url: '{{ route('admin.buildings.storeMedia') }}',
-    maxFilesize: 2, // MB
-    maxFiles: 1,
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2
-    },
-    success: function (file, response) {
-      $('form').find('input[name="research_vist_result"]').remove()
-      $('form').append('<input type="hidden" name="research_vist_result" value="' + response.name + '">')
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      if (file.status !== 'error') {
+        url: '{{ route('admin.buildings.storeMedia') }}',
+        maxFilesize: 2, // MB
+        maxFiles: 1,
+        addRemoveLinks: true,
+        headers: {
+        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        params: {
+        size: 2
+        },
+        success: function (file, response) {
         $('form').find('input[name="research_vist_result"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
-      }
-    },
-    init: function () {
-@if(isset($building) && $building->research_vist_result)
-      var file = {!! json_encode($building->research_vist_result) !!}
-          this.options.addedfile.call(this, file)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="research_vist_result" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
+        $('form').append('<input type="hidden" name="research_vist_result" value="' + response.name + '">')
+        },
+        removedfile: function (file) {
+        file.previewElement.remove()
+        if (file.status !== 'error') {
+            $('form').find('input[name="research_vist_result"]').remove()
+            this.options.maxFiles = this.options.maxFiles + 1
+        }
+        },
+        init: function () {
+    @if(isset($building) && $building->research_vist_result)
+        var file = {!! json_encode($building->research_vist_result) !!}
+            this.options.addedfile.call(this, file)
+        file.previewElement.classList.add('dz-complete')
+        $('form').append('<input type="hidden" name="research_vist_result" value="' + file.file_name + '">')
+        this.options.maxFiles = this.options.maxFiles - 1
+    @endif
+        },
+        error: function (file, response) {
+            if ($.type(response) === 'string') {
+                var message = response //dropzone sends it's own error messages in string
+            } else {
+                var message = response.errors.file
+            }
+            file.previewElement.classList.add('dz-error')
+            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+            _results = []
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                node = _ref[_i]
+                _results.push(node.textContent = message)
+            }
 
-         return _results
-     }
-}
+            return _results
+        }
+    }
 </script>
 <script>
-    Dropzone.options.engineeringVistResultDropzone = {
-    url: '{{ route('admin.buildings.storeMedia') }}',
-    maxFilesize: 2, // MB
-    maxFiles: 1,
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2
-    },
-    success: function (file, response) {
-      $('form').find('input[name="engineering_vist_result"]').remove()
-      $('form').append('<input type="hidden" name="engineering_vist_result" value="' + response.name + '">')
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      if (file.status !== 'error') {
+        Dropzone.options.engineeringVistResultDropzone = {
+        url: '{{ route('admin.buildings.storeMedia') }}',
+        maxFilesize: 2, // MB
+        maxFiles: 1,
+        addRemoveLinks: true,
+        headers: {
+        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        params: {
+        size: 2
+        },
+        success: function (file, response) {
         $('form').find('input[name="engineering_vist_result"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
-      }
-    },
-    init: function () {
-@if(isset($building) && $building->engineering_vist_result)
-      var file = {!! json_encode($building->engineering_vist_result) !!}
-          this.options.addedfile.call(this, file)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="engineering_vist_result" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
+        $('form').append('<input type="hidden" name="engineering_vist_result" value="' + response.name + '">')
+        },
+        removedfile: function (file) {
+        file.previewElement.remove()
+        if (file.status !== 'error') {
+            $('form').find('input[name="engineering_vist_result"]').remove()
+            this.options.maxFiles = this.options.maxFiles + 1
+        }
+        },
+        init: function () {
+    @if(isset($building) && $building->engineering_vist_result)
+        var file = {!! json_encode($building->engineering_vist_result) !!}
+            this.options.addedfile.call(this, file)
+        file.previewElement.classList.add('dz-complete')
+        $('form').append('<input type="hidden" name="engineering_vist_result" value="' + file.file_name + '">')
+        this.options.maxFiles = this.options.maxFiles - 1
+    @endif
+        },
+        error: function (file, response) {
+            if ($.type(response) === 'string') {
+                var message = response //dropzone sends it's own error messages in string
+            } else {
+                var message = response.errors.file
+            }
+            file.previewElement.classList.add('dz-error')
+            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+            _results = []
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                node = _ref[_i]
+                _results.push(node.textContent = message)
+            }
 
-         return _results
-     }
-}
+            return _results
+        }
+    }
 </script>
 @endsection

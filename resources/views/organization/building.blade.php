@@ -24,50 +24,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>نوع المبنى</td>
-                                    <td>5</td>
-                                    <td>2</td>
-                                    <td><button type="" class="btn long">إرسال للإدارة</button></td>
-                                    <td><a href="{{ route('organization.building.show') }}" class="details-btn">عرض
-                                            التفاصيل<i class="icofont-arrow-left"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>نوع المبنى</td>
-                                    <td>5</td>
-                                    <td>2</td>
-                                    <td><button type="" class="btn long">إرسال للإدارة</button></td>
-                                    <td><a href="{{ route('organization.building.show') }}" class="details-btn">عرض
-                                            التفاصيل<i class="icofont-arrow-left"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>نوع المبنى</td>
-                                    <td>5</td>
-                                    <td>2</td>
-                                    <td><button type="" class="btn long">إرسال للإدارة</button></td>
-                                    <td><a href="{{ route('organization.building.show') }}" class="details-btn">عرض
-                                            التفاصيل<i class="icofont-arrow-left"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>نوع المبنى</td>
-                                    <td>5</td>
-                                    <td>2</td>
-                                    <td><button type="" class="btn long">إرسال للإدارة</button></td>
-                                    <td><a href="{{ route('organization.building.show') }}" class="details-btn">عرض
-                                            التفاصيل<i class="icofont-arrow-left"></i></a></td>
-                                </tr>
+                                @foreach ( $buildings as $building )
+                                    <tr>
+                                        <td>{{$building->building_number}}</td>
+                                        <td>{{$building->building_type}}</td>
+                                        <td>{{$building->buildingBeneficiaries->count()}}</td>
+                                        <td>{{$building->stages}}</td>
+                                        @if ($building->management_statuses != 'on_review')
+                                            <td><a href="{{route('organization.building.send' , $building->id)}}" class="btn long">إرسال للإدارة</a></td>  
+                                        @else
+                                            <td><a href="{{route('organization.building.show' , $building->id)}}" class="btn long">متابعة الحالة مع الاداره </a></td>  
+
+                                        @endif
+                                        <td><a href="{{ route('organization.building.show' , $building->id) }}" class="details-btn">عرض
+                                                التفاصيل<i class="icofont-arrow-left"></i></a></td>
+                                    </tr>
+                                @endforeach
+                                
                             </tbody>
                         </table>
                         <!-- End Invoice List Table -->
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
     <!-- End Main Content -->

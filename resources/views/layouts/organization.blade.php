@@ -20,9 +20,13 @@
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
 
     <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <script src="{{ asset('dashboard_offline/js/jquery.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('frontend/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/fonts/icofont/icofont.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_offline/css/dropzone.min.css') }}">
+    <script src="{{ asset('dashboard_offline/js/moment.min.js') }}"></script>
+    <script src="{{ asset('dashboard_offline/js/bootstrap-datetimepicker.min.js') }}"></script>
     <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
 
     
@@ -321,7 +325,7 @@
     <script src="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('frontend/js/script.js') }}"></script>
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="{{ asset('dashboard_offline/js/dropzone.min.js') }}"></script>
     @include('sweetalert::alert')
-
     @yield('scripts')
 </body>

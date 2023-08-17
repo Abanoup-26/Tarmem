@@ -10,6 +10,9 @@ Route::group(['prefix' => 'organization','as' => 'organization.', 'namespace' =>
         // building
         Route::get('building', 'BuildingController@index')->name('building.index');
         Route::get('add-building', 'BuildingController@create')->name('building.create');
-        Route::get('show-building', 'BuildingController@show')->name('building.show');
-        
+        Route::get('show-building/{id}', 'BuildingController@show')->name('building.show');
+        Route::post('store-building' , 'BuildingController@store')->name('building.store');
+        Route::post('buildings/media', 'BuildingController@storeMedia')->name('buildings.storeMedia');
+        Route::post('buildings/ckmedia', 'BuildingController@storeCKEditorImages')->name('buildings.storeCKEditorImages');
+        Route::get('buildings/send/{id}', 'BuildingController@send')->name('building.send');
 });
