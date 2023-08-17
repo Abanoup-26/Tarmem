@@ -25,49 +25,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($beneficiaries as $beneficiary )
                                 <tr>
-                                    <td>أسم المستفيد</td>
-                                    <td>الحالة الوظيفية </td>
-                                    <td>الإحتياجات</td>
-                                    <td>المرحلة</td>
-                                    <td>المبنى</td>
-                                    <td>5</td>
-
+                                    <td>{{$beneficiary->name}}</td>
+                                    <td>{{$beneficiary->job_status}}  </td>
+                                    {{-- <td>{{$beneficiary}}</td>
+                                    <td>{{$beneficiary}}</td>
+                                    <td>{{$beneficiary}}</td>
+                                    <td>{{$beneficiary}}</td> --}}
                                     <td><a href="{{route('organization.beneficiary.show')}}" class="details-btn">عرض التفاصيل<i
                                                 class="icofont-arrow-left"></i></a></td>
                                 </tr>
-                                <tr>
-                                    <td>أسم المستفيد</td>
-                                    <td>الحالة الوظيفية </td>
-                                    <td>الإحتياجات</td>
-                                    <td>المرحلة</td>
-                                    <td>المبنى</td>
-                                    <td>5</td>
-                                    <td><a href="{{route('organization.beneficiary.show')}}" class="details-btn">عرض التفاصيل<i
-                                                class="icofont-arrow-left"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>أسم المستفيد</td>
-                                    <td>الحالة الوظيفية </td>
-                                    <td>الإحتياجات</td>
-                                    <td>المرحلة</td>
-                                    <td>المبنى</td>
-                                    <td>5</td>
-
-                                    <td><a href="{{route('organization.beneficiary.show')}}" class="details-btn">عرض التفاصيل<i
-                                                class="icofont-arrow-left"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>أسم المستفيد</td>
-                                    <td>الحالة الوظيفية </td>
-                                    <td>الإحتياجات</td>
-                                    <td>المرحلة</td>
-                                    <td>المبنى</td>
-                                    <td>5</td>
-
-                                    <td><a href="{{route('organization.beneficiary.show')}}" class="details-btn">عرض التفاصيل<i
-                                                class="icofont-arrow-left"></i></a></td>
-                                </tr>
+                                @endforeach
+                                
                             </tbody>
                         </table>
                         <!-- End Invoice List Table -->

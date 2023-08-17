@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Organization;
 
 use App\Http\Controllers\Controller;
+use App\Models\Beneficiary;
 use Illuminate\Http\Request;
 
 class BeneficiaryController extends Controller
 {   
     public function index()
     {
-        return view('organization.beneficiaries');
+        $beneficiaries = Beneficiary::with('beneficiaryBeneficiaryFamilies','beneficiaryBeneficiaryNeeds')->get();
+        
+        return view('organization.beneficiaries' ,compact('beneficiaries'));
     }
 
     public function create() 

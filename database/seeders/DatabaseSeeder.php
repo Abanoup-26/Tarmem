@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             BuildingTableSeeder::class,
             ContractorTypesTable::class,
             ContractorTableSeeder::class,
+            BeneficiarySeeder::class,
         ]);
     }
 }
