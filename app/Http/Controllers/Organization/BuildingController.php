@@ -16,7 +16,7 @@ class BuildingController extends Controller
     use MediaUploadingTrait;
     public function index()
     {
-        $buildings = Building::with('buildingBeneficiaries', 'buildingBuildingSupporters')->get();
+        $buildings = Building::with('buildingBeneficiaries.illness_type', 'buildingBuildingSupporters')->first();
 
         return view('organization.building', compact('buildings'));
     }
@@ -27,7 +27,7 @@ class BuildingController extends Controller
     public function show(Request $request)
     {
         $building = Building::findOrFail($request->id);
-        $building->load('buildingBuildingContractors.contractor.user' , 'buildingBuildingContractors.building', 'buildingBeneficiaries', 'buildingBuildingSupporters');
+        $building->load( 'buildingBeneficiaries.illness_type','buildingBeneficiaries.beneficiaryBeneficiaryFamilies.illness_type','buildingBeneficiaries.beneficiaryBeneficiaryFamilies.familyrelation');
         return view('organization.building-show',compact('building'));
     }
 
