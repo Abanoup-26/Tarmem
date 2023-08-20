@@ -25,15 +25,13 @@
     <link rel="stylesheet" href="{{ asset('frontend/fonts/icofont/icofont.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/dropzone.min.css') }}">
-    <script src="{{ asset('dashboard_offline/js/moment.min.js') }}"></script>
-    <script src="{{ asset('dashboard_offline/js/bootstrap-datetimepicker.min.js') }}"></script>
     <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <link rel="stylesheet" href="{{ asset('dashboard_offline/css/bootstrap-datetimepicker.min.css') }}">
 
     
     <!-- ======= MAIN STYLES ======= -->
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <!-- ======= END MAIN STYLES ======= -->
-    
     @yield('styles')
 </head>
 
@@ -325,6 +323,8 @@
     <script src="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('frontend/js/script.js') }}"></script>
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="{{ asset('dashboard_offline/js/moment.min.js') }}"></script>
+    <script src="{{ asset('dashboard_offline/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('dashboard_offline/js/dropzone.min.js') }}"></script>
     @include('sweetalert::alert')
     @yield('scripts')

@@ -78,10 +78,10 @@ class BeneficiaryFamily extends Model implements HasMedia
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
     }
 
-    // public function setBirthDateAttribute($value)
-    // {
-    //     $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    // }
+    public function setBirthDateAttribute($value)
+    {
+        $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
 
     public function getIdentityPhotosAttribute()
     {

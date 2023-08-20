@@ -155,7 +155,7 @@
                                 {{ trans('cruds.beneficiary.fields.building') }}
                             </th>
                             <td>
-                                {{ $beneficiary->building->building_type ?? '' }}
+                                {{ $beneficiary->building->id ?? '' }}
                             </td>
                         </tr>
                     </tbody>

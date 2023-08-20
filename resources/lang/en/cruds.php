@@ -385,6 +385,8 @@ return [
             'illness_status_helper'  => ' ',
             'illness_type'           => 'Illness Type',
             'illness_type_helper'    => ' ',
+            'job_title'             => ' Job Title',
+            'job_title_helper'      => ' ',
             'job_status'             => 'Job Status',
             'job_status_helper'      => ' ',
             'job_salary'            => 'Job Sallary',

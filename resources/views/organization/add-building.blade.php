@@ -2,7 +2,6 @@
 @section('styles')
     <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
     <link rel="stylesheet" href="{{ asset('frontend/plugins/apex/apexcharts.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboard_offline/css/bootstrap-datetimepicker.min.css') }}">
     <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
 @endsection
 @section('content')

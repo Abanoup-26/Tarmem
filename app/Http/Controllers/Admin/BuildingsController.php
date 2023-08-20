@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Models\Building;
 use Gate;
-use Alert;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\BuildingContractor;
 use App\Models\Contractor;
@@ -82,7 +82,7 @@ class BuildingsController extends Controller
         abort_if(Gate::denies('building_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $contractors = Contractor::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), ''); 
 
-        $building->load('buildingBuildingContractors.contractor.user' , 'buildingBuildingContractors.building', 'buildingBeneficiaries', 'buildingBuildingSupporters');
+        $building->load('buildingBuildingContractors.contractor.user' , 'buildingBuildingContractors.building', 'buildingBeneficiaries.illness_type', 'buildingBuildingSupporters');
         return view('admin.buildings.show', compact('building' ,'contractors'));
     }
 

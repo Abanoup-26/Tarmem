@@ -16,8 +16,8 @@ class BuildingController extends Controller
     use MediaUploadingTrait;
     public function index()
     {
-        $buildings = Building::with('buildingBeneficiaries.illness_type', 'buildingBuildingSupporters')->first();
-
+        $buildings = Building::with('buildingBeneficiaries.illness_type', 'buildingBuildingSupporters')->get();
+        
         return view('organization.building', compact('buildings'));
     }
     public function create()

@@ -12,32 +12,42 @@
                 <div class="card mb-30">
                     <div class="table-responsive">
                         <!-- Invoice List Table -->
-                        <table class="text-nowrap dh-table">
+                        <table class=" table table-striped border text-nowrap dh-table">
                             <thead class="text_color-bg text-white">
                                 <tr>
                                     <th>أسم المستفيد</th>
                                     <th> الحالة الوظيفية</th>
-                                    <th>الإحتياجات </th>
+                                    <th class="text-center">الإحتياجات </th>
                                     <th>المرحلة</th>
                                     <th>المبنى </th>
-                                    <th>عدد أفراض الأسرة</th>
+                                    <th>عدد أفراد الأسرة</th>
                                     <th> التفاصيل</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($beneficiaries as $beneficiary )
-                                <tr>
-                                    <td>{{$beneficiary->name}}</td>
-                                    <td>{{$beneficiary->job_status}}  </td>
-                                    {{-- <td>{{$beneficiary}}</td>
-                                    <td>{{$beneficiary}}</td>
-                                    <td>{{$beneficiary}}</td>
-                                    <td>{{$beneficiary}}</td> --}}
-                                    <td><a href="{{route('organization.beneficiary.show')}}" class="details-btn">عرض التفاصيل<i
-                                                class="icofont-arrow-left"></i></a></td>
-                                </tr>
+                                @foreach ($beneficiaries as $beneficiary)
+                                    <tr>
+                                        <td>{{ $beneficiary->name }}</td>
+                                        <td>{{ $beneficiary->job_status }} </td>
+                                        <td>
+                                            <table class="table table-striped border">
+                                                <thead class="text-center">
+                                                    @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $item)
+                                                        <tr class="text-center table-success" >
+                                                            <td>{{ $item->unit->name }} | {{ $item->trmem_type }} | <span class="">{{ $item->description }}</span></td>
+                                                        </tr>
+                                                    @endforeach
+                                                </thead>
+                                            </table>
+                                        </td>
+                                        <td>{{$beneficiary->building->stages}}</td>
+                                        <td>{{$beneficiary->building->id}}</td>
+                                        <td>{{$beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id',$beneficiary->id)->count() + 1 }}</td>
+                                        <td><a href="{{ route('organization.beneficiary.show') }}" class="details-btn">عرض
+                                                التفاصيل<i class="icofont-arrow-left"></i></a></td>
+                                    </tr>
                                 @endforeach
-                                
+
                             </tbody>
                         </table>
                         <!-- End Invoice List Table -->
