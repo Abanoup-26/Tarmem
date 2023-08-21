@@ -342,7 +342,7 @@
                                                             @foreach ($buildings as $id => $entry)
                                                                 <option value="{{ $id }}"
                                                                     {{ old('building_id') == $id ? 'selected' : '' }}>
-                                                                    {{$id}} {{  $entry }} </option>
+                                                                    {{ $id }} {{ $entry }} </option>
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->has('building'))
@@ -484,8 +484,9 @@
                                                             for="family_birth_date">{{ trans('cruds.beneficiaryFamily.fields.birth_date') }}</label>
                                                         <input
                                                             class="form-control date {{ $errors->has('birth_date') ? 'is-invalid' : '' }}"
-                                                            type="text" name="family_birth_date" id="family_birth_date"
-                                                            value="{{ old('birth_date') }}" required>
+                                                            type="text" name="family_birth_date"
+                                                            id="family_birth_date" value="{{ old('birth_date') }}"
+                                                            required>
                                                         @if ($errors->has('birth_date'))
                                                             <div class="invalid-feedback">
                                                                 {{ $errors->first('birth_date') }}
@@ -504,7 +505,8 @@
                                                             for="family_identity_number">{{ trans('cruds.beneficiaryFamily.fields.identity_number') }}</label>
                                                         <input
                                                             class="form-control {{ $errors->has('identity_number') ? 'is-invalid' : '' }}"
-                                                            type="text" name="family_identity_number" id="family_identity_number"
+                                                            type="text" name="family_identity_number"
+                                                            id="family_identity_number"
                                                             value="{{ old('identity_number', '') }}" required>
                                                         @if ($errors->has('identity_number'))
                                                             <div class="invalid-feedback">
@@ -590,7 +592,8 @@
                                                             for="family_qualifications">{{ trans('cruds.beneficiaryFamily.fields.qualifications') }}</label>
                                                         <input
                                                             class="form-control {{ $errors->has('qualifications') ? 'is-invalid' : '' }}"
-                                                            type="text" name="family_qualifications" id="family_qualifications"
+                                                            type="text" name="family_qualifications"
+                                                            id="family_qualifications"
                                                             value="{{ old('qualifications', '') }}">
                                                         @if ($errors->has('qualifications'))
                                                             <div class="invalid-feedback">
@@ -636,8 +639,9 @@
                                                             for="family_job_salary">{{ trans('cruds.beneficiaryFamily.fields.job_salary') }}</label>
                                                         <input
                                                             class="form-control {{ $errors->has('job_salary') ? 'is-invalid' : '' }}"
-                                                            type="number" name="family_job_salary" id="family_job_salary"
-                                                            value="{{ old('job_salary', '') }}" step="0.01">
+                                                            type="number" name="family_job_salary"
+                                                            id="family_job_salary" value="{{ old('job_salary', '') }}"
+                                                            step="0.01">
                                                         @if ($errors->has('job_salary'))
                                                             <div class="invalid-feedback">
                                                                 {{ $errors->first('job_salary') }}
@@ -657,7 +661,8 @@
                                                             class="required font-14 bold mb-2">{{ trans('cruds.beneficiaryFamily.fields.illness_status') }}</label>
                                                         <select
                                                             class="form-control font-14 bold mb-2 {{ $errors->has('illness_status') ? 'is-invalid' : '' }}"
-                                                            name="family_illness_status" id="family_illness_status" required>
+                                                            name="family_illness_status" id="family_illness_status"
+                                                            required>
                                                             <option value disabled
                                                                 {{ old('illness_status', null) === null ? 'selected' : '' }}>
                                                                 {{ trans('global.pleaseSelect') }}</option>
@@ -683,7 +688,8 @@
                                                             for="family_illness_type_id">{{ trans('cruds.beneficiaryFamily.fields.illness_type') }}</label>
                                                         <select
                                                             class="form-control select2 {{ $errors->has('illness_type') ? 'is-invalid' : '' }}"
-                                                            name="family_illness_type_id" id="family_illness_type_id" required>
+                                                            name="family_illness_type_id" id="family_illness_type_id"
+                                                            required>
                                                             @foreach ($illness_types as $id => $entry)
                                                                 <option value="{{ $id }}"
                                                                     {{ old('illness_type_id') == $id ? 'selected' : '' }}>
@@ -918,5 +924,26 @@
                 return _results
             }
         }
+    </script>
+    <!----Date Scripts ----->
+    <script>
+        function initializeDatepicker(selector) {
+            $(selector).datepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'en',
+                icons: {
+                    up: 'fas fa-chevron-up',
+                    down: 'fas fa-chevron-down',
+                    previous: 'fas fa-chevron-left',
+                    next: 'fas fa-chevron-right'
+                }
+            });
+        }
+        $(document).ready(function () {
+            initializeDatepicker("#birth_date");
+            initializeDatepicker("#marital_state_date");
+            initializeDatepicker("#family_birth_date");
+            // Add more datepickers if needed
+        });
     </script>
 @endsection

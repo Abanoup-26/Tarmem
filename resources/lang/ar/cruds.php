@@ -289,7 +289,7 @@ return [
             'floor_count_helper'             => ' ',
             'apartments_count'               => 'عدد الشقق',
             'apartments_count_helper'        => ' ',
-            'birth_data'                     => 'بيانات الميلاد',
+            'birth_data'                     => ' تاريخ انشاء المبني',
             'birth_data_helper'              => ' ',
             'latitude'                       => 'خط العرض',
             'latitude_helper'                => ' ',

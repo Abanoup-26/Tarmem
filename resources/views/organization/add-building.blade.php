@@ -91,9 +91,11 @@
                                         class="help-block">{{ trans('cruds.building.fields.apartments_count_helper') }}</span>
                                 </div>
                                 <div class="form-group col-md-6 mt-4">
-                                    <label class="mb-2 font-14 bold black" for="birth_data">{{ trans('cruds.building.fields.birth_data') }}</label>
-                                    <input class="form-control date {{ $errors->has('birth_data') ? 'is-invalid' : '' }}" type="text" name="birth_data" id="birth_data" value="{{ old('birth_data') }}">
-                                    @if($errors->has('birth_data'))
+                                    <label class="mb-2 font-14 bold black"
+                                        for="birth_data">{{ trans('cruds.building.fields.birth_data') }}</label>
+                                    <input class="form-control  {{ $errors->has('birth_data') ? 'is-invalid' : '' }}"
+                                        type="text" name="birth_data" id="birth_data" value="{{ old('birth_data') }}">
+                                    @if ($errors->has('birth_data'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('birth_data') }}
                                         </div>
@@ -160,11 +162,22 @@
 @endsection
 
 @section('scripts')
-
     <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
     <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
     <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
     <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script>
+        $("#birth_data").datepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'en',
+            icons: {
+                up: 'fas fa-chevron-up',
+                down: 'fas fa-chevron-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right'
+            }
+        });
+    </script>
     <script>
         var uploadedBuildingPhotosMap = {}
         Dropzone.options.buildingPhotosDropzone = {
@@ -222,4 +235,5 @@
             }
         }
     </script>
+    
 @endsection

@@ -26,16 +26,16 @@
     <link rel="stylesheet" href="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/dropzone.min.css') }}">
     <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
-    <link rel="stylesheet" href="{{ asset('dashboard_offline/css/bootstrap-datetimepicker.min.css') }}">
 
-    
+
     <!-- ======= MAIN STYLES ======= -->
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <!-- ======= END MAIN STYLES ======= -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     @yield('styles')
 </head>
 
-<body >
+<body>
 
     <!-- Offcanval Overlay -->
     <div class="offcanvas-overlay"></div>
@@ -46,8 +46,10 @@
         <header class="header white-bg fixed-top d-flex align-content-center flex-wrap">
             <!-- Logo -->
             <div class="logo">
-                <a href="#" class="default-logo"><img src="{{asset('frontend/img/logo.png') }}" alt=""></a>
-                <a href="#" class="mobile-logo"><img src="{{asset('frontend/img/logo.png') }}" alt=""></a>
+                <a href="#" class="default-logo"><img src="{{ asset('frontend/img/logo.png') }}"
+                        alt=""></a>
+                <a href="#" class="mobile-logo"><img src="{{ asset('frontend/img/logo.png') }}"
+                        alt=""></a>
             </div>
             <!-- End Logo -->
 
@@ -71,10 +73,11 @@
                                             <div class="user-profile d-xl-flex align-items-center d-none">
                                                 <!-- User Avatar -->
                                                 <div class="user-avatar">
-                                                    <img src="{{ asset('frontend/img/img-placeholder.png') }}" alt="">
+                                                    <img src="{{ asset('frontend/img/img-placeholder.png') }}"
+                                                        alt="">
                                                 </div>
                                                 <!-- End User Avatar -->
-                                                
+
                                                 <!-- User Info -->
                                                 <div class="user-info">
                                                     <h4 class="user-name">{{ auth()->user()->name }}</h4>
@@ -96,7 +99,7 @@
                                 <!-- Main Header Menu -->
                                 <div class="main-header-menu d-block d-lg-none">
                                     <div class="header-toogle-menu">
-                                        <i class="icofont-navigation-menu"></i> 
+                                        <i class="icofont-navigation-menu"></i>
                                         <img src="{{ asset('frontend/img/menu.png') }}" alt="">
                                     </div>
                                 </div>
@@ -137,7 +140,8 @@
                                                 <div class="theme-input-group header-search">
                                                     <input type="text" class="theme-input-style"
                                                         placeholder="Search Here">
-                                                    <button type="submit"><img src="{{asset('frontend/img/svg/search-icon.svg')}}"
+                                                    <button type="submit"><img
+                                                            src="{{ asset('frontend/img/svg/search-icon.svg') }}"
                                                             alt="" class="svg"></button>
                                                 </div>
                                             </form>
@@ -246,7 +250,7 @@
                     <!-- Nav -->
                     <ul class="nav">
                         <li class="active">
-                            <a href="{{route('organization.dashboard')}}">
+                            <a href="{{ route('organization.dashboard') }}">
                                 <i class="icofont-pie-chart"></i>
                                 <span class="link-title">الرئيسية</span>
                             </a>
@@ -259,8 +263,8 @@
 
                             <!-- Sub Menu -->
                             <ul class="nav sub-menu">
-                                <li><a href="{{route('organization.building.create')}}">إضافة مبني</a></li>
-                                <li><a href="{{route('organization.building.index')}}">المباني</a></li>
+                                <li><a href="{{ route('organization.building.create') }}">إضافة مبني</a></li>
+                                <li><a href="{{ route('organization.building.index') }}">المباني</a></li>
 
                             </ul>
                             <!-- End Sub Menu -->
@@ -274,8 +278,8 @@
 
                             <!-- Sub Menu -->
                             <ul class="nav sub-menu">
-                                <li><a href="{{route('organization.beneficiary.create')}}"> إضافة مستفيد</a></li>
-                                <li><a href="{{route('organization.beneficiary.index')}}">المستفيدين</a></li>
+                                <li><a href="{{ route('organization.beneficiary.create') }}"> إضافة مستفيد</a></li>
+                                <li><a href="{{ route('organization.beneficiary.index') }}">المستفيدين</a></li>
 
                             </ul>
                             <!-- End Sub Menu -->
@@ -323,9 +327,9 @@
     <script src="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('frontend/js/script.js') }}"></script>
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
-    <script src="{{ asset('dashboard_offline/js/moment.min.js') }}"></script>
-    <script src="{{ asset('dashboard_offline/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('dashboard_offline/js/dropzone.min.js') }}"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     @include('sweetalert::alert')
     @yield('scripts')
 </body>
