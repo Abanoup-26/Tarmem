@@ -9,7 +9,7 @@
     <div class="main-content">
         <div class="row justify-content-center">
             <!------Building info Section ------>
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="card mb-30">
                     <!-- Building data-->
                     <div class="card-body p-30">
@@ -100,108 +100,6 @@
             <!------Beneificary info Section ------>
             <div class="col-md-12">
                 <div class="card mb-30">
-                    <!-- Beneificary data -->
-                    {{-- <div class="card-body p-30">
-                        <div class="container  w-25  p-2 border-success border-bottom">
-                            <h4 class=" m-auto font-25  text-primary text-start mb-20 text-center">بيانات المستفيد</h4>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الاسم</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">محمد محمود</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المبنى</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">1</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ الميلاد</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">5/9/987</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الوظيفية </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">موظف</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> المرتب</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">المرتب</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوظيفة </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">الوظيفة</span>
-                                </div>
-                                <!-- End Form Group -->
-                            </div>
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">رقم الهوية</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">877777811222</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">صورة الهوية</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">1</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المؤهل</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">بكالريوس</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الصحية</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">مريض </span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">نوع المرض </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">قلب </span>
-                                </div>
-                                <!-- End Form Group -->
-
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوضع الإجتماعي </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">متزوج </span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">8/788 </span>
-                                </div>
-                                <!-- End Form Group -->
-
-
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <button class="btn sw-btn-next col-3" type="button">تعديل</button>
-                        </div>
-                    </div> --}}
                     <div class="card-body p-30">
                         <div class="container  w-25  p-2 border-success border-bottom">
                             <h4 class=" m-auto font-25  text-primary text-start mb-20 text-center">بيانات المستفيد</h4>

@@ -5,9 +5,9 @@ Route::group(['prefix' => 'organization','as' => 'organization.', 'namespace' =>
         Route::get('/', 'HomeController@index')->name('dashboard');
         // beneficiaries
         Route::get('beneficiaries', 'BeneficiaryController@index')->name('beneficiary.index');
-        Route::get('beneficiaries/show', 'BeneficiaryController@show')->name('beneficiary.show');
+        Route::get('beneficiaries/show/{id}', 'BeneficiaryController@show')->name('beneficiary.show');
         Route::post('beneficiaries/store', 'BeneficiaryController@store')->name('beneficiary.store');
-        Route::get('add-beneficiary', 'BeneficiaryController@create')->name('beneficiary.create');
+        Route::get('beneficiaries/create', 'BeneficiaryController@create')->name('beneficiary.create');
         Route::post('beneficiaries/media', 'BeneficiaryController@storeMedia')->name('beneficiaries.storeMedia');
         Route::post('beneficiaries/ckmedia', 'BeneficiaryController@storeCKEditorImages')->name('beneficiaries.storeCKEditorImages');
         Route::post('beneficiary-needs/media', 'BeneficiaryController@storeMedia')->name('beneficiary-needs.storeMedia');

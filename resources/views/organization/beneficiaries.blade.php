@@ -43,7 +43,7 @@
                                         <td>{{$beneficiary->building->stages}}</td>
                                         <td>{{$beneficiary->building->id}}</td>
                                         <td>{{$beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id',$beneficiary->id)->count() + 1 }}</td>
-                                        <td><a href="{{ route('organization.beneficiary.show') }}" class="details-btn">عرض
+                                        <td><a href="{{ route('organization.beneficiary.show' ,$beneficiary->id) }}" class="details-btn">عرض
                                                 التفاصيل<i class="icofont-arrow-left"></i></a></td>
                                     </tr>
                                 @endforeach

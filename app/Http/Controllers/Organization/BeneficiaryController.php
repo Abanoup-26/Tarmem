@@ -130,9 +130,11 @@ class BeneficiaryController extends Controller
         return redirect()->route('organization.beneficiary.index');
     }
 
-    public function show()
+    public function show(Request $request)
     {
-        return view('organization.beneficiaries_show');
+        $beneficiary = Beneficiary::findOrFail($request->id);
+        $beneficiary->load('beneficiaryBeneficiaryNeeds.unit','illness_type','building');
+        return view('organization.beneficiaries_show' ,compact('beneficiary'));
     }
 
     public function storeCKEditorImages(Request $request)

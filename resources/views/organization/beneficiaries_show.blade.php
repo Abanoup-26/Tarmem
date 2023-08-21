@@ -7,222 +7,162 @@
 @section('content')
     <!-- Main Content -->
     <div class="main-content">
-
         <!------Beneficiary------>
-        <div class="row">
+        <div class="row justify-content-center">
+            <!------Beneficiary info Section ------>
             <div class="col-12">
                 <div class="card mb-30">
                     <!-- Main Review-->
+                    <!-- Beneificary data -->
                     <div class="card-body p-30">
-                        <h4 class="font-20 mb-20">بيانات المستفيد</h4>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
+                        <div class="container  w-25  p-2 border-success border-bottom">
+                            <h2 class=" m-auto   text-primary text-start mb-20 text-center">بيانات المستفيد</h2>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-lg-4">
+                                <!-- name -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">الاسم</span>
-                                    <span class="black">محمد محمود</span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->name}}</span>
                                 </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
+                                <!-- End name -->
+                                <!-- birth_date -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المبنى</span>
-                                    <span class="black">1</span>
+                                    <span class="font-14 bold c4 ml-4">تاريخ الميلاد </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->birth_date}}</span>
                                 </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
+                                <!-- End birth_date -->
+                                <!-- identity_number -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ الميلاد</span>
-                                    <span class="black">5/9/987</span>
+                                    <span class="font-14 bold c4 ml-4">  رقم بطاقة الهويه</span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->identity_number}}</span>
                                 </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
+                                <!-- End identity_number -->
+                                <!-- identity_photo -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الوظيفية </span>
-                                    <span class="black">موظف</span>
+                                    <span class="font-14 bold c4 ml-4"> صور الهويه </span>
+                                    <span class=" ml-4">
+                                        @foreach ( $beneficiary->identity_photo as $key => $media )
+                                        <div class="row justifiy-content-between  ">
+                                            <img src="{{$media->getUrl()}}" alt="identity photos"  class="w-50">
+                                        </div>
+                                        <br>
+                                        @endforeach
+                                    </span>
                                 </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> المرتب</span>
-                                    <span class="black">المرتب</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوظيفة </span>
-                                    <span class="black">الوظيفة</span>
-                                </div>
-                                <!-- End Form Group -->
-
+                                <!-- End identity_photo -->
                             </div>
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
+                            <div class="col-lg-4">
+                                <!-- qualifications -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">رقم الهوية</span>
-                                    <span class="black">877777811222</span>
+                                    <span class="font-14 bold c4 ml-4"> المؤهل الدراسي </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->qualifications}}</span>
                                 </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
+                                <!-- End qualifications -->
+                                <!-- job_status -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">صورة الهوية</span>
-                                    <span class="black">1</span>
+                                    <span class="font-14 bold c4 ml-4">الحالة الوظيفيه </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->job_status}}</span>
                                 </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
+                                <!-- End job_status -->
+                                <!-- job_title -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المؤهل</span>
-                                    <span class="black">بكالريوس</span>
+                                    <span class="font-14 bold c4 ml-4"> الوظيفه</span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->job_title}}</span>
                                 </div>
-                                <!-- End Form Group -->
+                                <!-- End job_title -->
 
-                                <!-- Form Group -->
+                                <!-- job_salary -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الصحية</span>
-                                    <span class="black">مريض </span>
+                                    <span class="font-14 bold c4 ml-4">الراتب </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->job_salary}}</span>
                                 </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">نوع المرض </span>
-                                    <span class="black">قلب </span>
-                                </div>
-                                <!-- End Form Group -->
-
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوضع الإجتماعي </span>
-                                    <span class="black">متزوج </span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ </span>
-                                    <span class="black">8/788 </span>
-                                </div>
-                                <!-- End Form Group -->
-
-
+                                <!-- End job_salary -->
                             </div>
-                        </div>
-                        <div class="row">
-                            <button class="btn sw-btn-next" type="button">تعديل</button>
+                            <div class="col-lg-4">
+                                <!-- marital_status -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">الحاله الاجتماعيه</span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->marital_status}}</span>
+                                </div>
+                                <!-- End marital_status -->
+
+                                <!-- address -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">العنوان </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$beneficiary->address}} </span>
+                                </div>
+                                <!-- End address -->
+
+                                <!-- illness_type + illness_status  -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">الحاله الصحيه - نوع المرض </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4"> {{$beneficiary->illness_status}} - {{$beneficiary->illness_type->name}}</span>
+                                </div>
+                                <!-- End illness -->
+                            </div>
                         </div>
                     </div>
                     <!-- End Main Review -->
                 </div>
             </div>
         </div>
-
-        <!------Beneficiary Family------>
-        <div class="row">
+        <!--- beneficiary needs  -->
+        <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card mb-30">
-                    <!-- Review-->
+                    @foreach ($beneficiary->beneficiaryBeneficiaryNeeds->where('beneficiary_id', $beneficiary->id) as $Needs )
+                    <!-- Needs-->
                     <div class="card-body p-30">
-                        <h4 class="font-20 mb-20">بيانات الأسرة</h4>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الاسم</span>
-                                    <span class="black">محمد محمود</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المبنى</span>
-                                    <span class="black">1</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ الميلاد</span>
-                                    <span class="black">5/9/987</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الوظيفية </span>
-                                    <span class="black">موظف</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> المرتب</span>
-                                    <span class="black">المرتب</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوظيفة </span>
-                                    <span class="black">الوظيفة</span>
-                                </div>
-                                <!-- End Form Group -->
-                            </div>
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">رقم الهوية</span>
-                                    <span class="black">877777811222</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">صورة الهوية</span>
-                                    <span class="black">1</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المؤهل</span>
-                                    <span class="black">بكالريوس</span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الصحية</span>
-                                    <span class="black">مريض </span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">نوع المرض </span>
-                                    <span class="black">قلب </span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوضع الإجتماعي </span>
-                                    <span class="black">متزوج </span>
-                                </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ </span>
-                                    <span class="black">8/788 </span>
-                                </div>
-                                <!-- End Form Group -->
-                            </div>
+                        <div class="container  w-25  p-2 border-success border-bottom">
+                            <h2 class=" m-auto  text-primary text-start mb-20 text-center">بيانات المبنى</h2>
                         </div>
-                        <div class="row">
-                            <button class="btn sw-btn-next" type="button">تعديل</button>
+                        <div class="row m-5">
+                                <!-- Unit -->
+                                <div class="review-list mb-20 col-4">
+                                    <span class="font-14 bold c4 ml-4"> الوحده</span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$Needs->unit->name}}</span>
+                                </div>
+                                <!-- End Unit -->
+
+                                <!-- Tarmem-type -->
+                                <div class="review-list mb-20 col-4">
+                                    <span class="font-14 bold c4 ml-4"> الاحتياج اللازم من جمعية ترميم </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$Needs->trmem_type}}</span>
+                                </div>
+                                <!-- End Tarmem-type -->
+                            
+                                <!-- Description -->
+                                <div class="review-list mb-20 col-4">
+                                    <span class="font-14 bold c4 ml-4"> التفاصيل كامله</span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">{{$Needs->description}}</span>
+                                </div>
+                                <!-- End Description -->
+                            
+                        </div>
+                        <div class=" row m-auto  ">
+                            <!-- photos before -->
+                            <div class="  review-list mb-20 ">
+                                <h3 class="font-18 bold c4 ms-4 text-center mb-5 "> صور قبل الترميم</h3>
+                                <span class="font-20 bold c4 ml-4">
+                                    <div class="  row justify-content-center ">
+                                        @foreach ($Needs->photos_before as $key => $media )
+                                        <div class="col-4">
+                                            <img src="{{$media->getUrl()}}" alt="Building Photos before Tarmem" class="w-75">
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    
+                                </span>
+                            </div>
+                            <!-- End photos before -->
                         </div>
                     </div>
-                    <!-- End Review -->
+                    <!-- End Needs -->
+                    @endforeach
                 </div>
             </div>
         </div>
-        
     </div>
 @endsection
 @section('scripts')
