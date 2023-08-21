@@ -16,7 +16,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('register-contractor') }}" method="post">
+                        <form action="{{ route('login-contractor') }}" method="post">
                             @csrf
                             <div class="row">
                                 <!---- Contractor data --->

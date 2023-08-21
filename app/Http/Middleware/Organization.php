@@ -18,15 +18,16 @@ class Organization
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->user_type == 'contractor') 
+        if (Auth::user()->user_type == 'organization') 
+        {
+            return $next($request);
+            
+        } 
+        elseif (Auth::user()->user_type == 'contractor') 
         {
             return redirect()->route('contractor.dashboard');
         } 
-        elseif (Auth::user()->user_type == 'organization') 
-        {
-            return $next($request);
-        } 
-        elseif (Auth::user()->user_type == 'suppoter') 
+        elseif (Auth::user()->user_type == 'supporter') 
         {
             return redirect()->route('supporter.dashboard');
         } 

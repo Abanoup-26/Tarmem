@@ -23,7 +23,7 @@
                     @endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <!-- Form Group -->
+                        <!-- email -->
                         <div class="form-group mb-20">
                             <label for="email" class="mb-2 font-14 bold black">البريد الإلكتروني</label>
                             <input class="theme-input-style" type="email" name="email" value="{{ old('email') }}"
@@ -34,9 +34,9 @@
                             </div>
                             @endif
                         </div>
-                        <!-- End Form Group -->
+                        <!-- End email -->
 
-                        <!-- Form Group -->
+                        <!-- password -->
                         <div class="form-group mb-20">
                             <label for="password" class="mb-2 font-14 bold black">كلمة المرور</label>
                             <input class="theme-input-style" type="password" name="password" placeholder="كلمة المرور"
@@ -47,7 +47,7 @@
                             </div>
                             @endif
                         </div>
-                        <!-- End Form Group -->
+                        <!-- End password -->
                         <div class="d-flex justify-content-between mb-20">
                             <div class="d-flex align-items-center">
                                 <!-- Custom Checkbox -->
@@ -68,7 +68,7 @@
                             <span class="font-12 d-block m-2"><a href="{{route('register-contractor')}}" class="bold">تسجيل
                                     مقاول جديد</a>
                             </span>
-                            <span class="font-12 d-block m-2"><a href="{{route('register')}}" class="bold">تسجيل
+                            <span class="font-12 d-block m-2"><a href="{{route('register-supporter')}}" class="bold">تسجيل
                                     مانح جديد</a>
                             </span>
                             

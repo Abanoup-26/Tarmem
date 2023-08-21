@@ -42,7 +42,7 @@ class User extends Authenticatable implements HasMedia
 
     public const USER_TYPE_SELECT = [
         'staff'        => 'Staff',
-        'suppoter'     => 'Suppoter',
+        'supporter'     => 'Supporter',
         'organization' => 'Organization',
         'contractor'   => 'Contractor',
     ];

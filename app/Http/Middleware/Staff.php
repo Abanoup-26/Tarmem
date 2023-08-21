@@ -17,21 +17,21 @@ class Staff
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->user_type == 'contractor')
+        if(Auth::user()->user_type == 'staff')
         {
-            return redirect()->route('contractor.dashboard');
+            return $next($request);
         }
         elseif(Auth::user()->user_type == 'organization')
         {
             return redirect()->route('organization.dashboard');
         }
-        elseif(Auth::user()->user_type == 'suppoter')
+        elseif(Auth::user()->user_type == 'supporter')
         {
             return redirect()->route('supporter.dashboard');
         }
-        elseif(Auth::user()->user_type == 'staff')
+        elseif(Auth::user()->user_type == 'contractor')
         {
-            return $next($request);
+            return redirect()->route('contractor.dashboard');
         }
         else
         {

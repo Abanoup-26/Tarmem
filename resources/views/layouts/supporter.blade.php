@@ -1,5 +1,7 @@
+{{ auth()->user()->name }}
+{{ auth()->user()->email }}
 <!DOCTYPE html>
-<html lang="{{str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <!-- Page Title -->
@@ -13,19 +15,19 @@
     <meta name="keywords" content="" />
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{asset('frontend/img/favicon.png')}}" />
+    <link rel="shortcut icon" href="{{ asset('frontend/img/favicon.png') }}" />
 
     <!-- Web Fonts -->
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet" />
 
     <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
-    <link rel="stylesheet" href="{{asset('frontend/bootstrap/css/bootstrap.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('frontend/fonts/icofont/icofont.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('frontend/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('frontend/fonts/icofont/icofont.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.css') }}" />
     <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
 
     <!-- ======= MAIN STYLES ======= -->
-    <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}" />
+    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}" />
     <!-- ======= END MAIN STYLES ======= -->
     @yield('styles')
 </head>
@@ -41,8 +43,10 @@
         <header class="header white-bg fixed-top d-flex align-content-center flex-wrap">
             <!-- Logo -->
             <div class="logo">
-                <a href="{{route('contractor.dashboard')}}" class="default-logo"><img src="{{asset('frontend/img/logo.png')}}" alt="" /></a>
-                <a href="{{route('contractor.dashboard')}}" class="mobile-logo"><img src="{{asset('frontend/img/mobile-logo.png')}}" alt="" /></a>
+                <a href="{{ route('contractor.dashboard') }}" class="default-logo"><img
+                        src="{{ asset('frontend/img/logo.png') }}" alt="" /></a>
+                <a href="{{ route('contractor.dashboard') }}" class="mobile-logo"><img
+                        src="{{ asset('frontend/img/mobile-logo.png') }}" alt="" /></a>
             </div>
             <!-- End Logo -->
 
@@ -65,14 +69,15 @@
                                         <div class="user-profile d-xl-flex align-items-center d-none">
                                             <!-- User Avatar -->
                                             <div class="user-avatar">
-                                                <img src="{{asset('frontend/img/avatar/user.png')}}" alt="a" />
+                                                <img src="{{ asset('frontend/img/avatar/user.png') }}"
+                                                    alt="a" />
                                             </div>
                                             <!-- End User Avatar -->
 
                                             <!-- User Info -->
                                             <div class="user-info">
-                                                <h4 class="user-name">Mohamed badeeb</h4>
-                                                <p class="user-email">Mohamed_badeeb@gmail.com</p>
+                                                <h4 class="user-name">{{ auth()->user()->name }}</h4>
+                                                <p class="user-email">{{ auth()->user()->name }}</p>
                                             </div>
                                             <!-- End User Info -->
                                         </div>
@@ -81,7 +86,9 @@
                                         <a href="#">الملف الشخصي</a>
 
                                         <a href="#">الإعدادات</a>
-                                        <a href="#">تسجيل الخروج</a>
+                                        <a href="#"
+                                            onclick="event.preventDefault(); document.getElementById('logoutform').submit();">تسجيل
+                                            الخروج</a>
                                     </div>
                                 </div>
                                 <!-- End Main Header User -->
@@ -90,7 +97,7 @@
                                 <div class="main-header-menu d-block d-lg-none">
                                     <div class="header-toogle-menu">
                                         <!-- <i class="icofont-navigation-menu"></i> -->
-                                        <img src="{{asset('frontend/img/menu.png')}}" alt="" />
+                                        <img src="{{ asset('frontend/img/menu.png') }}" alt="" />
                                     </div>
                                 </div>
                                 <!-- End Main Header Menu -->
@@ -105,7 +112,8 @@
                                         <!-- Main Header Print -->
                                         <div class="main-header-print">
                                             <a href="#">
-                                                <img src="{{asset('frontend/img/svg/print-icon.svg')}}" alt="" />
+                                                <img src="{{ asset('frontend/img/svg/print-icon.svg') }}"
+                                                    alt="" />
                                             </a>
                                         </div>
                                         <!-- End Main Header Print -->
@@ -132,8 +140,8 @@
                                                         placeholder="Search Here" />
 
                                                     <button type="submit">
-                                                        <img src="{{asset('frontend/img/svg/search-icon.svg')}}" alt=""
-                                                            class="svg" />
+                                                        <img src="{{ asset('frontend/img/svg/search-icon.svg') }}"
+                                                            alt="" class="svg" />
                                                     </button>
                                                 </div>
                                             </form>
@@ -146,9 +154,10 @@
                                         <div class="main-header-notification">
                                             <a href="#" class="header-icon notification-icon"
                                                 data-toggle="dropdown">
-                                                <span class="count" data-bg-img="{{asset('frontend/img/count-bg.png')}}">22</span>
-                                                <img src="{{asset('frontend/img/svg/notification-icon.svg')}}" alt=""
-                                                    class="svg" />
+                                                <span class="count"
+                                                    data-bg-img="{{ asset('frontend/img/count-bg.png') }}">22</span>
+                                                <img src="{{ asset('frontend/img/svg/notification-icon.svg') }}"
+                                                    alt="" class="svg" />
                                             </a>
                                             <div class="dropdown-menu style--two">
                                                 <!-- Dropdown Header -->
@@ -252,14 +261,14 @@
                     <!-- Nav -->
                     <ul class="nav">
                         <li class="active">
-                            <a href="{{route('contractor.dashboard')}}">
+                            <a href="{{ route('supporter.dashboard') }}">
                                 <i class="icofont-pie-chart"></i>
                                 <span class="link-title">الرئيسية</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="{{route('contractor.requests')}}">
+                            <a href="{{ route('supporter.requests') }}">
                                 <i class="icofont-files-stack"></i>
                                 <span class="link-title">الطلبات</span>
                             </a>
@@ -284,14 +293,17 @@
     </div>
     <!-- End wrapper -->
 
+    <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
-    <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
-    <script src="{{asset('frontend/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
-    <script src="{{asset('frontend/js/script.js')}}"></script>
+    <script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('frontend/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/script.js') }}"></script>
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
 
-   @yield('scripts')
+    @yield('scripts')
 </body>
 
 </html>

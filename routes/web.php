@@ -2,6 +2,7 @@
 
 use \App\Http\Controllers\Auth\ContractorRegisterController;
 use \App\Http\Controllers\Auth\RegisterController;
+use \App\Http\Controllers\Auth\SupporterRegisterController;
 
 Route::redirect('/', 'login');
 Route::get('/home', function () {
@@ -15,7 +16,7 @@ Route::get('/home', function () {
 Auth::routes();
 // Users Registration
 Route::get('register-contractor', [ContractorRegisterController::class, 'showRegistrationForm'])->name('register-contractor');
-Route::post('register-contractor', [ContractorRegisterController::class, 'register']);
+Route::post('login-contractor', [ContractorRegisterController::class, 'register'])->name('login-contractor');
 Route::post('contractors/media', [ContractorRegisterController::class, 'storeMedia'])->name('contractors.storeMedia');
 Route::post('contractors/ckmedia', [ContractorRegisterController::class, 'storeCKEditorImages'])->name('contractors.storeCKEditorImages');
 
@@ -23,6 +24,10 @@ Route::post('contractors/ckmedia', [ContractorRegisterController::class, 'storeC
 Route::post('organizations/media', [RegisterController::class, 'storeMedia'])->name('organizations.storeMedia');
 Route::post('organizations/ckmedia', [RegisterController::class, 'storeCKEditorImages'])->name('organizations.storeCKEditorImages');
 Route::post('organizations/users/media', [RegisterController::class, 'storeMedia'])->name('organizations.users.storeMedia');
+
+// Supporter
+Route::get('register-supporter', [SupporterRegisterController::class ,'showRegistrationForm'])->name('register-supporter');
+Route::post('login-supporter', [SupporterRegisterController::class,'register'])->name('login-supporter');
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'staff']], function () {

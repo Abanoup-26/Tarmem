@@ -26,9 +26,9 @@ class Contractor
         {
             return redirect()->route('organization.dashboard');
         } 
-        elseif ( Auth::user()->user_type == 'suppoter') 
+        elseif ( Auth::user()->user_type == 'supporter') 
         {
-            return redirect()->route('suppoter.dashboard');
+            return redirect()->route('supporter.dashboard');
         } 
         elseif ( Auth::user()->user_type == 'staff') 
         {
