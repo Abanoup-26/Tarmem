@@ -12,51 +12,51 @@
                 <div class="card mb-30">
                     <div class="table-responsive">
                         <!-- Invoice List Table -->
-                        <table class=" table table-striped border text-nowrap dh-table">
+                        <table class="table table-striped table-bordered border-primary  dh-table">
                             <thead class="text_color-bg text-white">
                                 <tr>
                                     <th>أسم المستفيد</th>
-                                    <th> الحالة الوظيفية</th>
-                                    <th class="text-center">الإحتياجات </th>
+                                    <th>الحالة الوظيفية</th>
+                                    <th class="text-center">الإحتياجات</th>
                                     <th>المرحلة</th>
-                                    <th>المبنى </th>
+                                    <th>المبنى</th>
                                     <th>عدد أفراد الأسرة</th>
-                                    <th> التفاصيل</th>
+                                    <th>التفاصيل</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($beneficiaries as $beneficiary)
                                     <tr>
                                         <td>{{ $beneficiary->name }}</td>
-                                        <td>{{ $beneficiary->job_status }} </td>
-                                        <td>
-                                            <table class="table table-striped border">
-                                                <thead class="text-center">
-                                                    @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $item)
-                                                        <tr class="text-center table-success" >
-                                                            <td>{{ $item->unit->name }} | {{ $item->trmem_type }} | <span class="">{{ $item->description }}</span></td>
-                                                        </tr>
-                                                    @endforeach
-                                                </thead>
-                                            </table>
+                                        <td>{{ $beneficiary->job_status }}</td>
+                                        <td class="border border-3 table-success">
+                                            <div class="row" dir="ltr">
+                                                @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $item)
+                                                <div class="col-6"><span class="bold"><span class="bold">Description|</span>{{ $item->description }}</span></div>
+                                                    <div class="col-3"><span class="bold">Unit|</span>{{ $item->unit->name }}</div>
+                                                    <div class="col-3"><span class="bold">Tarmem|</span>{{ $item->trmem_type }}</div>
+                                                @endforeach
+                                            </div>
                                         </td>
-                                        <td>{{$beneficiary->building->stages}}</td>
-                                        <td>{{$beneficiary->building->id}}</td>
-                                        <td>{{$beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id',$beneficiary->id)->count() + 1 }}</td>
+                                        <td>{{ $beneficiary->building->stages }}</td>
+                                        <td>{{ $beneficiary->building->id }}</td>
+                                        <td>{{ $beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id', $beneficiary->id)->count() + 1 }}
+                                        </td>
                                         <td>
-                                            <div class="container">
-                                                <a   class="btn" href="{{ route('organization.beneficiary.edit' ,$beneficiary->id) }}" class="details-btn">تعديل
-                                                </a>
-                                                <a class="btn" href="{{ route('organization.beneficiary.show' ,$beneficiary->id) }}" class="details-btn">عرض
-                                                    التفاصيل<i class="icofont-arrow-left"></i></a>
-                                                
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <!-- Equal row sizes -->
+                                                <a href="{{ route('organization.beneficiary.edit', $beneficiary->id) }}"
+                                                    style="display: inline-block; padding: 5px 10px; background-color: #dc3545; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">تعديل</a>
+                                                <a href="{{ route('organization.beneficiary.show', $beneficiary->id) }}"
+                                                    style="display: inline-block; padding: 5px 10px; background-color: #3B9B89; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">عرض
+                                                    التفاصيل <i class="icofont-arrow-left ml-1"></i></a>
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
+
                         <!-- End Invoice List Table -->
                     </div>
                 </div>

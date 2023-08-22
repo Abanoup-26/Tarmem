@@ -10,6 +10,7 @@ Route::group(['prefix' => 'organization','as' => 'organization.', 'namespace' =>
         Route::get('beneficiaries/create', 'BeneficiaryController@create')->name('beneficiary.create');
         Route::get('beneficiaries/edit/{id}', 'BeneficiaryController@edit')->name('beneficiary.edit');
         Route::post('beneficiaries/update/{id}', 'BeneficiaryController@update')->name('beneficiary.update');
+
         Route::post('beneficiaries/media', 'BeneficiaryController@storeMedia')->name('beneficiaries.storeMedia');
         Route::post('beneficiaries/ckmedia', 'BeneficiaryController@storeCKEditorImages')->name('beneficiaries.storeCKEditorImages');
         Route::post('beneficiary-needs/media', 'BeneficiaryController@storeMedia')->name('beneficiary-needs.storeMedia');
@@ -18,9 +19,11 @@ Route::group(['prefix' => 'organization','as' => 'organization.', 'namespace' =>
         Route::post('beneficiary-families/ckmedia', 'BeneficiaryController@storeCKEditorImages3')->name('beneficiary-families.storeCKEditorImages');
         // building
         Route::get('building', 'BuildingController@index')->name('building.index');
-        Route::get('add-building', 'BuildingController@create')->name('building.create');
         Route::get('show-building/{id}', 'BuildingController@show')->name('building.show');
         Route::post('store-building' , 'BuildingController@store')->name('building.store');
+        Route::get('add-building', 'BuildingController@create')->name('building.create');
+        Route::get('edit-building/{id}', 'BuildingController@edit')->name('building.edit');
+        Route::post('update-building/{id}', 'BuildingController@update')->name('building.update');
         Route::post('buildings/media', 'BuildingController@storeMedia')->name('buildings.storeMedia');
         Route::post('buildings/ckmedia', 'BuildingController@storeCKEditorImages')->name('buildings.storeCKEditorImages');
         Route::get('buildings/send/{id}', 'BuildingController@send')->name('building.send');

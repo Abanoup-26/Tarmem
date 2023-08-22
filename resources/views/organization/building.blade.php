@@ -24,23 +24,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ( $buildings as $building )
+                                @foreach ($buildings as $building)
                                     <tr>
-                                        <td>{{$building->building_number}}</td>
-                                        <td>{{$building->building_type}}</td>
-                                        <td>{{$building->buildingBeneficiaries->count()}}</td>
-                                        <td>{{$building->stages}}</td>
+                                        <td>{{ $building->building_number }}</td>
+                                        <td>{{ $building->building_type }}</td>
+                                        <td>{{ $building->buildingBeneficiaries->count() }}</td>
+                                        <td>{{ $building->stages }}</td>
                                         @if ($building->management_statuses != 'on_review')
-                                            <td><a href="{{route('organization.building.send' , $building->id)}}" class="btn long">إرسال للإدارة</a></td>  
+                                            <td><a href="{{ route('organization.building.send', $building->id) }}"
+                                                    class="btn long">إرسال للإدارة</a></td>
                                         @else
-                                            <td><a href="{{route('organization.building.show' , $building->id)}}" class="btn long">متابعة الحالة مع الاداره </a></td>  
-
+                                            <td><a href="{{ route('organization.building.show', $building->id) }}"
+                                                    class="btn long">متابعة الحالة مع الاداره </a></td>
                                         @endif
-                                        <td><a href="{{ route('organization.building.show' , $building->id) }}" class="details-btn">عرض
-                                                التفاصيل<i class="icofont-arrow-left"></i></a></td>
+                                        <td>
+                                            <div class="container">
+                                                <a href="{{ route('organization.building.edit', $building->id) }}"
+                                                    style="display: inline-block; padding: 5px 10px; background-color: #dc3545; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">
+                                                    تعديل
+                                                </a>
+                                                <a href="{{ route('organization.building.show', $building->id) }}"
+                                                    style="display: inline-block; padding: 5px 10px; background-color: #3B9B89; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">عرض
+                                                    التفاصيل<i class="icofont-arrow-left"></i></a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
-                                
+
                             </tbody>
                         </table>
                         <!-- End Invoice List Table -->

@@ -42,12 +42,6 @@
                                     <span
                                         class="font-20  text-primary text-start bold c4 ml-4">{{ $building->apartments_count }}</span>
                                 </div>
-                                <!-- birth_data -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ تاسيس المبني</span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->birth_data }}</span>
-                                </div>
                             </div>
                             <div class="col-lg-4">
                                 <!-- latitude /longtude -->
@@ -55,13 +49,6 @@
                                     <span class="font-14 bold c4 ml-4"> العنوان </span>
                                     <span
                                         class="font-20  text-primary text-start bold c4 ml-4">{{ $building->latitude . '-' . $building->longtude }}</span>
-                                </div>
-                                <!-- building_photos -->
-                                <div class="review-list mb-20 row">
-                                    <span class="font-14 bold c4 ml-4"> صور المبني قبل الترميم </span>
-                                    @foreach ($building->building_photos as $photo)
-                                        <img src="{{ $photo->getUrl('preview') }}" width="150px" height="150px">
-                                    @endforeach
                                 </div>
                                 <!-- management_statuses -->
                                 <div class="review-list mb-20">
@@ -77,47 +64,21 @@
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <!-- Unit -->
+                                <!-- birth_data -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوحدة</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">
-                                        @foreach ($building->buildingBeneficiaries as $beneficiary)
-                                            @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $Need)
-                                                {{ $Need->unit->name }}
-                                            @endforeach
-                                        @endforeach
-                                    </span>
+                                    <span class="font-14 bold c4 ml-4">تاريخ تاسيس المبني</span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->birth_data }}</span>
                                 </div>
-                                <!-- End Unit -->
-                                <!-- Tarmem_type -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الاحتياج</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">
-                                        @foreach ($building->buildingBeneficiaries as $beneficiary)
-                                            @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $Need)
-                                                {{ $Need->trmem_type }}
-                                            @endforeach
-                                        @endforeach
-                                    </span>
+                                <!-- building_photos -->
+                                <div class="review-list mb-20 row">
+                                    <span class="font-14 bold c4 ml-4"> صور المبني قبل الترميم </span>
+                                    @foreach ($building->building_photos as $photo)
+                                        <img src="{{ $photo->getUrl('preview') }}" width="150px" height="150px">
+                                    @endforeach
                                 </div>
-                                <!-- End Tarmem_type -->
-                                <!-- description -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الاحتياج</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">
-                                        @foreach ($building->buildingBeneficiaries as $beneficiary)
-                                            @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $Need)
-                                                {{ $Need->description }}
-                                            @endforeach
-                                        @endforeach
-                                    </span>
-                                </div>
-                                <!-- End description -->
-                            </div>
 
-                        </div>
-                        <div class="row justify-content-center">
-                            <button class="btn sw-btn-next col-3" type="button">تعديل</button>
+                            </div>
                         </div>
                     </div>
                     <!-- End Building data-->
@@ -154,8 +115,14 @@
                                         <td>{{ $beneficiary->name }}</td>
                                         <td>{{ $beneficiary->birth_date }}</td>
                                         <td>{{ $beneficiary->identity_number }}</td>
-                                        <td><img src="{{ $beneficiary->identity_photo[0]->getUrl('preview') }}"
-                                                alt=""></td>
+                                        <td>
+                                            <div class="container">
+                                                @foreach ($beneficiary->identity_photo as $key => $media)
+                                                    <img src="{{ $media->getUrl('thumb') }}" alt="identity photos ">
+                                                @endforeach
+                                            </div>
+
+                                        </td>
                                         <td>{{ $beneficiary->qualifications }}</td>
                                         <td>{{ $beneficiary->job_status }}</td>
                                         <td>{{ $beneficiary->job_title }}</td>
@@ -168,9 +135,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="row justify-content-center">
-                            <button class="btn sw-btn-next col-3" type="button">تعديل</button>
-                        </div>
                     </div>
                     <!-- Beneificary data-->
                 </div>
@@ -217,14 +181,9 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="row justify-content-center">
-                            <button class="btn sw-btn-next col-3" type="button">تعديل</button>
-                        </div>
                     </div>
                 </div>
-
             </div>
-
             <!------End Family info Section ------>
         </div>
     </div>
