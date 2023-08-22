@@ -26,8 +26,7 @@ class BuildingController extends Controller
     }
     public function show(Request $request)
     {
-        $building = Building::findOrFail($request->id);
-        $building->load( 'buildingBeneficiaries.illness_type','buildingBeneficiaries.beneficiaryBeneficiaryFamilies.illness_type','buildingBeneficiaries.beneficiaryBeneficiaryFamilies.familyrelation');
+        $building = Building::with('buildingBeneficiaries.beneficiaryBeneficiaryNeeds.unit','buildingBeneficiaries.illness_type','buildingBeneficiaries.beneficiaryBeneficiaryFamilies.illness_type' ,'buildingBeneficiaries.beneficiaryBeneficiaryFamilies.familyrelation')->findOrFail($request->id);
         return view('organization.building-show',compact('building'));
     }
 

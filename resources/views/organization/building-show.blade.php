@@ -17,7 +17,7 @@
                             <h4 class=" m-auto font-25  text-primary text-start mb-20 text-center">بيانات المبنى</h4>
                         </div>
                         <div class="row mt-4">
-                            <div class="col-lg-6  ">
+                            <div class="col-lg-4  ">
                                 <!-- building_number -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">رقم المبني </span>
@@ -48,6 +48,8 @@
                                     <span
                                         class="font-20  text-primary text-start bold c4 ml-4">{{ $building->birth_data }}</span>
                                 </div>
+                            </div>
+                            <div class="col-lg-4">
                                 <!-- latitude /longtude -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> العنوان </span>
@@ -74,20 +76,45 @@
                                         class="font-20  text-primary text-start bold c4 ml-4">{{ $building->stages }}</span>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
+                            <div class="col-lg-4">
+                                <!-- Unit -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">الوحدة</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">الوحدة </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">
+                                        @foreach ($building->buildingBeneficiaries as $beneficiary)
+                                            @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $Need)
+                                                {{ $Need->unit->name }}
+                                            @endforeach
+                                        @endforeach
+                                    </span>
                                 </div>
-                                <!-- End Form Group -->
-                                <!-- Form Group -->
+                                <!-- End Unit -->
+                                <!-- Tarmem_type -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">الاحتياج</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">الاحتياج</span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">
+                                        @foreach ($building->buildingBeneficiaries as $beneficiary)
+                                            @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $Need)
+                                                {{ $Need->trmem_type }}
+                                            @endforeach
+                                        @endforeach
+                                    </span>
                                 </div>
-                                <!-- End Form Group -->
+                                <!-- End Tarmem_type -->
+                                <!-- description -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">الاحتياج</span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">
+                                        @foreach ($building->buildingBeneficiaries as $beneficiary)
+                                            @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $Need)
+                                                {{ $Need->description }}
+                                            @endforeach
+                                        @endforeach
+                                    </span>
+                                </div>
+                                <!-- End description -->
                             </div>
+
                         </div>
                         <div class="row justify-content-center">
                             <button class="btn sw-btn-next col-3" type="button">تعديل</button>
@@ -107,38 +134,39 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>{{trans('cruds.beneficiary.fields.name')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.birth_date')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.identity_number')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.identity_photo')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.qualifications')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.job_status')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.job_title')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.job_salary')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.marital_status')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.address')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.illness_status')}}</th>
-                                    <th>{{trans('cruds.beneficiary.fields.illness_type')}}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.name') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.birth_date') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.identity_number') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.identity_photo') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.qualifications') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.job_status') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.job_title') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.job_salary') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.marital_status') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.address') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.illness_status') }}</th>
+                                    <th>{{ trans('cruds.beneficiary.fields.illness_type') }}</th>
                                 </tr>
                             </thead>
-                                <tbody>
-                                    @foreach ($building->buildingBeneficiaries->where('building_id',$building->id) as $beneficiary )
-                                        <tr>
-                                            <td>{{$beneficiary->name}}</td>
-                                            <td>{{$beneficiary->birth_date}}</td>
-                                            <td>{{$beneficiary->identity_number}}</td>
-                                            <td><img src="{{$beneficiary->identity_photo[0]->getUrl('preview')}}" alt=""></td>
-                                            <td>{{$beneficiary->qualifications}}</td>
-                                            <td>{{$beneficiary->job_status}}</td>
-                                            <td>{{$beneficiary->job_title}}</td>
-                                            <td>{{$beneficiary->job_salary}}</td>
-                                            <td>{{$beneficiary->marital_status}}</td>
-                                            <td>{{$beneficiary->address}}</td>
-                                            <td>{{$beneficiary->illness_type->name}}</td>
-                                            <td>{{$beneficiary->illness_status}}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                            <tbody>
+                                @foreach ($building->buildingBeneficiaries->where('building_id', $building->id) as $beneficiary)
+                                    <tr>
+                                        <td>{{ $beneficiary->name }}</td>
+                                        <td>{{ $beneficiary->birth_date }}</td>
+                                        <td>{{ $beneficiary->identity_number }}</td>
+                                        <td><img src="{{ $beneficiary->identity_photo[0]->getUrl('preview') }}"
+                                                alt=""></td>
+                                        <td>{{ $beneficiary->qualifications }}</td>
+                                        <td>{{ $beneficiary->job_status }}</td>
+                                        <td>{{ $beneficiary->job_title }}</td>
+                                        <td>{{ $beneficiary->job_salary }}</td>
+                                        <td>{{ $beneficiary->marital_status }}</td>
+                                        <td>{{ $beneficiary->address }}</td>
+                                        <td>{{ $beneficiary->illness_type->name }}</td>
+                                        <td>{{ $beneficiary->illness_status }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                         <div class="row justify-content-center">
                             <button class="btn sw-btn-next col-3" type="button">تعديل</button>
@@ -158,137 +186,37 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.name')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.birth_date')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.identity_number')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.qualifications')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.marital_status')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.illness_status')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.illness_type')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.job_status')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.job_salary')}}</th>
-                                    <th>{{trans('cruds.beneficiaryFamily.fields.familyrelation')}}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.name') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.birth_date') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.identity_number') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.qualifications') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.marital_status') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.illness_status') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.illness_type') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.job_status') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.job_salary') }}</th>
+                                    <th>{{ trans('cruds.beneficiaryFamily.fields.familyrelation') }}</th>
                                 </tr>
                             </thead>
-                                <tbody>
-                                    @foreach ($building->buildingBeneficiaries->where('building_id',$building->id) as $beneficiary )
-                                        @foreach ( $beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id',$beneficiary->id) as $person )
-                                            <tr>
-                                                <td>{{$person->name}}</td>
-                                                <td>{{$person->birth_date}}</td>
-                                                <td>{{$person->identity_number}}</td>
-                                                <td>{{$person->qualifications}}</td>
-                                                <td>{{$person->marital_status}}</td>
-                                                <td>{{$person->illness_status}}</td>
-                                                <td>{{$person->illness_type->name}}</td>
-                                                <td>{{$person->job_status}}</td>
-                                                <td>{{$person->job_salary}}</td>
-                                                <td>{{$person->familyrelation->name}}</td>
-                                            </tr>
-                                        @endforeach
+                            <tbody>
+                                @foreach ($building->buildingBeneficiaries->where('building_id', $building->id) as $beneficiary)
+                                    @foreach ($beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id', $beneficiary->id) as $person)
+                                        <tr>
+                                            <td>{{ $person->name }}</td>
+                                            <td>{{ $person->birth_date }}</td>
+                                            <td>{{ $person->identity_number }}</td>
+                                            <td>{{ $person->qualifications }}</td>
+                                            <td>{{ $person->marital_status }}</td>
+                                            <td>{{ $person->illness_status }}</td>
+                                            <td>{{ $person->illness_type->name }}</td>
+                                            <td>{{ $person->job_status }}</td>
+                                            <td>{{ $person->job_salary }}</td>
+                                            <td>{{ $person->familyrelation->name }}</td>
+                                        </tr>
                                     @endforeach
-                                </tbody>
+                                @endforeach
+                            </tbody>
                         </table>
-                        {{-- <div class="row mt-4">
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الاسم</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">محمد محمود</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المبنى</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">1</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ الميلاد</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">5/9/987</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الوظيفية </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">موظف</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> المرتب</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">المرتب</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوظيفة </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">الوظيفة</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                            </div>
-
-                            <div class="col-lg-6">
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">رقم الهوية</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">877777811222</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">صورة الهوية</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">1</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المؤهل</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">بكالريوس</span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الصحية</span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">مريض </span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">نوع المرض </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">قلب </span>
-                                </div>
-                                <!-- End Form Group -->
-
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الوضع الإجتماعي </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">متزوج </span>
-                                </div>
-                                <!-- End Form Group -->
-
-                                <!-- Form Group -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ </span>
-                                    <span class="font-20  text-primary text-start bold c4 ml-4">8/788 </span>
-                                </div>
-                                <!-- End Form Group -->
-
-
-                            </div>
-                        </div> --}}
                         <div class="row justify-content-center">
                             <button class="btn sw-btn-next col-3" type="button">تعديل</button>
                         </div>
