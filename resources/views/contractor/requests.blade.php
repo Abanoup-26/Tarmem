@@ -25,42 +25,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($buildings as $building )
                                 <tr>
-                                    <td>1</td>
-                                    <td>نوع المبنى</td>
-                                    <td>5</td>
-                                    <td>الحالة</td>
-                                    <td> 28/8/2023</td>
-                                    <td><a href="{{ route('contractor.building.show') }}" class="details-btn">عرض التفاصيل<i
-                                                class="icofont-arrow-left"></i></a></td>
+                                    <td>{{$building->building_number}}</td>
+                                    <td> {{$building->building_type}}</td>
+                                    <td>{{$building->apartments_count}}</td>
+                                    <td>{{$building->management_statuses}}</td>
+                                    <td> {{ $building->buildingBuildingContractors->first()->visit_date }}</td>
+                                    <td>
+                                        <div class="container">
+                                            {{-- <a href=""
+                                                style="display: inline-block; padding: 5px 10px; background-color: #dc3545; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">
+                                                تعديل
+                                            </a> --}}
+                                            <a href="{{route('contractor.building.show',[$building->id])}}"
+                                                style="display: inline-block; padding: 5px 10px; background-color: #3B9B89; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">عرض
+                                                التفاصيل<i class="icofont-arrow-left"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>نوع المبنى</td>
-                                    <td>5</td>
-                                    <td>الحالة</td>
-                                    <td> 28/8/2023</td>
-                                    <td><a href="building_show.html" class="details-btn">عرض التفاصيل<i
-                                                class="icofont-arrow-left"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>نوع المبنى</td>
-                                    <td>5</td>
-                                    <td>الحالة</td>
-                                    <td> 28/8/2023</td>
-                                    <td><a href="building_show.html" class="details-btn">عرض التفاصيل<i
-                                                class="icofont-arrow-left"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>نوع المبنى</td>
-                                    <td>5</td>
-                                    <td>الحالة</td>
-                                    <td> 28/8/2023</td>
-                                    <td><a href="building_show.html" class="details-btn">عرض التفاصيل<i
-                                                class="icofont-arrow-left"></i></a></td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                         <!-- End Invoice List Table -->

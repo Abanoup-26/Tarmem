@@ -5,7 +5,6 @@ Route::group(['prefix' => 'contractor','as' => 'contractor.', 'namespace' => 'Co
         Route::get('/', 'HomeController@index')->name('dashboard');
         // requests
         Route::get('request', 'RequestController@index')->name('requests');
-        // building
-        Route::get('building/show', 'BuildingController@show')->name('building.show');
+        Route::get('building/show/{id}', 'RequestController@show')->name('building.show');
         
 });

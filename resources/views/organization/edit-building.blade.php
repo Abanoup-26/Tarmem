@@ -145,7 +145,7 @@
                             <!-- Button Group -->
                             <div class="button-group  row justify-content-center  pt-1">
                                 <button type="submit" class="btn long col-4">إضافة</button>
-                                <button type="reset" class="link-btn bg-transparent mr-3 soft-pink">إلغاء</button>
+                                <a href="{{route('organization.building.index')}}" class="link-btn bg-transparent mr-3 soft-pink">إلغاء</a>
                             </div>
                             <!-- End Button Group -->
                         </form>

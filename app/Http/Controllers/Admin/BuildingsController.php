@@ -80,8 +80,17 @@ class BuildingsController extends Controller
     public function show(Building $building )
     {
         abort_if(Gate::denies('building_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $contractors = Contractor::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), ''); 
-
+        // get only the approved contractors 
+        $contractors = Contractor::with(['user' => function ($query) {
+            $query->where('approved', 1)->whereNotNull('name');
+        }])
+        ->whereHas('user', function ($query) {
+            $query->where('approved', 1)->whereNotNull('name');
+        })
+        ->get()
+        ->pluck('user.name', 'id')
+        ->prepend(trans('global.pleaseSelect'), '');
+    
         $building->load('buildingBuildingContractors.contractor.user' , 'buildingBuildingContractors.building', 'buildingBeneficiaries.illness_type', 'buildingBuildingSupporters');
         return view('admin.buildings.show', compact('building' ,'contractors'));
     }
