@@ -270,6 +270,17 @@ class BeneficiaryController extends Controller
         return view('organization.beneficiaries_show', compact('beneficiary'));
     }
 
+    public function destroy(Request $request)
+    {
+
+        $beneficiary =  Beneficiary::findOrFail($request->beneficiary_id);
+
+        $beneficiary->delete();
+
+        return redirect()->route('organization.beneficiary.index');
+    }
+
+
     public function storeCKEditorImages(Request $request)
     {
         $model         = new Beneficiary();

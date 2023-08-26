@@ -10,7 +10,7 @@ Route::group(['prefix' => 'organization', 'as' => 'organization.', 'namespace' =
         Route::get('beneficiaries/create', 'BeneficiaryController@create')->name('beneficiary.create');
         Route::get('beneficiaries/edit/{id}', 'BeneficiaryController@edit')->name('beneficiary.edit');
         Route::post('beneficiaries/update/{id}', 'BeneficiaryController@update')->name('beneficiary.update');
-
+        Route::post('beneficiaries/delete/{id}', 'BeneficiaryController@destroy')->name('beneficiary.destroy');
         // beneficiary family 
         Route::post('beneficiary-families/store', 'BeneficiaryFamilyController@store')->name('beneficiary-families.store');
         Route::post('beneficiary-families/media', 'BeneficiaryFamilyController@storeMedia')->name('beneficiary-families.storeMedia');

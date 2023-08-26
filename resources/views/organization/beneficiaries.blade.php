@@ -50,7 +50,11 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <!-- Equal row sizes -->
                                                 <a href="{{ route('organization.beneficiary.edit', $beneficiary->id) }}"
-                                                    style="display: inline-block; padding: 5px 10px; background-color: #dc3545; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">تعديل</a>
+                                                    style="display: inline-block; padding: 5px 10px; background-color: #3535dc; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">تعديل</a>
+                                                <button class="deleteBeneficiary"
+                                                    style="display: inline-block; padding: 5px 10px; background-color: #d51919; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;"
+                                                    data-beneficiary-id={{ $beneficiary->id }}
+                                                    data-delete-url="{{ route('organization.beneficiary.destroy', $beneficiary->id) }}">حذف</button>
                                                 <a href="{{ route('organization.beneficiary.show', $beneficiary->id) }}"
                                                     style="display: inline-block; padding: 5px 10px; background-color: #3B9B89; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">عرض
                                                     التفاصيل <i class="icofont-arrow-left ml-1"></i></a>
@@ -84,6 +88,36 @@
                 previous: 'fas fa-chevron-left',
                 next: 'fas fa-chevron-right'
             }
+        });
+    </script>
+    {{-- delette beneficiary --}}
+    <script>
+        $(document).ready(function() {
+            $(".deleteBeneficiary").click(function() {
+                var beneficiary = $(this).data('beneficiary-id');
+                var deleteUrl = $(this).data('delete-url');
+                var self = this; // Store a reference to the outer 'this'
+
+                if (confirm("Are you sure you want to delete this family member?")) {
+                    $.ajax({
+                        type: "POST",
+                        url: deleteUrl,
+                        data: {
+                            beneficiary_id: beneficiary,
+                            _token: "{{ csrf_token() }}" // Include the CSRF token
+                        },
+                        success: function(response) {
+                            // Handle success response (e.g., remove the table row)
+                            console.log(response);
+                            $(self).closest('tr').remove();
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error response (e.g., show an error message)
+                            console.error(error);
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endsection
