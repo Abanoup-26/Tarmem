@@ -37,7 +37,7 @@ class BeneficiaryController extends Controller
         return view('organization.add-beneficiary', compact('illness_types', 'buildings', 'units', 'familyrelations'));
     }
 
-    public function edit(Request $request )
+    public function edit(Request $request)
     {
         // get the beneficiary 
         $beneficiary = Beneficiary::findOrFail($request->id);
@@ -49,10 +49,10 @@ class BeneficiaryController extends Controller
         $beneficiaries = Beneficiary::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // get the beneficiary related data 
-        $beneficiaryNeed = BeneficiaryNeed::with('unit', 'beneficiary')->where('beneficiary_id',$beneficiary->id)->first();
-        $beneficiaryFamily = BeneficiaryFamily::with('illness_type','familyrelation')->where('beneficiary_id',$beneficiary->id)->first();
-        
-        return view('organization.edit-beneficiary',compact('beneficiary','beneficiaryNeed','beneficiaryFamily','illness_types','buildings','units','familyrelations'));
+        $beneficiaryNeed = BeneficiaryNeed::with('unit', 'beneficiary')->where('beneficiary_id', $beneficiary->id)->first();
+        $beneficiaryFamily = BeneficiaryFamily::with('illness_type', 'familyrelation')->where('beneficiary_id', $beneficiary->id)->first();
+
+        return view('organization.edit-beneficiary', compact('beneficiary', 'beneficiaryNeed', 'beneficiaryFamily', 'illness_types', 'buildings', 'units', 'familyrelations'));
     }
 
     public function store(Request $request)
@@ -150,12 +150,12 @@ class BeneficiaryController extends Controller
     }
 
     public function update(Request $request)
-    {   
-        
+    {
+
         $beneficiary = Beneficiary::findOrFail($request->id);
-        $beneficiaryNeed = BeneficiaryNeed::where('beneficiary_id',$beneficiary->id)->first();
-        $beneficiaryFamily = BeneficiaryFamily::where('beneficiary_id',$beneficiary->id)->first();
-       // validate all data 
+        $beneficiaryNeed = BeneficiaryNeed::where('beneficiary_id', $beneficiary->id)->first();
+        $beneficiaryFamily = BeneficiaryFamily::where('beneficiary_id', $beneficiary->id)->first();
+        // validate all data 
         $validUpdatedData = $request->validate([
             'name' => 'required',
             'birth_date' => 'required',
@@ -201,14 +201,14 @@ class BeneficiaryController extends Controller
         ]);
         if (count($beneficiary->identity_photo) > 0) {
             foreach ($beneficiary->identity_photo as $media) {
-                if (! in_array($media->file_name, $request->input('identity_photo', []))) {
+                if (!in_array($media->file_name, $request->input('identity_photo', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $beneficiary->identity_photo->pluck('file_name')->toArray();
         foreach ($request->input('identity_photo', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $beneficiary->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photo');
             }
         }
@@ -221,14 +221,14 @@ class BeneficiaryController extends Controller
         ]);
         if (count($beneficiaryNeed->photos_before) > 0) {
             foreach ($beneficiaryNeed->photos_before as $media) {
-                if (! in_array($media->file_name, $request->input('photos_before', []))) {
+                if (!in_array($media->file_name, $request->input('photos_before', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $beneficiaryNeed->photos_before->pluck('file_name')->toArray();
         foreach ($request->input('photos_before', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $beneficiaryNeed->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos_before');
             }
         }
@@ -248,14 +248,14 @@ class BeneficiaryController extends Controller
         ]);
         if (count($beneficiaryFamily->identity_photos) > 0) {
             foreach ($beneficiaryFamily->identity_photos as $media) {
-                if (! in_array($media->file_name, $request->input('family_identity_photos', []))) {
+                if (!in_array($media->file_name, $request->input('family_identity_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $beneficiaryFamily->identity_photos->pluck('file_name')->toArray();
         foreach ($request->input('family_identity_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $beneficiaryFamily->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photos');
             }
         }
@@ -266,8 +266,8 @@ class BeneficiaryController extends Controller
     public function show(Request $request)
     {
         $beneficiary = Beneficiary::findOrFail($request->id);
-        $beneficiary->load('beneficiaryBeneficiaryFamilies.familyrelation','beneficiaryBeneficiaryFamilies.illness_type','beneficiaryBeneficiaryNeeds.unit','illness_type','building');
-        return view('organization.beneficiaries_show' ,compact('beneficiary'));
+        $beneficiary->load('beneficiaryBeneficiaryFamilies.familyrelation', 'beneficiaryBeneficiaryFamilies.illness_type', 'beneficiaryBeneficiaryNeeds.unit', 'illness_type', 'building');
+        return view('organization.beneficiaries_show', compact('beneficiary'));
     }
 
     public function storeCKEditorImages(Request $request)

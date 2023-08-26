@@ -18,7 +18,7 @@
                                     <th>أسم المستفيد</th>
                                     <th>الحالة الوظيفية</th>
                                     <th class="text-center">الإحتياجات</th>
-                                    <th>المرحلة</th>
+                                    {{-- <th>المرحلة</th> --}}
                                     <th>المبنى</th>
                                     <th>عدد أفراد الأسرة</th>
                                     <th>التفاصيل</th>
@@ -32,13 +32,17 @@
                                         <td class="border border-3 table-success">
                                             <div class="row" dir="ltr">
                                                 @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $item)
-                                                <div class="col-6"><span class="bold"><span class="bold">Description|</span>{{ $item->description }}</span></div>
-                                                    <div class="col-3"><span class="bold">Unit|</span>{{ $item->unit->name }}</div>
-                                                    <div class="col-3"><span class="bold">Tarmem|</span>{{ $item->trmem_type }}</div>
+                                                    <div class="col-6"><span class="bold"><span
+                                                                class="bold">Description|</span>{{ $item->description }}</span>
+                                                    </div>
+                                                    <div class="col-3"><span
+                                                            class="bold">Unit|</span>{{ $item->unit->name }}</div>
+                                                    <div class="col-3"><span
+                                                            class="bold">Tarmem|</span>{{ $item->trmem_type }}</div>
                                                 @endforeach
                                             </div>
                                         </td>
-                                        <td>{{ $beneficiary->building->stages }}</td>
+                                        {{-- <td>{{ $beneficiary->building->stages }}</td> --}}
                                         <td>{{ $beneficiary->building->id }}</td>
                                         <td>{{ $beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id', $beneficiary->id)->count() + 1 }}
                                         </td>
@@ -70,4 +74,16 @@
     <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
     <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
     <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script>
+        $("#birth_date").datepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'en',
+            icons: {
+                up: 'fas fa-chevron-up',
+                down: 'fas fa-chevron-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right'
+            }
+        });
+    </script>
 @endsection

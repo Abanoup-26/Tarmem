@@ -3,6 +3,7 @@
     <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
     <link rel="stylesheet" href="{{ asset('frontend/plugins/apex/apexcharts.css') }}">
     <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="{{ asset('dashboard_offline/css/dropzone.min.css') }}">
 @endsection
 @section('content')
     <!-- Main Content -->
@@ -177,7 +178,7 @@
                 </div>
             </div>
         </div>
-        <!--- Family  -->
+        <!---  beneficiaryy Family  -->
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card mb30">
@@ -264,7 +265,16 @@
                                     <!-- End familyrelation -->
                                 </div>
                             </div> --}}
+                        {{-- <a class="justify-content-end" href="exampleModal"
+                           >اضافة
+                            فرد لاسرة المستفيد
+                        </a> --}}
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#familyModel"
+                            style="display: inline-block; padding: 5px 10px; margin-bottom:10px; background-color: #3B9B89; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">
+                            اضافة فرد لاسرة المستفيد
+                        </button>
                         <table class="table table-bordered table-striped">
+
                             <thead>
                                 <tr>
                                     <th>{{ trans('cruds.beneficiaryFamily.fields.name') }}</th>
@@ -277,6 +287,7 @@
                                     <th>{{ trans('cruds.beneficiaryFamily.fields.job_status') }}</th>
                                     <th>{{ trans('cruds.beneficiaryFamily.fields.job_salary') }}</th>
                                     <th>{{ trans('cruds.beneficiaryFamily.fields.familyrelation') }}</th>
+                                    <th>&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -292,6 +303,16 @@
                                         <td>{{ $person->job_status }}</td>
                                         <td>{{ $person->job_sallary }}</td>
                                         <td>{{ $person->familyrelation->name }}</td>
+                                        <td>
+                                            <button class="btn btn-danger deleteFamilyMember"
+                                                data-family-member-id="{{ $person->id }}"
+                                                data-beneficiary-id={{ $beneficiary->id }}
+                                                data-delete-url="{{ route('organization.beneficiary-families.destroy', $person->id) }}">Delete</button>
+
+
+                                        </td>
+
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -301,10 +322,104 @@
             </div>
         </div>
     </div>
+
+    @include('organization.familypopup', ['beneficiary_id' => $beneficiary->id])
 @endsection
 @section('scripts')
     <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
     <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
     <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
     <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script>
+        var uploadedIdentityPhotosMap = {}
+        Dropzone.options.identityPhotosDropzone = {
+            url: '{{ route('organization.beneficiary-families.storeMedia') }}',
+            maxFilesize: 4, // MB
+            acceptedFiles: '.jpeg,.jpg,.png,.gif',
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            params: {
+                size: 4,
+                width: 4096,
+                height: 4096
+            },
+            success: function(file, response) {
+                $('form').append('<input type="hidden" name="identity_photos[]" value="' + response.name + '">')
+                uploadedIdentityPhotosMap[file.name] = response.name
+            },
+            removedfile: function(file) {
+                console.log(file)
+                file.previewElement.remove()
+                var name = ''
+                if (typeof file.file_name !== 'undefined') {
+                    name = file.file_name
+                } else {
+                    name = uploadedIdentityPhotosMap[file.name]
+                }
+                $('form').find('input[name="identity_photos[]"][value="' + name + '"]').remove()
+            },
+            init: function() {
+                @if (isset($beneficiaryFamily) && $beneficiaryFamily->identity_photos)
+                    var files = {!! json_encode($beneficiaryFamily->identity_photos) !!}
+                    for (var i in files) {
+                        var file = files[i]
+                        this.options.addedfile.call(this, file)
+                        this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+                        file.previewElement.classList.add('dz-complete')
+                        $('form').append('<input type="hidden" name="identity_photos[]" value="' + file.file_name +
+                            '">')
+                    }
+                @endif
+            },
+            error: function(file, response) {
+                if ($.type(response) === 'string') {
+                    var message = response //dropzone sends it's own error messages in string
+                } else {
+                    var message = response.errors.file
+                }
+                file.previewElement.classList.add('dz-error')
+                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                _results = []
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    node = _ref[_i]
+                    _results.push(node.textContent = message)
+                }
+
+                return _results
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".deleteFamilyMember").click(function() {
+                var familyMemberId = $(this).data('family-member-id');
+                var beneficiary = $(this).data('beneficiary-id');
+                var deleteUrl = $(this).data('delete-url');
+                var self = this; // Store a reference to the outer 'this'
+
+                if (confirm("Are you sure you want to delete this family member?")) {
+                    $.ajax({
+                        type: "POST",
+                        url: deleteUrl,
+                        data: {
+                            member: familyMemberId,
+                            beneficiary_id: beneficiary,
+                            _token: "{{ csrf_token() }}" // Include the CSRF token
+                        },
+                        success: function(response) {
+                            // Handle success response (e.g., remove the table row)
+                            console.log(response);
+                            $(self).closest('tr').remove();
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error response (e.g., show an error message)
+                            console.error(error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

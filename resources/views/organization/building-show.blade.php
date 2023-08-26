@@ -141,7 +141,7 @@
             </div>
             <!------End Beneificary info Section ------>
             <!------Start Family info Section ------>
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <div class="card mb-30">
                     <div class="card-body p-30">
                         <div class="container  w-25  p-2 border-success border-bottom">
@@ -183,7 +183,7 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!------End Family info Section ------>
         </div>
     </div>
