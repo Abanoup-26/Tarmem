@@ -26,7 +26,7 @@ class BeneficiarySeeder extends Seeder
             'address' => '123 Main Street, City',
             'illness_status' => 'safe',
             'illness_type_id' => null, // You might need to adjust this based on your data
-            'building_id' => null, // You might need to adjust this based on your data
+            'building_id' => 1, // You might need to adjust this based on your data
         ]);
         $B1->addMediaFromUrl(asset('frontend/img/user.jpg'))->toMediaCollection('identity_photo');
         $B2 = Beneficiary::create([
@@ -42,7 +42,7 @@ class BeneficiarySeeder extends Seeder
             'address' => '456 Elm Street, Town',
             'illness_status' => 'safe',
             'illness_type_id' => null, // You might need to adjust this based on your data
-            'building_id' => null, // You might need to adjust this based on your data
+            'building_id' => 1, // You might need to adjust this based on your data
         ]);
         $B2->addMediaFromUrl(asset('frontend/img/user.jpg'))->toMediaCollection('identity_photo');
         $B3 = Beneficiary::create([
@@ -58,7 +58,7 @@ class BeneficiarySeeder extends Seeder
             'address' => '789 Oak Avenue, Village',
             'illness_status' => 'endemic',
             'illness_type_id' => null, // You might need to adjust this based on your data
-            'building_id' => null, // You might need to adjust this based on your data
+            'building_id' => 1, // You might need to adjust this based on your data
         ]);
         $B3->addMediaFromUrl(asset('frontend/img/user.jpg'))->toMediaCollection('identity_photo');
     }
