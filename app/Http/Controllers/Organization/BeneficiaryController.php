@@ -266,7 +266,7 @@ class BeneficiaryController extends Controller
     public function show(Request $request)
     {
         $beneficiary = Beneficiary::findOrFail($request->id);
-        $beneficiary->load('beneficiaryBeneficiaryFamilies.familyrelation', 'beneficiaryBeneficiaryFamilies.illness_type', 'beneficiaryBeneficiaryNeeds.unit', 'illness_type', 'building');
+        $beneficiary->load('building','beneficiaryBeneficiaryFamilies.familyrelation', 'beneficiaryBeneficiaryFamilies.illness_type', 'beneficiaryBeneficiaryNeeds.unit', 'illness_type', 'building');
         return view('organization.beneficiaries_show', compact('beneficiary'));
     }
 

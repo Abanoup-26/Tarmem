@@ -13,9 +13,18 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 150%">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="familyModelLabel">Add Family person </h1>
+                <h1 class="modal-title fs-5" id="familyModelLabel">اضافة فرد لاسرة المستفيد </h1>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
+            @if ($errors->count() > 0)
+                <div class="alert alert-danger">
+                    <ul class="list-unstyled">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="container ">
                 <form method="POST" action="{{ route('organization.beneficiary-families.store') }}"
                     enctype="multipart/form-data">
@@ -61,7 +70,7 @@
                     <div class="form-group">
                         <label
                             for="identity_photos">{{ trans('cruds.beneficiaryFamily.fields.identity_photos') }}</label>
-                        <div class="needsclick dropzone style--two {{ $errors->has('identity_photos') ? 'is-invalid' : '' }}"
+                        <div class="needsclick dropzone style--three {{ $errors->has('identity_photos') ? 'is-invalid' : '' }}"
                             id="identity_photos-dropzone">
                         </div>
                         @if ($errors->has('identity_photos'))

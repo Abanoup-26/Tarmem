@@ -16,7 +16,11 @@ Route::group(['prefix' => 'organization', 'as' => 'organization.', 'namespace' =
         Route::post('beneficiary-families/media', 'BeneficiaryFamilyController@storeMedia')->name('beneficiary-families.storeMedia');
         Route::post('beneficiary-families/ckmedia', 'BeneficiaryFamilyController@storeCKEditorImages')->name('beneficiary-families.storeCKEditorImages');
         Route::post('beneficiary-families/{id}', 'BeneficiaryFamilyController@destroy')->name('beneficiary-families.destroy');
-
+        // beneficiary needs 
+        Route::post('beneficiary-needs/store', 'BeneficiaryNeedsController@store')->name('beneficiary-needs.store');
+        Route::post('beneficiary-needs/delete/{id}', 'BeneficiaryNeedsController@destroy')->name('beneficiary-needs.delete');
+        Route::post('beneficiary-needs/media', 'BeneficiaryNeedsController@storeMedia')->name('beneficiary-needs.storeMedia');
+        Route::post('beneficiary-needs/ckmedia', 'BeneficiaryNeedsController@storeCKEditorImages')->name('beneficiary-needs.storeCKEditorImages');
         // beneficiary
         Route::post('beneficiaries/media', 'BeneficiaryController@storeMedia')->name('beneficiaries.storeMedia');
         Route::post('beneficiaries/ckmedia', 'BeneficiaryController@storeCKEditorImages')->name('beneficiaries.storeCKEditorImages');
