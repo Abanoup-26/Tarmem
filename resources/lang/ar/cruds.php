@@ -319,6 +319,8 @@ return [
             'engineering_vist_date_helper'   => ' ',
             'engineering_vist_result'        => 'نتيجة زيارة الهندسة',
             'engineering_vist_result_helper' => ' ',
+            'organization'                   => 'المنظمه التابع لها',
+            'organization_helper'            => ' ',
         ],
     ],
     'beneficiary' => [

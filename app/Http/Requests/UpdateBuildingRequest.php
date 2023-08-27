@@ -37,6 +37,10 @@ class UpdateBuildingRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
+            'organization_id' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

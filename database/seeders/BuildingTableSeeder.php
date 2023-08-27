@@ -8,7 +8,7 @@ use App\Models\Building;
 
 class BuildingTableSeeder extends Seeder
 {
-   /**
+    /**
      * Run the database seeds.
      *
      * @return void
@@ -36,8 +36,8 @@ class BuildingTableSeeder extends Seeder
             ],
             // Add more buildings as needed...
         ];
-            // Add more buildings as needed...
-    // Loop through the buildings array and create records in the database
+        // Add more buildings as needed...
+        // Loop through the buildings array and create records in the database
         foreach ($buildings as $buildingData) {
             Building::create($buildingData);
         }

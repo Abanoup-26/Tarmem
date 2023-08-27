@@ -31,6 +31,9 @@
                             {{ trans('cruds.building.fields.engineering_vist_result') }}
                         </th>
                         <th>
+                            {{ trans('cruds.building.fields.organization') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -87,6 +90,10 @@
                         name: 'engineering_vist_result',
                         sortable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'organization_name',
+                        name: 'organization.name'
                     },
                     {
                         data: 'actions',

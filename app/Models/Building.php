@@ -68,6 +68,7 @@ class Building extends Model implements HasMedia
         'stages',
         'research_vist_date',
         'engineering_vist_date',
+        'organization_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -142,5 +143,9 @@ class Building extends Model implements HasMedia
     public function getEngineeringVistResultAttribute()
     {
         return $this->getMedia('engineering_vist_result')->last();
+    }
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
 }

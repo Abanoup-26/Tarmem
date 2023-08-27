@@ -319,6 +319,8 @@ return [
             'engineering_vist_date_helper'   => ' ',
             'engineering_vist_result'        => 'Engineering Vist Result',
             'engineering_vist_result_helper' => ' ',
+            'organization'                   => 'Organization',
+            'organization_helper'            => ' ',
         ],
     ],
     'beneficiary' => [
