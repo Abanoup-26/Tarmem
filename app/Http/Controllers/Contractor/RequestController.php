@@ -17,19 +17,40 @@ class RequestController extends Controller
         // get the building which is for this contractor
         if ($contractor) {
             $buildings = Building::with(['buildingBuildingContractors' => function ($query) use ($contractor) {
-                $query->where('contractor_id', $contractor->id);
+                $query->where('contractor_id', $contractor->id)->where('stages','!=','pending');
             }])
-            ->where('stages', 'send_to_contractor')
+            ->whereIn('stages', ['send_to_contractor','done','supporting'])
             ->get();
-        }
-        // return $buildings;
+        } 
         return view('contractor.requests' ,compact('buildings'));
     }
 
     public function show(Request $request )
     {
         $building =Building::findOrFail( $request->id );
+        $building->load('buildingBuildingContractors');
         // start her to know what is the  بيانات الوحدات  وتكمل مهمات الcontrctor 
         return view('contractor.building-show',compact('building'));
+    }
+
+    public function edit($id)
+    {
+        $building =Building::findOrFail( $id ); 
+        return view('contractor.building-edit',compact('building'));
+    }
+
+    public function update(Request $request)
+    {
+        $contractor = Contractor::where('user_id', auth()->user()->id)->first();
+        $building =Building::findOrFail($request->building_id); 
+        $buildingContractor = BuildingContractor::where('contractor_id',$contractor->id)->where('building_id',$building->id)->first(); 
+        if(!$buildingContractor){
+            return abort(404);
+        }
+        $buildingContractor->quotation_with_materials = $request->quotation_with_materials;
+        $buildingContractor->quotation_without_materials = $request->quotation_without_materials;
+        $buildingContractor->stages = 'send_quotation';
+        $buildingContractor->save();  
+        return redirect()->route('contractor.requests');
     }
 }

@@ -129,14 +129,26 @@
                                     </form>
                                 @endif
                                 @if ($buildingContractor->stages == 'send_quotation')
-                                    <a class="btn btn-xs btn-primary"
-                                        href="{{ route('admin.building-contractors.show', $buildingContractor->id) }}">
-                                        قبول
-                                    </a>
-                                    <a class="btn btn-xs btn-primary"
-                                        href="{{ route('admin.building-contractors.show', $buildingContractor->id) }}">
-                                        رفض
-                                    </a>
+                                    <form method="POST" action="{{ route("admin.building-contractors.update", [$buildingContractor->id]) }}" enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf 
+                                        <input type="hidden" name="stages" value="accepted">
+                                        <div class="form-group">
+                                            <button class="btn btn-success btn-sm" type="submit">
+                                                قبول
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <form method="POST" action="{{ route("admin.building-contractors.update", [$buildingContractor->id]) }}" enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf 
+                                        <input type="hidden" name="stages" value="rejected">
+                                        <div class="form-group">
+                                            <button class="btn btn-warning btn-sm" type="submit">
+                                                رفض
+                                            </button>
+                                        </div>
+                                    </form>
                                 @endif
 
 

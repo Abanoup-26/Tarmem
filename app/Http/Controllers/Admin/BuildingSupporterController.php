@@ -38,9 +38,16 @@ class BuildingSupporterController extends Controller
 
     public function store(StoreBuildingSupporterRequest $request)
     {
+        
+        // prevent from adding the supporter to the same building mutliple times
+        if(BuildingSupporter::where('supporter_id',$request->supporter_id)->where('building_id',$request->building_id)->first()){
+            Alert::warning('The Supporter Already Exsist','');
+            return redirect()->route('admin.buildings.show',$request->building_id);
+        }
+
         $buildingSupporter = BuildingSupporter::create($request->all());
         Alert::success(trans('flash.store.title'),trans('flash.store.body'));
-        return redirect()->route('admin.building-supporters.index');
+        return redirect()->route('admin.buildings.show',$buildingSupporter->building_id);
     }
 
     public function edit(BuildingSupporter $buildingSupporter)

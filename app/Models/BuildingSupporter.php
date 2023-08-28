@@ -29,10 +29,10 @@ class BuildingSupporter extends Model
     ];
 
     public const SUPPORTER_STATUS_SELECT = [
-        'pending'   => 'Pending',
-        'on_review' => 'On Review',
-        'accepted'  => 'Accepted',
-        'rejected'  => 'Rejected',
+        'pending'   => 'قيد الأنتظار',      
+        'on_review' => 'قيد المراجعة',
+        'accepted'  => 'مقبول',
+        'rejected'  => 'مرفوض',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

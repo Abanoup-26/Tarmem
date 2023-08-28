@@ -91,17 +91,33 @@
                                 @endif
                             @endcan
                             @can('done_stage')
-                                @if ($building->stages == 'send_to_contractor')
-                                    <a class="btn btn-danger" href="{{ route('admin.buildings.index') }}">
-                                        الموافقه على عرض الاسعار
-                                    </a>
+                                @if ($building->stages == 'send_to_contractor') 
+                                    <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <input type="hidden" name="stages" value="done">
+                                        <div class="form-group">
+                                            <button class="btn btn-danger" type="submit">
+                                                الموافقه على عرض الاسعار
+                                            </button>
+                                        </div>
+                                    </form>
                                 @endif
                             @endcan
                             @can('supporting_stage')
                                 @if ($building->stages == 'done')
-                                    <a class="btn btn-danger" href="{{ route('admin.buildings.index') }}">
-                                        الارسال للمانحين
-                                    </a>
+                                    <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <input type="hidden" name="stages" value="supporting">
+                                        <div class="form-group">
+                                            <button class="btn btn-danger" type="submit">
+                                                الارسال للمانحين
+                                            </button>
+                                        </div>
+                                    </form> 
                                 @endif
                             @endcan
 

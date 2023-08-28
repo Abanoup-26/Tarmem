@@ -114,7 +114,7 @@
                                 {{ $beneficiary->illness_type->name ?? '' }}
                             </td>
                             <td>
-                                {{ $beneficiary->building_type ?? '' }}
+                                {{ $beneficiary->building->building_number ?? '' }}
                             </td>
                             <td>
                                 @can('beneficiary_show')

@@ -110,12 +110,12 @@
                                 <ul class="nav">
                                     <li class="ml-0 d-none d-lg-flex">
                                         <!-- Main Header Print -->
-                                        <div class="main-header-print">
+                                        {{-- <div class="main-header-print">
                                             <a href="#">
                                                 <img src="{{ asset('frontend/img/svg/print-icon.svg') }}"
                                                     alt="" />
                                             </a>
-                                        </div>
+                                        </div> --}}
                                         <!-- End Main Header Print -->
                                     </li>
                                     <li class="d-none d-lg-flex">

@@ -54,6 +54,26 @@
                                         </a> 
                                     </span>
                                 </div> 
+                                @php
+                                    $buildingContractor = $building->buildingBuildingContractors->first();
+                                @endphp
+                                @if($buildingContractor && $buildingContractor->stages != 'pending')
+                                    <div class="review-list mb-20">
+                                        <span class="font-14 bold c4 ml-4">السعر بالمواد</span>
+                                        <span
+                                            class="font-20  text-primary text-start bold c4 ml-4">{{ $buildingContractor->quotation_with_materials ?? ''  }}</span>
+                                    </div>
+                                    <div class="review-list mb-20">
+                                        <span class="font-14 bold c4 ml-4">السعر بدون المواد</span>
+                                        <span
+                                            class="font-20  text-primary text-start bold c4 ml-4">{{ $buildingContractor->quotation_without_materials  ?? '' }}</span>
+                                    </div>
+                                    <div class="review-list mb-20">
+                                        <span class="font-14 bold c4 ml-4">الحالة</span>
+                                        <span
+                                            class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\BuildingContractor::STAGES_2_SELECT[$buildingContractor->stages] }}</span>
+                                    </div>
+                                @endif
                             </div>
                             <div class="col-lg-4">
                                 <!-- birth_data -->

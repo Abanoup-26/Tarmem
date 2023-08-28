@@ -32,10 +32,12 @@
                                     <td> {{ $building->buildingBuildingContractors->first()->visit_date }}</td>
                                     <td>
                                         <div class="container">
-                                            {{-- <a href=""
-                                                style="display: inline-block; padding: 5px 10px; background-color: #dc3545; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">
-                                                تعديل
-                                            </a> --}}
+                                            @if($building->buildingBuildingContractors->first()->stages == 'request_quotation')
+                                                <a href="{{route('contractor.building.edit',[$building->id])}}"
+                                                    style="display: inline-block; padding: 5px 10px; background-color: #dc3545; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">
+                                                    أرسال السعر
+                                                </a>
+                                            @endif
                                             <a href="{{route('contractor.building.show',[$building->id])}}"
                                                 style="display: inline-block; padding: 5px 10px; background-color: #3B9B89; color: white; font-size: 12px; border-radius: 4px; text-decoration: none;">عرض
                                                 التفاصيل<i class="icofont-arrow-left"></i></a>

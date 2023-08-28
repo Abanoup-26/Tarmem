@@ -10,6 +10,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\BuildingContractor;
 use App\Models\Contractor;
+use App\Models\Supporter;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,6 +84,7 @@ class BuildingsController extends Controller
     public function show(Building $building)
     {
         abort_if(Gate::denies('building_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $supporters = Supporter::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // get only the approved contractors 
         $contractors = Contractor::with(['user' => function ($query) {
             $query->where('approved', 1)->whereNotNull('name');
@@ -95,7 +97,7 @@ class BuildingsController extends Controller
             ->prepend(trans('global.pleaseSelect'), '');
 
         $building->load('organization', 'buildingBuildingContractors.contractor.user', 'buildingBuildingContractors.building', 'buildingBeneficiaries.illness_type', 'buildingBuildingSupporters');
-        return view('admin.buildings.show', compact('building', 'contractors'));
+        return view('admin.buildings.show', compact('building', 'contractors','supporters'));
     }
 
     public function edit(Building $building)
@@ -113,6 +115,14 @@ class BuildingsController extends Controller
             if (BuildingContractor::where('building_id', $building->id)->where('stages', 'request_quotation')->count() < 3) {
                 Alert::warning('You Must add at least 3 contractor with stage request quotation', '');
                 return redirect()->route('admin.buildings.show', $building->id);
+            }
+        }
+
+        
+        if ($request->stages == 'supporting') {
+            foreach($building->buildingBuildingSupporters as $raw){
+                $raw->supporter_status = 'on_review';
+                $raw->save();
             }
         }
 

@@ -37,6 +37,14 @@ class BuildingContractor extends Model implements HasMedia
         'rejected'          => 'رفض',
     ];
 
+    public const STAGES_2_SELECT = [ // for contractor dashboard purpose
+        'pending'          => 'زيارة هندسية', //لسه ضايف المقاول للمبني 
+        'request_quotation' => 'في أنتطار عرض سعرك', 
+        'send_quotation'    => 'تم أرسال السعر للأدارة',
+        'accepted'          => 'تم قبولك',
+        'rejected'          => 'تم رفضك',
+    ];
+
     protected $fillable = [
         'visit_date',
         'stages',

@@ -1,4 +1,4 @@
-@extends('layouts.organization')
+@extends('layouts.supporter')
 @section('styles')
     <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
     <link rel="stylesheet" href="{{ asset('frontend/plugins/apex/apexcharts.css') }}">
