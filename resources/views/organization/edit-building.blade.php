@@ -12,7 +12,7 @@
                 <div class="col-lg-8">
                     <!-- Base Control -->
                     <div class="form-element base-control mb-30">
-                        <h4 class="font-20 mb-4">إضافة مبني </h4>
+                        <h4 class="font-20 mb-4">تعديل مبني </h4>
                         @if ($errors->count() > 0)
                             <div class="alert alert-danger">
                                 <ul class="list-unstyled">
@@ -104,30 +104,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-6 mt-4">
-                                    <label class="mb-2 font-14 bold black"
-                                        for="longtude">{{ trans('cruds.building.fields.longtude') }}</label>
-                                    <input class="form-control {{ $errors->has('longtude') ? 'is-invalid' : '' }}"
-                                        type="text" name="longtude" id="longtude" value="{{ old('longtude', $building->longtude) }}">
-                                    @if ($errors->has('longtude'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('longtude') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.building.fields.longtude_helper') }}</span>
-                                </div>
-                                <div class="form-group col-md-6 mt-4">
-                                    <label class="mb-2 font-14 bold black"
-                                        for="latitude">{{ trans('cruds.building.fields.latitude') }}</label>
-                                    <input class="form-control {{ $errors->has('latitude') ? 'is-invalid' : '' }}"
-                                        type="text" name="latitude" id="latitude" value="{{ old('latitude', $building->latitude) }}">
-                                    @if ($errors->has('latitude'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('latitude') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.building.fields.latitude_helper') }}</span>
-                                </div>
+
+                                <input type="hidden" name="latitude" id="latitude" value="{{ $building->latitude }}">
+                                <input type="hidden" name="longtude" id="longtude" value="{{ $building->longtude }}">
+
+                                <div class="form-group col-md-12 mt-4">
+                                    <input id="search-input" type="text" class="form-control" placeholder="Search for places" style="width:300px">
+                                    <div id="map" style="height: 400px;"></div>
+                                </div> 
                             </div>
                             <div class="form-group mt-4">
                                 <label class="mb-2 font-14 bold black"
@@ -144,7 +128,7 @@
                             </div>
                             <!-- Button Group -->
                             <div class="button-group  row justify-content-center  pt-1">
-                                <button type="submit" class="btn long col-4">إضافة</button>
+                                <button type="submit" class="btn long col-4">تعديل</button>
                                 <a href="{{route('organization.building.index')}}" class="link-btn bg-transparent mr-3 soft-pink">إلغاء</a>
                             </div>
                             <!-- End Button Group -->
@@ -162,21 +146,81 @@
 @endsection
 
 @section('scripts')
-    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-    <script src="{{ asset('frontend/plugins/apex/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('frontend/plugins/apex/custom-apexcharts.js') }}"></script>
-    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{config('app.google_api_key')}}&libraries=places&callback=initMap" async defer></script>
+
     <script>
-        $("#birth_data").datepicker({
-            format: 'DD/MM/YYYY',
-            locale: 'en',
-            icons: {
-                up: 'fas fa-chevron-up',
-                down: 'fas fa-chevron-down',
-                previous: 'fas fa-chevron-left',
-                next: 'fas fa-chevron-right'
-            }
+        let map;
+        let marker;
+
+        $(document).ready(function() {
+            initMap();
         });
+
+        function placeMarker(location) {
+            if (marker) {
+                marker.setMap(null);
+            }
+
+            marker = new google.maps.Marker({
+                position: location,
+                map: map,
+            }); 
+
+            $('#latitude').val(location.lat());
+            $('#longtude').val(location.lng());
+        }
+        function initMap() {
+            // Specify the initial latitude and longitude
+            const initialLatLng = { lat: parseFloat('{{ $building->latitude }}'), lng: parseFloat('{{ $building->longtude }}') };
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: initialLatLng,
+                zoom: 13,
+            });
+            
+            // Initialize the marker at the specified location
+            marker = new google.maps.Marker({
+                position: initialLatLng,
+                map: map,
+            });
+
+            const searchInput = document.getElementById('search-input');
+            const searchBox = new google.maps.places.SearchBox(searchInput);
+
+            map.addListener('bounds_changed', () => {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            // Listen for clicks on the map
+            map.addListener('click', event => {
+                placeMarker(event.latLng);
+            });
+
+            searchBox.addListener('places_changed', () => {
+                const places = searchBox.getPlaces();
+
+                if (places.length === 0) {
+                    return;
+                }
+
+                const place = places[0];
+                if (!place.geometry) {
+                    console.log('Place geometry not found');
+                    return;
+                }
+
+                if (marker) {
+                    marker.setMap(null);
+                }
+
+                marker = new google.maps.Marker({
+                    map,
+                    position: place.geometry.location,
+                });
+
+                map.setCenter(place.geometry.location);
+            }); 
+        }
     </script>
     <script>
         var uploadedBuildingPhotosMap = {}

@@ -409,6 +409,30 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id'    => 100,
                 'title' => 'building_update',
+            ], 
+            [
+                'id'    => 101,
+                'title' => 'managment_stage',
+            ],
+            [
+                'id'    => 102,
+                'title' => 'engineering_stage',
+            ],
+            [
+                'id'    => 103,
+                'title' => 'research_stage',
+            ],
+            [
+                'id'    => 104,
+                'title' => 'contractor_stage',
+            ],
+            [
+                'id'    => 105,
+                'title' => 'done_stage',
+            ],
+            [
+                'id'    => 106,
+                'title' => 'supporting_stage',
             ],
 
         ];

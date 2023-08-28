@@ -32,6 +32,11 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <!-- ======= END MAIN STYLES ======= -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <style>
+        .ui-datepicker{
+            z-index: 99 !important;
+        }
+    </style>
     @yield('styles')
 </head>
 
@@ -73,7 +78,7 @@
                                             <div class="user-profile d-xl-flex align-items-center d-none">
                                                 <!-- User Avatar -->
                                                 <div class="user-avatar">
-                                                    <img src="{{ asset('frontend/img/img-placeholder.png') }}"
+                                                    <img src="{{ asset('user.png') }}"
                                                         alt="">
                                                 </div>
                                                 <!-- End User Avatar -->
@@ -114,10 +119,10 @@
                                     <li class="ml-0 d-none d-lg-flex">
                                         <!-- Main Header Print -->
                                         <div class="main-header-print">
-                                            <a href="#">
+                                            {{-- <a href="#">
                                                 <img src="{{ asset('frontend/img/svg/print-icon.svg') }}"
                                                     alt="">
-                                            </a>
+                                            </a> --}}
                                         </div>
                                         <!-- End Main Header Print -->
                                     </li>
@@ -125,11 +130,11 @@
                                         <!-- Main Header Time -->
                                         <div class="main-header-date-time text-right">
                                             <h3 class="time">
-                                                <span id="hours">21</span>
+                                                <span id="min">00</span>
                                                 <span id="point">:</span>
-                                                <span id="min">06</span>
+                                                <span id="hours">00</span>
                                             </h3>
-                                            <span class="date"><span id="date">Tue, 12 October 2019</span></span>
+                                            <span class="date"><span id="date">Tue, 00 Month 0000</span></span>
                                         </div>
                                         <!-- End Main Header Time -->
                                     </li>
@@ -151,70 +156,47 @@
                                     <li>
                                         <!-- Main Header Notification -->
                                         <div class="main-header-notification">
-                                            <a href="#" class="header-icon notification-icon"
-                                                data-toggle="dropdown">
-                                                <span class="count"
-                                                    data-bg-img="{{ asset('frontend/img/count-bg.png') }}">22</span>
-                                                <img src="{{ asset('frontend/img/svg/notification-icon.svg') }}"
-                                                    alt="" class="svg">
+                                            <a href="#" class="header-icon notification-icon" data-toggle="dropdown">
+                                                @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
+                                                <span class="count" data-bg-img="{{ asset('frontend/img/count-bg.png') }}">{{ $alertsCount }}</span>
+                                                <img src="{{ asset('frontend/img/svg/notification-icon.svg') }}" alt="" class="svg">
                                             </a>
                                             <div class="dropdown-menu style--two">
                                                 <!-- Dropdown Header -->
-                                                <div
+                                                {{-- <div
                                                     class="dropdown-header d-flex align-items-center justify-content-between">
                                                     <h5>5 New notifications</h5>
                                                     <a href="#" class="text-mute d-inline-block">Clear all</a>
-                                                </div>
+                                                </div> --}}
                                                 <!-- End Dropdown Header -->
                                                 <!-- Dropdown Body -->
                                                 <div class="dropdown-body">
-                                                    <!-- Item Single -->
-                                                    <a href="#" class="item-single d-flex align-items-center">
-                                                        <div class="content">
-                                                            <div class="mb-2">
-                                                                <p class="time">2 min ago</p>
-                                                            </div>
-                                                            <p class="main-text">Donec dapibus mauris id odio ornare
-                                                                tempus amet.</p>
-                                                        </div>
-                                                    </a>
-                                                    <!-- End Item Single -->
-                                                    <!-- Item Single -->
-                                                    <a href="#" class="item-single d-flex align-items-center">
-                                                        <div class="content">
-                                                            <div class="mb-2">
-                                                                <p class="time">2 min ago</p>
-                                                            </div>
-                                                            <p class="main-text">Donec dapibus mauris id odio ornare
-                                                                tempus. Duis sit
-                                                                amet accumsan justo.</p>
-                                                        </div>
-                                                    </a>
-                                                    <!-- End Item Single -->
-                                                    <!-- Item Single -->
-                                                    <a href="#" class="item-single d-flex align-items-center">
-                                                        <div class="content">
-                                                            <div class="mb-2">
-                                                                <p class="time">2 min ago</p>
-                                                            </div>
-                                                            <p class="main-text">Donec dapibus mauris id odio ornare
-                                                                tempus. Duis sit
-                                                                amet accumsan justo.</p>
-                                                        </div>
-                                                    </a>
-                                                    <!-- End Item Single -->
-                                                    <!-- Item Single -->
-                                                    <a href="#" class="item-single d-flex align-items-center">
-                                                        <div class="content">
-                                                            <div class="mb-2">
-                                                                <p class="time">2 min ago</p>
-                                                            </div>
-                                                            <p class="main-text">Donec dapibus mauris id odio ornare
-                                                                tempus. Duis sit
-                                                                amet accumsan justo.</p>
-                                                        </div>
-                                                    </a>
-                                                    <!-- End Item Single -->
+                                                    @if (count($alerts = \Auth::user()->userUserAlerts()->withPivot('read')->limit(10)->orderBy('created_at', 'ASC')->get()->reverse()) > 0)
+                                                        @foreach ($alerts as $alert)
+                                                            <!-- Item Single -->
+                                                            <a href="{{ $alert->alert_link ? $alert->alert_link : ' #' }}" target="_blank" class="item-single d-flex align-items-center">
+                                                                <div class="content">
+                                                                    <div class="mb-2">
+                                                                        <p class="time">{{ $alert->created_at ?? '' }}</p>
+                                                                    </div>
+                                                                    <p class="main-text">
+                                                                        @if ($alert->pivot->read === 0)
+                                                                            <strong>
+                                                                        @endif
+                                                                        {{ $alert->alert_text }}
+                                                                        @if ($alert->pivot->read === 0)
+                                                                            </strong>
+                                                                        @endif
+                                                                    </p>
+                                                                </div>
+                                                            </a>
+                                                            <!-- End Item Single --> 
+                                                        @endforeach 
+                                                    @else
+                                                        <a href="#" class="item-single d-flex align-items-center">
+                                                                {{ trans('global.no_alerts') }}
+                                                        </a>
+                                                    @endif
                                                 </div>
                                                 <!-- End Dropdown Body -->
                                             </div>
@@ -283,20 +265,12 @@
 
                             </ul>
                             <!-- End Sub Menu -->
-                        </li>
+                        </li> 
 
                         <li>
-                            <a href="donors.html">
-                                <i class="icofont-heart-alt"></i>
-                                <span class="link-title">المانحين</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="requests.html">
-                                <i class="icofont-files-stack"></i>
-                                <span class="link-title">الطلبات</span>
+                            <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                <i class="icofont-logout"></i>
+                                <span class="link-title">تسجيل الخروج</span>
                             </a>
                         </li>
                     </ul>
@@ -330,6 +304,21 @@
     <script src="{{ asset('dashboard_offline/js/dropzone.min.js') }}"></script>
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!----Date Scripts ----->
+    <script>
+        $(document).ready(function () {
+            $('.form-group .date').datepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'en',
+                icons: {
+                    up: 'fas fa-chevron-up',
+                    down: 'fas fa-chevron-down',
+                    previous: 'fas fa-chevron-left',
+                    next: 'fas fa-chevron-right'
+                }
+            });
+        }); 
+    </script>
     @include('sweetalert::alert')
     @yield('scripts')
 </body>

@@ -19,8 +19,8 @@ class Building extends Model implements HasMedia
     public $table = 'buildings';
 
     public const BUILDING_TYPE_SELECT = [
-        'public' => 'Public',
-        'modern' => 'Modern',
+        'public' => 'شعبي',
+        'modern' => 'مسلح',
     ];
 
     protected $appends = [
@@ -39,10 +39,10 @@ class Building extends Model implements HasMedia
     ];
 
     public const MANAGEMENT_STATUSES_SELECT = [
-        'pending'   => 'Pending',  // لسه عند الجهه 
-        'on_review' => 'On Review', // تم الارسال من الجهة للاداره للمراجعه 
+        'pending'   => 'قيد الأنتظار',  // لسه عند الجهه 
+        'on_review' => 'قيد المراجعة', // تم الارسال من الجهة للاداره للمراجعه 
         'accepted'  => 'مقبول',
-        'rejected'  => 'Rejected',
+        'rejected'  => 'مرفوض',
     ];
 
     public const STAGES_SELECT = [

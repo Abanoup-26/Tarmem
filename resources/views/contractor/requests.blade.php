@@ -18,8 +18,7 @@
                                 <tr>
                                     <th>رقم الصك</th>
                                     <th>نوع المبنى</th>
-                                    <th>عدد الوحدات</th>
-                                    <th>الحالة</th>
+                                    <th>عدد الوحدات</th> 
                                     <th>موعد الزيارة</th>
                                     <th>عرض</th>
                                 </tr>
@@ -28,9 +27,8 @@
                                 @foreach ($buildings as $building )
                                 <tr>
                                     <td>{{$building->building_number}}</td>
-                                    <td> {{$building->building_type}}</td>
-                                    <td>{{$building->apartments_count}}</td>
-                                    <td>{{$building->management_statuses}}</td>
+                                    <td> {{ $building->building_type ? \App\Models\Building::BUILDING_TYPE_SELECT[$building->building_type] : '' }}</td>
+                                    <td>{{$building->apartments_count}}</td> 
                                     <td> {{ $building->buildingBuildingContractors->first()->visit_date }}</td>
                                     <td>
                                         <div class="container">

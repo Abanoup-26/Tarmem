@@ -24,7 +24,7 @@ class BuildingsController extends Controller
         abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Building::with(['organization'])->select(sprintf('%s.*', (new Building)->table));
+            $query = Building::with(['organization'])->where('management_statuses','!=','pending')->select(sprintf('%s.*', (new Building)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -118,46 +118,53 @@ class BuildingsController extends Controller
 
         $building->update($request->all());
 
-        if (count($building->building_photos) > 0) {
-            foreach ($building->building_photos as $media) {
-                if (!in_array($media->file_name, $request->input('building_photos', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $building->building_photos->pluck('file_name')->toArray();
-        foreach ($request->input('building_photos', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $building->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('building_photos');
-            }
-        }
-
-        if ($building->stages == 'research_visit' && $building->research_vist_result == null) {
-            if ($request->input('research_vist_result', false)) {
-                if (!$building->research_vist_result || $request->input('research_vist_result') !== $building->research_vist_result->file_name) {
-                    if ($building->research_vist_result) {
-                        $building->research_vist_result->delete();
+        if($request->has('building_photos')){
+            if (count($building->building_photos) > 0) {
+                foreach ($building->building_photos as $media) {
+                    if (!in_array($media->file_name, $request->input('building_photos', []))) {
+                        $media->delete();
                     }
-                    $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('research_vist_result'))))->toMediaCollection('research_vist_result');
                 }
-            } elseif ($building->research_vist_result) {
-                $building->research_vist_result->delete();
+            }
+            $media = $building->building_photos->pluck('file_name')->toArray();
+            foreach ($request->input('building_photos', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $building->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('building_photos');
+                }
             }
         }
-
-
-        if ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null) {
-            if ($request->input('engineering_vist_result', false)) {
-                if (!$building->engineering_vist_result || $request->input('engineering_vist_result') !== $building->engineering_vist_result->file_name) {
-                    if ($building->engineering_vist_result) {
-                        $building->engineering_vist_result->delete();
+        
+        if($request->has('research_vist_result')){
+            if ($building->stages == 'research_visit' && $building->research_vist_result == null) {
+                if ($request->input('research_vist_result', false)) {
+                    if (!$building->research_vist_result || $request->input('research_vist_result') !== $building->research_vist_result->file_name) {
+                        if ($building->research_vist_result) {
+                            $building->research_vist_result->delete();
+                        }
+                        $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('research_vist_result'))))->toMediaCollection('research_vist_result');
                     }
-                    $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('engineering_vist_result'))))->toMediaCollection('engineering_vist_result');
+                } elseif ($building->research_vist_result) {
+                    $building->research_vist_result->delete();
                 }
-            } elseif ($building->engineering_vist_result) {
-                $building->engineering_vist_result->delete();
             }
         }
+
+
+        if($request->has('engineering_vist_result')){
+            if ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null) {
+                if ($request->input('engineering_vist_result', false)) {
+                    if (!$building->engineering_vist_result || $request->input('engineering_vist_result') !== $building->engineering_vist_result->file_name) {
+                        if ($building->engineering_vist_result) {
+                            $building->engineering_vist_result->delete();
+                        }
+                        $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('engineering_vist_result'))))->toMediaCollection('engineering_vist_result');
+                    }
+                } elseif ($building->engineering_vist_result) {
+                    $building->engineering_vist_result->delete();
+                }
+            }
+        }
+
         Alert::success(trans('flash.update.title'), trans('flash.update.body'));
         return redirect()->route('admin.buildings.show', $building->id);
     }

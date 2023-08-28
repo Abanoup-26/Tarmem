@@ -68,7 +68,7 @@
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">الحالة الوظيفيه </span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->job_status }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\Beneficiary::JOB_STATUS_RADIO[$beneficiary->job_status] }}</span>
                                 </div>
                                 <!-- End job_status -->
                                 <!-- job_title -->
@@ -92,7 +92,7 @@
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">الحاله الاجتماعيه</span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->marital_status }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->marital_status ? \App\Models\Beneficiary::MARITAL_STATUS_SELECT[$beneficiary->marital_status] : '' }}</span>
                                 </div>
                                 <!-- End marital_status -->
 
@@ -108,7 +108,7 @@
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">الحاله الصحيه - نوع المرض </span>
                                     <span class="font-20  text-primary text-start bold c4 ml-4">
-                                        {{ $beneficiary->illness_status }} - {{ $beneficiary->illness_type->name }}</span>
+                                        {{ $beneficiary->illness_status ? \App\Models\Beneficiary::ILLNESS_STATUS_RADIO[$beneficiary->illness_status] : '' }} - {{ $beneficiary->illness_type->name }}</span>
                                 </div>
                                 <!-- End illness -->
                             </div>
@@ -135,23 +135,61 @@
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">رقم المبني</span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->building_number }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->building_number ?? '' }}</span>
                                 </div>
                                 <!-- End building_number -->
                                 <!-- floor_count -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> عدد الادوار </span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->floor_count }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->floor_count ?? '' }}</span>
                                 </div>
                                 <!-- End floor_count -->
                                 <!-- apartments_count -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> عدد الشقه </span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->apartments_count }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->apartments_count ?? '' }}</span>
                                 </div>
                                 <!-- End apartments_count -->
+                            </div>
+                            <div class="col-lg-4">
+                                <!-- birth_data -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> تاريخ انشاء المبني </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->birth_data ?? '' }}</span>
+                                </div>
+                                <!-- End birth_data -->
+                                <!-- address -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> العنوان </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">
+                                        <a target="_blanc" href="https://www.google.com/maps/place/{{$beneficiary->building->latitude ?? ''}},{{$beneficiary->building->longtude ?? ''}}">
+                                            عرض في الخريطة
+                                        </a> 
+                                    </span>
+                                </div>
+                                <!-- End address --> 
+
+                                <!-- management_statuses -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">الحالة الاداريه للطلب </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building ? \App\Models\Building::MANAGEMENT_STATUSES_SELECT[$beneficiary->building->management_statuses] : ''}}</span>
+                                </div>
+                                <!-- End management_statuses -->
+                            </div>
+                            <div class="col-lg-4">
+                                <!-- stages -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">المرحله للطلب</span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building ? \App\Models\Building::STAGES_SELECT[$beneficiary->building->stages] : '' }}</span>
+                                </div>
+                                <!-- End stages --> 
+
                                 <!-- building_photos -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> صور المبني </span>
@@ -165,80 +203,6 @@
                                     </span>
                                 </div>
                                 <!-- End building_photos -->
-                            </div>
-                            <div class="col-lg-4">
-                                <!-- birth_data -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> تاريخ انشاء المبني </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->birth_data }}</span>
-                                </div>
-                                <!-- End birth_data -->
-                                <!-- address -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> العنوان </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->latitude }}{{ $beneficiary->building->longtude }}</span>
-                                </div>
-                                <!-- End address -->
-                                <!-- rejected_reson -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> سبب الرفض</span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->rejected_reson }}</span>
-                                </div>
-                                <!-- End rejected_reson -->
-
-                                <!-- management_statuses -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الاداريه للطلب </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->management_statuses }}</span>
-                                </div>
-                                <!-- End management_statuses -->
-                            </div>
-                            <div class="col-lg-4">
-                                <!-- stages -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المرحله الحاليه لطلب</span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->stages }}</span>
-                                </div>
-                                <!-- End stages -->
-
-                                <!-- research_vist_date -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ الزياره البحثيه </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->research_vist_date }}
-                                    </span>
-                                </div>
-                                <!-- End research_vist_date -->
-                                <!-- engineering_vist_date -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">تاريخ الزياره الهندسيه </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->engineering_vist_date }}
-                                    </span>
-                                </div>
-                                <!-- End engineering_vist_date -->
-                                <!-- research_vist_result -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">نتيجة الزياره البحثيه </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->research_vist_result }}
-                                    </span>
-                                </div>
-                                <!-- End research_vist_result -->
-                                <!-- engineering_vist_result -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">نتيجة الزيارة الهندسيه </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->engineering_vist_result }}
-                                    </span>
-                                </div>
-                                <!-- End engineering_vist_result -->
-
                             </div>
                         </div>
                     </div>

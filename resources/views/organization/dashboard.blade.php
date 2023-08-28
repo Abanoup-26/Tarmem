@@ -12,7 +12,7 @@
                 <div class="col-xl-4 col-md-8">
                     <h1> Organization Dashboard</h1>
                     <!-- Card -->
-                    <div class="card mb-30">
+                    {{-- <div class="card mb-30">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="increase">
@@ -28,11 +28,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End Card -->
                 </div>
 
-                <div class="col-xl-2 col-md-4 col-sm-6">
+                {{-- <div class="col-xl-2 col-md-4 col-sm-6">
                     <!-- Card -->
                     <div class="card area-chart-box mb-30">
                         <div class="card-body">
@@ -96,12 +96,12 @@
                         <div id="apex_area4-chart" class="chart"></div>
                     </div>
                     <!-- End Card -->
-                </div>
+                </div> --}}
             </div>
 
 
 
-            <div class="row">
+            {{-- <div class="row">
 
 
 
@@ -130,7 +130,7 @@
                     </div>
                     <!-- End Card -->
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- End Main Content -->

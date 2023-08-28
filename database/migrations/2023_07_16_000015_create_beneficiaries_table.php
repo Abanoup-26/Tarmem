@@ -11,7 +11,7 @@ class CreateBeneficiariesTable extends Migration
         Schema::create('beneficiaries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->date('birth_date');
+            $table->date('birth_date')->nullable();
             $table->string('identity_number');
             $table->string('qualifications');
             $table->string('job_status');

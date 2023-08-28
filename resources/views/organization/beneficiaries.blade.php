@@ -15,10 +15,11 @@
                         <table class="table table-striped table-bordered border-primary  dh-table">
                             <thead class="text_color-bg text-white">
                                 <tr>
+                                    <th>#</th>
                                     <th>أسم المستفيد</th>
                                     <th>الحالة الوظيفية</th>
                                     <th class="text-center">الإحتياجات</th>
-                                    {{-- <th>المرحلة</th> --}}
+                                    <th>المرحلة</th>
                                     <th>المبنى</th>
                                     <th>عدد أفراد الأسرة</th>
                                     <th>التفاصيل</th>
@@ -27,8 +28,9 @@
                             <tbody>
                                 @foreach ($beneficiaries as $beneficiary)
                                     <tr>
+                                        <td>{{ $beneficiary->id }}</td>
                                         <td>{{ $beneficiary->name }}</td>
-                                        <td>{{ $beneficiary->job_status }}</td>
+                                        <td>{{ $beneficiary->job_status ? \App\Models\Beneficiary::JOB_STATUS_RADIO[$beneficiary->job_status] : '' }}</td>
                                         <td class="border border-3 table-success">
                                             <div class="row" dir="ltr">
                                                 @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $item)
@@ -42,9 +44,9 @@
                                                 @endforeach
                                             </div>
                                         </td>
-                                        {{-- <td>{{ $beneficiary->building->stages }}</td> --}}
-                                        <td>{{ $beneficiary->building->id }}</td>
-                                        <td>{{ $beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id', $beneficiary->id)->count() + 1 }}
+                                        <td>{{ $beneficiary->building ? \App\Models\Building::STAGES_SELECT[$beneficiary->building->stages] : '' }}</td>
+                                        <td>{{ $beneficiary->building->building_number ?? '' }}</td>
+                                        <td>{{ $beneficiary->beneficiaryBeneficiaryFamilies->count() }}
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-between align-items-center">

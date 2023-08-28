@@ -342,7 +342,7 @@
                                                             @foreach ($buildings as $id => $entry)
                                                                 <option value="{{ $id }}"
                                                                     {{ old('building_id') == $id ? 'selected' : '' }}>
-                                                                    {{ $id }} {{ $entry }} </option>
+                                                                    {{ $id }} - {{ $entry }} </option>
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->has('building'))
@@ -466,8 +466,7 @@
                                                         <input
                                                             class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                                             type="text" name="family_name" id="family_name"
-                                                            placeholder="اسم المستفيد" value="{{ old('name', '') }}"
-                                                            required>
+                                                            placeholder="اسم " value="{{ old('name', '') }}" required>
                                                         @if ($errors->has('name'))
                                                             <div class="invalid-feedback">
                                                                 {{ $errors->first('name') }}
@@ -742,6 +741,7 @@
     <script src=" {{ asset('frontend/plugins/jquery.steps/custom-jquery-step.js') }}"></script>
     <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
     <!--  identity photo    -->
+
     <script>
         var uploadedIdentityPhotoMap = {}
         Dropzone.options.identityPhotoDropzone = {
@@ -924,26 +924,5 @@
                 return _results
             }
         }
-    </script>
-    <!----Date Scripts ----->
-    <script>
-        function initializeDatepicker(selector) {
-            $(selector).datepicker({
-                format: 'DD/MM/YYYY',
-                locale: 'en',
-                icons: {
-                    up: 'fas fa-chevron-up',
-                    down: 'fas fa-chevron-down',
-                    previous: 'fas fa-chevron-left',
-                    next: 'fas fa-chevron-right'
-                }
-            });
-        }
-        $(document).ready(function () {
-            initializeDatepicker("#birth_date");
-            initializeDatepicker("#marital_state_date");
-            initializeDatepicker("#family_birth_date");
-            // Add more datepickers if needed
-        });
     </script>
 @endsection

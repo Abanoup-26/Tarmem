@@ -14,10 +14,13 @@ class DatabaseSeeder extends Seeder
             PermissionRoleTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
-            BuildingTableSeeder::class,
             ContractorTypesTable::class,
-            ContractorTableSeeder::class,
-            BeneficiarySeeder::class,
+            ContractorServieceTypeTableSeeder::class,
+            RelativeTableSeeder::class,
+            OrganizationTypeTableSeeder::class,
+            UnitTableSeeder::class,
+            IllnessTypeTableSeeder::class,
+            ContractorTableSeeder::class
         ]);
     }
 }

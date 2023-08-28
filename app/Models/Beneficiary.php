@@ -23,8 +23,8 @@ class Beneficiary extends Model implements HasMedia
     ];
 
     public const JOB_STATUS_RADIO = [
-        'idle'    => 'Idle',
-        'emplyee' => 'Employee',
+        'idle'    => 'لا يعمل',
+        'emplyee' => 'يعمل',
     ];
 
     public const ILLNESS_STATUS_RADIO = [
@@ -41,9 +41,9 @@ class Beneficiary extends Model implements HasMedia
     ];
 
     public const MARITAL_STATUS_SELECT = [
-        'married'  => 'Married',
-        'divorced' => 'Divorced',
-        'single'   => 'Single',
+        'married'  => 'متزوج',
+        'divorced' => 'مطلق',
+        'single'   => 'عازب',
     ];
 
     protected $fillable = [

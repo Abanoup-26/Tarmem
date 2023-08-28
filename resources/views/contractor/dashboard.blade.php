@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row">
                 <p> Contractor Home</p>
-                <div class="col-xl-4 col-md-8">
+                {{-- <div class="col-xl-4 col-md-8">
                     <!-- Card -->
                     <div class="card mb-30">
                         <div class="card-body">
@@ -96,10 +96,10 @@
                         <div id="apex_area4-chart" class="chart"></div>
                     </div>
                     <!-- End Card -->
-                </div>
+                </div> --}}
             </div>
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-xl-12">
                     <!-- Card -->
                     <div class="card">
@@ -125,7 +125,7 @@
                     </div>
                     <!-- End Card -->
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- End Main Content -->

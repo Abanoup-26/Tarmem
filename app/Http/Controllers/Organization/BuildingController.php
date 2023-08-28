@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Building;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Models\Organization;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -16,7 +18,13 @@ class BuildingController extends Controller
     use MediaUploadingTrait;
     public function index()
     {
-        $buildings = Building::with('buildingBeneficiaries.illness_type', 'buildingBuildingSupporters')->get();
+        $organization = Organization::where('user_id',Auth::id())->first();
+
+        if (!$organization){
+            return abort(404);
+        }
+
+        $buildings = Building::with('buildingBeneficiaries.illness_type', 'buildingBuildingSupporters')->where('organization_id',$organization->id)->get();
         
         return view('organization.building', compact('buildings'));
     }
@@ -45,11 +53,16 @@ class BuildingController extends Controller
             'building_number' => 'required|numeric',
             'floor_count' => 'required|numeric',
             'apartments_count' => 'required|numeric',
-            'birth_data' => 'required',
-            "longtude" => 'nullable',
-            "latitude" => "nullable",
+            'birth_data' => 'required|date_format:' . config('panel.date_format'),
+            "longtude" => 'required',
+            "latitude" => "required",
         ]);
 
+        $organization = Organization::where('user_id',Auth::id())->first();
+
+        if (!$organization){
+            return abort(404);
+        }
         //create a new Building 
         $building = Building::create([
             'building_type'  => $data['building_type'],
@@ -61,6 +74,7 @@ class BuildingController extends Controller
             'longtude' => $data['longtude'],
             'management_statuses' => 'pending',
             'stages' => 'managment',
+            'organization_id' => $organization->id,
         ]);
 
         foreach ($request->input('building_photos', []) as $file) {
@@ -81,9 +95,9 @@ class BuildingController extends Controller
             'building_number' => 'required|numeric',
             'floor_count' => 'required|numeric',
             'apartments_count' => 'required|numeric',
-            'birth_data' => 'required',
-            "longtude" => 'nullable',
-            "latitude" => "nullable",
+            'birth_data' => 'required|date_format:' . config('panel.date_format'),
+            "longtude" => 'required',
+            "latitude" => "required",
         ]);
         // update the building 
         $building->update([
@@ -93,10 +107,22 @@ class BuildingController extends Controller
             'apartments_count' => $updatedData['apartments_count'],
             'birth_data' => $updatedData['birth_data'],
             'latitude' => $updatedData['latitude'],
-            'longtude' => $updatedData['longtude'],
-            'management_statuses' => 'pending',
-            'stages' => 'managment',
+            'longtude' => $updatedData['longtude'], 
         ]);
+
+        if (count($building->building_photos) > 0) {
+            foreach ($building->building_photos as $media) {
+                if (! in_array($media->file_name, $request->input('building_photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $building->building_photos->pluck('file_name')->toArray();
+        foreach ($request->input('building_photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $building->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('building_photos');
+            }
+        }
 
         Alert::success('Building updated Succedssfully');
         return redirect()->route('organization.building.index');

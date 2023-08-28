@@ -13,23 +13,20 @@
 
                         </th>
                         <th>
+                            {{ trans('cruds.building.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.building.fields.building_number') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.building.fields.building_type') }}
                         </th>
                         <th>
                             {{ trans('cruds.building.fields.management_statuses') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.building.fields.rejected_reson') }}
-                        </th>
+                        </th> 
                         <th>
                             {{ trans('cruds.building.fields.stages') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.building.fields.research_vist_result') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.building.fields.engineering_vist_result') }}
-                        </th>
+                        </th> 
                         <th>
                             {{ trans('cruds.building.fields.organization') }}
                         </th>
@@ -61,6 +58,16 @@
                     },
 
                     {
+                        data: 'id',
+                        name: 'id'
+                    },
+
+                    {
+                        data: 'building_number',
+                        name: 'building_number'
+                    },
+
+                    {
                         data: 'building_type',
                         name: 'building_type'
                     },
@@ -68,29 +75,11 @@
                     {
                         data: 'management_statuses',
                         name: 'management_statuses'
-                    },
-                    {
-                        data: 'rejected_reson',
-                        name: 'rejected_reson'
-                    },
+                    }, 
                     {
                         data: 'stages',
                         name: 'stages'
-                    },
-
-                    {
-                        data: 'research_vist_result',
-                        name: 'research_vist_result',
-                        sortable: false,
-                        searchable: false
-                    },
-
-                    {
-                        data: 'engineering_vist_result',
-                        name: 'engineering_vist_result',
-                        sortable: false,
-                        searchable: false
-                    },
+                    }, 
                     {
                         data: 'organization_name',
                         name: 'organization.name'

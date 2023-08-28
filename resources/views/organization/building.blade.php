@@ -27,9 +27,9 @@
                                 @foreach ($buildings as $building)
                                     <tr>
                                         <td>{{ $building->building_number }}</td>
-                                        <td>{{ $building->building_type }}</td>
+                                        <td> {{ $building->building_type ? \App\Models\Building::BUILDING_TYPE_SELECT[$building->building_type] : '' }}</td>
                                         <td>{{ $building->buildingBeneficiaries->count() }}</td>
-                                        <td>{{ $building->stages }}</td>
+                                        <td>{{ $building->stages ? \App\Models\Building::STAGES_SELECT[$building->stages] : '' }}</td>
                                         @if ($building->management_statuses != 'on_review')
                                             <td><a href="{{ route('organization.building.send', $building->id) }}"
                                                     class="btn long">إرسال للإدارة</a></td>

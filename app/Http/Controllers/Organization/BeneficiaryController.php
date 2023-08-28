@@ -30,7 +30,7 @@ class BeneficiaryController extends Controller
     public function create()
     {
         $illness_types = Illnesstype::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::pluck('building_type', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::pluck('building_number', 'id')->prepend(trans('global.pleaseSelect'), '');
         $units = Unit::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $familyrelations = Relative::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -43,7 +43,7 @@ class BeneficiaryController extends Controller
         $beneficiary = Beneficiary::findOrFail($request->id);
         // get important pluckes
         $illness_types = Illnesstype::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::pluck('building_type', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::pluck('building_number', 'id')->prepend(trans('global.pleaseSelect'), '');
         $units = Unit::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $familyrelations = Relative::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $beneficiaries = Beneficiary::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -56,13 +56,13 @@ class BeneficiaryController extends Controller
     }
 
     public function store(Request $request)
-    {
+    { 
         // validate all data 
         $validData = $request->validate([
             'name' => 'required',
-            'birth_date' => 'required',
+            'birth_date' => 'required|date_format:' . config('panel.date_format'),
             'address' => 'required',
-            'identity_number' => 'required|max:14|min:14',
+            'identity_number' => 'required|max:10|min:10',
             'qualifications' => 'required',
             'job_status' => 'required',
             'job_title' => 'required',
@@ -70,13 +70,13 @@ class BeneficiaryController extends Controller
             'illness_status' => 'required',
             'illness_type_id' => 'required',
             'marital_status' => 'required',
-            'marital_state_date' => 'required',
+            'marital_state_date' => 'required|date_format:' . config('panel.date_format'),
             'building_id' => 'required',
             'unit_id'  => 'required',
             'trmem_type' => 'required',
             'description' => 'required',
             "family_name" => 'required',
-            "family_birth_date" => 'required',
+            "family_birth_date" => 'required|date_format:' . config('panel.date_format'),
             "family_identity_number" => 'required',
             "familyrelation_id" => 'required',
             "family_qualifications" => 'required',

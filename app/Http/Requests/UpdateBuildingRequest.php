@@ -36,11 +36,7 @@ class UpdateBuildingRequest extends FormRequest
             'engineering_vist_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
-            ],
-            'organization_id' => [
-                'required',
-                'integer',
-            ],
+            ], 
         ];
     }
 }

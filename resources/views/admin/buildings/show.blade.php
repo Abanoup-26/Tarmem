@@ -12,84 +12,98 @@
                     <div class="form-group">
                         <div class="form-group">
                             <!-- Accept and Refuese and Review Building buttons--->
-                            @if ($building->stages == 'managment')
-                                <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
-                                    enctype="multipart/form-data">
-                                    @method('PUT')
-                                    @csrf
-                                    <input type="hidden" name="management_statuses" value="accepted">
-                                    <input type="hidden" name="stages" value="engineering">
-                                    <div class="form-group">
-                                        <button class="btn btn-info" type="submit">
-                                            قبول
+                            @can('managment_stage')
+                                @if ($building->stages == 'managment')
+                                    <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <input type="hidden" name="management_statuses" value="accepted">
+                                        <input type="hidden" name="stages" value="engineering">
+                                        <div class="form-group">
+                                            <button class="btn btn-info" type="submit">
+                                                قبول
+                                            </button>
+                                        </div>
+                                    </form>
+                                    @if ($building->rejected_reson != null && $building->management_statuses == 'rejected')
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#exampleModal">
+                                            اعادة النظر للطلب
                                         </button>
-                                    </div>
-                                </form>
-                                @if ($building->rejected_reson != null && $building->management_statuses == 'rejected')
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#exampleModal">
-                                        اعادة النظر للطلب
-                                    </button>
-                                @else
-                                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                                        data-target="#exampleModal">
-                                        رفض
-                                    </button>
+                                    @else
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            data-target="#exampleModal">
+                                            رفض
+                                        </button>
+                                    @endif
                                 @endif
-                            @endif
+                            @endcan
                             <!-- end Accept and Refuese and Review Building buttons--->
 
                             <!-- Research visit and Result  buttons--->
-                            @if ($building->stages == 'engineering' && $building->research_vist_date == null)
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#exampleModal">
-                                    تحديد موعد زياره بحثيه
-                                </button>
-                            @endif
-                            @if ($building->stages == 'research_visit' && $building->research_vist_result == null)
-                                <button type="button" class="btn btn-success" data-toggle="modal"
-                                    data-target="#exampleModal">
-                                    نتيجة الزياره بحثيه
-                                </button>
-                            @endif
-                            @if ($building->research_vist_result != null && $building->engineering_vist_date == null)
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                    data-target="#exampleModal">
-                                    تحديد ميعاد الزياره الهندسيه
-                                </button>
-                            @endif
+                            @can('research_stage')
+                                @if ($building->stages == 'engineering' && $building->research_vist_date == null)
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                        تحديد موعد زياره بحثيه
+                                    </button>
+                                @endif
+                                @if ($building->stages == 'research_visit' && $building->research_vist_result == null)
+                                    <button type="button" class="btn btn-success" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                        نتيجة الزياره بحثيه
+                                    </button>
+                                @endif
+                            @endcan
+                            @can('engineering_stage')
+                                @if ($building->research_vist_result != null && $building->engineering_vist_date == null)
+                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                        تحديد ميعاد الزياره الهندسيه
+                                    </button>
+                                @endif
+                            @endcan
                             <!-- End Research visit  buttons--->
                             <!-- engineering visit and Result  buttons--->
 
-                            @if ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null)
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                    data-target="#exampleModal">
-                                    نتيجة الزياره الهندسيه
-                                </button>
-                            @endif
-                            @if ($building->stages == 'engineering_visit' && $building->engineering_vist_result != null)
-                                <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
-                                    enctype="multipart/form-data">
-                                    @method('PUT')
-                                    @csrf
-                                    <input type="hidden" name="stages" value="send_to_contractor">
-                                    <div class="form-group">
-                                        <button class="btn btn-danger" type="submit">
-                                            طلب عرض سعر من المقاولين
-                                        </button>
-                                    </div>
-                                </form>
-                            @endif
-                            @if ($building->stages == 'send_to_contractor')
-                                <a class="btn btn-danger" href="{{ route('admin.buildings.index') }}">
-                                    الموافقه على عرض الاسعار
-                                </a>
-                            @endif
-                            @if ($building->stages == 'done')
-                                <a class="btn btn-danger" href="{{ route('admin.buildings.index') }}">
-                                    الارسال للمانحين
-                                </a>
-                            @endif
+                            @can('engineering_stage')
+                                @if ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null)
+                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                        نتيجة الزياره الهندسيه
+                                    </button>
+                                @endif
+                            @endcan
+                            @can('contractor_stage')
+                                @if ($building->stages == 'engineering_visit' && $building->engineering_vist_result != null)
+                                    <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <input type="hidden" name="stages" value="send_to_contractor">
+                                        <div class="form-group">
+                                            <button class="btn btn-danger" type="submit">
+                                                طلب عرض سعر من المقاولين
+                                            </button>
+                                        </div>
+                                    </form>
+                                @endif
+                            @endcan
+                            @can('done_stage')
+                                @if ($building->stages == 'send_to_contractor')
+                                    <a class="btn btn-danger" href="{{ route('admin.buildings.index') }}">
+                                        الموافقه على عرض الاسعار
+                                    </a>
+                                @endif
+                            @endcan
+                            @can('supporting_stage')
+                                @if ($building->stages == 'done')
+                                    <a class="btn btn-danger" href="{{ route('admin.buildings.index') }}">
+                                        الارسال للمانحين
+                                    </a>
+                                @endif
+                            @endcan
 
                         </div>
                         <table class="table table-bordered table-striped">

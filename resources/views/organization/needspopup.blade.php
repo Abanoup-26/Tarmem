@@ -87,20 +87,7 @@
                         @endif
                         <span
                             class="help-block">{{ trans('cruds.beneficiaryNeed.fields.photos_before_helper') }}</span>
-                    </div>
-                    <!--  photos_after -->
-                    <div class="form-group ">
-                        <label for="photos_after">{{ trans('cruds.beneficiaryNeed.fields.photos_after') }}</label>
-                        <div class="needsclick dropzone style--three{{ $errors->has('photos_after') ? 'is-invalid' : '' }}"
-                            id="photos_after-dropzone">
-                        </div>
-                        @if ($errors->has('photos_after'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('photos_after') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.beneficiaryNeed.fields.photos_after_helper') }}</span>
-                    </div>
+                    </div> 
                     <!--  beneficiary_id -->
                     <input type="hidden" name="beneficiary_id" , value="{{ $beneficiary_id }}">
                     <div class="form-group">

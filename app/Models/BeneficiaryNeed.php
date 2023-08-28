@@ -29,8 +29,8 @@ class BeneficiaryNeed extends Model implements HasMedia
     ];
 
     public const TRMEM_TYPE_SELECT = [
-        'whole'   => 'Whole',
-        'partial' => 'Partial',
+        'whole'   => 'كلي',
+        'partial' => 'جزئي',
     ];
 
     protected $fillable = [

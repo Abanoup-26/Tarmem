@@ -458,26 +458,30 @@ $(function () {
         // Create a newDate() object
         var newDate = new Date();
         // Extract the current date from Date object
-        newDate.setDate(newDate.getDate());
+        newDate.setDate(newDate.getDate()); 
         // Output the day, date, month and year    
         $('#date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
 
         //Output the date & month for Project Management Add new Card.
         $('.add-card').find('.date-text').html(newDate.getDate() + ' ' + monthNames[newDate.getMonth()]);
+        var minutes = new Date().getMinutes();
+        $("#min").html(( minutes < 10 ? "0" : "" ) + minutes);
+        var hours = new Date().getHours();
+        $("#hours").html(( hours < 10 ? "0" : "" ) + hours); 
             
         setInterval( function() {
             // Create a newDate() object and extract the minutes of the current time on the visitor's
             var minutes = new Date().getMinutes();
             // Add a leading zero to the minutes value
             $("#min").html(( minutes < 10 ? "0" : "" ) + minutes);
-        },1000);
+        },5000);
             
         setInterval( function() {
             // Create a newDate() object and extract the hours of the current time on the visitor's
             var hours = new Date().getHours();
             // Add a leading zero to the hours value
-            $("#hours").html(( hours < 10 ? "0" : "" ) + hours);
-        }, 1000);
+            $("#hours").html(( hours < 10 ? "0" : "" ) + hours); 
+        }, 5000);
             
     });
 

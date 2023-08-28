@@ -28,7 +28,7 @@
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> نوع المبني </span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->building_type }}</span>
+                                    class="font-20  text-primary text-start bold c4 ml-4">{{  \App\Models\Building::BUILDING_TYPE_SELECT[$building->building_type] }}</span>
                                 </div>
                                 <!-- floor_count -->
                                 <div class="review-list mb-20">
@@ -48,20 +48,12 @@
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> العنوان </span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->latitude . '-' . $building->longtude }}</span>
-                                </div>
-                                <!-- management_statuses -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> حالة الطلب</span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->management_statuses }}</span>
-                                </div>
-                                <!-- stages -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> مرحلة الطلب</span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->stages }}</span>
-                                </div>
+                                        class="font-20  text-primary text-start bold c4 ml-4">
+                                        <a target="_blanc" href="https://www.google.com/maps/place/{{$building->latitude}},{{$building->longtude}}">
+                                            عرض في الخريطة
+                                        </a> 
+                                    </span>
+                                </div> 
                             </div>
                             <div class="col-lg-4">
                                 <!-- birth_data -->
