@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateOrganizationRequest;
 use App\Models\Organization;
 use App\Models\OrganizationType;
 use Gate;
-use Alert;
+use \RealRashid\SweetAlert\Facades\Alert;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -67,8 +67,19 @@ class OrganizationsController extends Controller
                             <span class="c-switch-slider"></span>
                         </label>';
             });
-          
-            $table->rawColumns(['actions', 'placeholder', 'organization_type' , 'user_approved']);
+            
+            $table->editColumn('logo', function ($row) {
+                if ($photo = $row->logo) {
+                    return sprintf(
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
+                }
+
+                return '';
+            });
+            $table->rawColumns(['actions', 'placeholder', 'organization_type' , 'user_approved' , 'logo']);
 
             return $table->make(true);
         }
@@ -121,6 +132,10 @@ class OrganizationsController extends Controller
 
         if ($request->input('partnership_agreement', false)) {
             $organization->addMedia(storage_path('tmp/uploads/' . basename($request->input('partnership_agreement'))))->toMediaCollection('partnership_agreement');
+        }
+
+        if ($request->input('logo', false)) {
+            $organization->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
         }
 
         if ($media = $request->input('ck-media', false)) {

@@ -213,6 +213,8 @@ return [
             'commercial_record_helper'     => ' ',
             'partnership_agreement'        => 'عقد الشراكة',
             'partnership_agreement_helper' => ' ',
+            'logo'                         =>'الصوره',
+            'logo_helper'                  => ' ',
         ],
     ],
     'contractor' => [

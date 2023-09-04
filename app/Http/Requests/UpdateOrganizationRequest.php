@@ -46,6 +46,9 @@ class UpdateOrganizationRequest extends FormRequest
             'partnership_agreement' => [
                 'required',
             ],
+            'logo' => [
+                'required',
+            ],
         ];
     }
 }

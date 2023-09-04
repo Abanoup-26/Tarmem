@@ -26,15 +26,18 @@
                         </th>
                         <th>
                             {{ trans('cruds.organization.fields.organization_name') }}
-                        </th> 
+                        </th>
                         <th>
                             {{ trans('cruds.organization.fields.website') }}
-                        </th>   
+                        </th>
                         <th>
                             {{ trans('cruds.organization.fields.organization_type') }}
                         </th>
                         <th>
                             {{ trans('cruds.user.fields.approved') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.organization.fields.logo') }}
                         </th>
                         <th>
                             &nbsp;
@@ -108,19 +111,23 @@
                     {
                         data: 'name',
                         name: 'organization_name'
-                    }, 
+                    },
                     {
                         data: 'website',
                         name: 'website'
-                    }, 
+                    },
                     {
                         data: 'organization_type_name',
                         name: 'organization_type.name'
-                    }, 
+                    },
                     {
                         data: 'user_approved',
                         name: 'user.approved'
-                    }, 
+                    },
+                    {
+                        data: 'logo',
+                        name: 'logo'
+                    },
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'

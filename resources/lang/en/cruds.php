@@ -213,6 +213,8 @@ return [
             'commercial_record_helper'     => ' ',
             'partnership_agreement'        => 'Partnership Agreement',
             'partnership_agreement_helper' => ' ',
+            'logo'                         =>'Logo',
+            'logo_helper'                  => ' ',
         ],
     ],
     'contractor' => [

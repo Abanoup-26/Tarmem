@@ -26,6 +26,7 @@ class Organization extends Model implements HasMedia
     protected $appends = [
         'commercial_record',
         'partnership_agreement',
+        'logo',
     ];
 
     protected $fillable = [
@@ -65,6 +66,17 @@ class Organization extends Model implements HasMedia
     public function getPartnershipAgreementAttribute()
     {
         return $this->getMedia('partnership_agreement')->last();
+    }
+    public function getLogoAttribute()
+    {
+        $file = $this->getMedia('logo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function user()

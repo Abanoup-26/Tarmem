@@ -132,6 +132,10 @@ class RegisterController extends Controller
             $organization->addMedia(storage_path('tmp/uploads/' . basename(request()->input('partnership_agreement'))))->toMediaCollection('partnership_agreement');
         }
 
+        if (request()->input('logo', false)) {
+            $organization->addMedia(storage_path('tmp/uploads/' . basename(request()->input('logo'))))->toMediaCollection('logo');
+        }
+
         if ($media = request()->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $organization->id]);
         }

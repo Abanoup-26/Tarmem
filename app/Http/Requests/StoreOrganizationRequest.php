@@ -44,9 +44,6 @@ class StoreOrganizationRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'email' => [
-                'required',
-            ],
             'organization_type_id' => [
                 'required',
                 'integer',
@@ -55,6 +52,9 @@ class StoreOrganizationRequest extends FormRequest
                 'required',
             ],
             'partnership_agreement' => [
+                'required',
+            ],
+            'logo' => [
                 'required',
             ],
         ];

@@ -33,7 +33,7 @@
     <!-- ======= END MAIN STYLES ======= -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <style>
-        .ui-datepicker{
+        .ui-datepicker {
             z-index: 99 !important;
         }
     </style>
@@ -49,12 +49,13 @@
     <div class="wrapper">
         <!-- Header -->
         <header class="header white-bg fixed-top d-flex align-content-center flex-wrap">
+            @php
+                $org = \App\Models\Organization::where('user_id', Auth::user()->id)->first();
+            @endphp
             <!-- Logo -->
             <div class="logo">
-                <a href="#" class="default-logo"><img src="{{ asset('frontend/img/logo.png') }}"
-                        alt=""></a>
-                <a href="#" class="mobile-logo"><img src="{{ asset('frontend/img/logo.png') }}"
-                        alt=""></a>
+                <a href="#" class="default-logo"><img src="{{ $org->logo->getUrl() }}" alt=""></a>
+                <a href="#" class="mobile-logo"><img src="{{ $org->logo->getUrl() }}" alt=""></a>
             </div>
             <!-- End Logo -->
 
@@ -78,8 +79,7 @@
                                             <div class="user-profile d-xl-flex align-items-center d-none">
                                                 <!-- User Avatar -->
                                                 <div class="user-avatar">
-                                                    <img src="{{ asset('user.png') }}"
-                                                        alt="">
+                                                    <img src="{{ asset('user.png') }}" alt="">
                                                 </div>
                                                 <!-- End User Avatar -->
 
@@ -156,10 +156,18 @@
                                     <li>
                                         <!-- Main Header Notification -->
                                         <div class="main-header-notification">
-                                            <a href="#" class="header-icon notification-icon" data-toggle="dropdown">
-                                                @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
-                                                <span class="count" data-bg-img="{{ asset('frontend/img/count-bg.png') }}">{{ $alertsCount }}</span>
-                                                <img src="{{ asset('frontend/img/svg/notification-icon.svg') }}" alt="" class="svg">
+                                            <a href="#" class="header-icon notification-icon"
+                                                data-toggle="dropdown">
+                                                @php
+                                                    $alertsCount = \Auth::user()
+                                                        ->userUserAlerts()
+                                                        ->where('read', false)
+                                                        ->count();
+                                                @endphp
+                                                <span class="count"
+                                                    data-bg-img="{{ asset('frontend/img/count-bg.png') }}">{{ $alertsCount }}</span>
+                                                <img src="{{ asset('frontend/img/svg/notification-icon.svg') }}"
+                                                    alt="" class="svg">
                                             </a>
                                             <div class="dropdown-menu style--two">
                                                 <!-- Dropdown Header -->
@@ -171,13 +179,17 @@
                                                 <!-- End Dropdown Header -->
                                                 <!-- Dropdown Body -->
                                                 <div class="dropdown-body">
-                                                    @if (count($alerts = \Auth::user()->userUserAlerts()->withPivot('read')->limit(10)->orderBy('created_at', 'ASC')->get()->reverse()) > 0)
+                                                    @if (count(
+                                                            $alerts = \Auth::user()->userUserAlerts()->withPivot('read')->limit(10)->orderBy('created_at', 'ASC')->get()->reverse()) > 0)
                                                         @foreach ($alerts as $alert)
                                                             <!-- Item Single -->
-                                                            <a href="{{ $alert->alert_link ? $alert->alert_link : ' #' }}" target="_blank" class="item-single d-flex align-items-center">
+                                                            <a href="{{ $alert->alert_link ? $alert->alert_link : ' #' }}"
+                                                                target="_blank"
+                                                                class="item-single d-flex align-items-center">
                                                                 <div class="content">
                                                                     <div class="mb-2">
-                                                                        <p class="time">{{ $alert->created_at ?? '' }}</p>
+                                                                        <p class="time">
+                                                                            {{ $alert->created_at ?? '' }}</p>
                                                                     </div>
                                                                     <p class="main-text">
                                                                         @if ($alert->pivot->read === 0)
@@ -190,11 +202,12 @@
                                                                     </p>
                                                                 </div>
                                                             </a>
-                                                            <!-- End Item Single --> 
-                                                        @endforeach 
+                                                            <!-- End Item Single -->
+                                                        @endforeach
                                                     @else
-                                                        <a href="#" class="item-single d-flex align-items-center">
-                                                                {{ trans('global.no_alerts') }}
+                                                        <a href="#"
+                                                            class="item-single d-flex align-items-center">
+                                                            {{ trans('global.no_alerts') }}
                                                         </a>
                                                     @endif
                                                 </div>
@@ -265,10 +278,11 @@
 
                             </ul>
                             <!-- End Sub Menu -->
-                        </li> 
+                        </li>
 
                         <li>
-                            <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                            <a href="#"
+                                onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                 <i class="icofont-logout"></i>
                                 <span class="link-title">تسجيل الخروج</span>
                             </a>
@@ -306,7 +320,7 @@
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!----Date Scripts ----->
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.form-group .date').datepicker({
                 format: 'DD/MM/YYYY',
                 locale: 'en',
@@ -317,7 +331,7 @@
                     next: 'fas fa-chevron-right'
                 }
             });
-        }); 
+        });
     </script>
     @include('sweetalert::alert')
     @yield('scripts')
