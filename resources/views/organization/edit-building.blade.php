@@ -23,9 +23,22 @@
                             </div>
                         @endif
                         <!-- Form -->
-                        <form action="{{ route('organization.building.update' , [$building->id]) }}" method="POST">
+                        <form action="{{ route('organization.building.update', [$building->id]) }}" method="POST">
                             @csrf
                             <div class="row">
+                                <div class="form-group col-md-4 mt-4">
+                                    <label class="required mb-2 font-14 bold black"
+                                        for="name">{{ trans('cruds.building.fields.name') }}</label>
+                                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                        type="text" name="name" id="name"
+                                        value="{{ old('name', $building->name) }}" required>
+                                    @if ($errors->has('name'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('name') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.building.fields.name_helper') }}</span>
+                                </div>
                                 <div class="form-group col-md-4 mt-4">
                                     <label
                                         class="mb-2 font-14 bold black">{{ trans('cruds.building.fields.building_type') }}</label>
@@ -52,7 +65,8 @@
                                         for="building_number">{{ trans('cruds.building.fields.building_number') }}</label>
                                     <input class="form-control {{ $errors->has('building_number') ? 'is-invalid' : '' }}"
                                         type="number" name="building_number" id="building_number"
-                                        value="{{ old('building_number', $building->building_number) }}" step="1" required>
+                                        value="{{ old('building_number', $building->building_number) }}" step="1"
+                                        required>
                                     @if ($errors->has('building_number'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('building_number') }}
@@ -60,6 +74,23 @@
                                     @endif
                                     <span
                                         class="help-block">{{ trans('cruds.building.fields.building_number_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4 mt-4">
+                                    <label class="required mb-2 font-14 bold black"
+                                        for="apartments_count">{{ trans('cruds.building.fields.apartments_count') }}</label>
+                                    <input class="form-control {{ $errors->has('apartments_count') ? 'is-invalid' : '' }}"
+                                        type="number" name="apartments_count" id="apartments_count"
+                                        value="{{ old('apartments_count', $building->apartments_count) }}" step="1"
+                                        required>
+                                    @if ($errors->has('apartments_count'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('apartments_count') }}
+                                        </div>
+                                    @endif
+                                    <span
+                                        class="help-block">{{ trans('cruds.building.fields.apartments_count_helper') }}</span>
                                 </div>
                                 <div class="form-group col-md-4 mt-4">
                                     <label class="required mb-2 font-14 bold black"
@@ -74,27 +105,56 @@
                                     @endif
                                     <span class="help-block">{{ trans('cruds.building.fields.floor_count_helper') }}</span>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6 mt-4">
+                                <div class="form-group col-md-4 mt-4">
                                     <label class="required mb-2 font-14 bold black"
-                                        for="apartments_count">{{ trans('cruds.building.fields.apartments_count') }}</label>
-                                    <input class="form-control {{ $errors->has('apartments_count') ? 'is-invalid' : '' }}"
-                                        type="number" name="apartments_count" id="apartments_count"
-                                        value="{{ old('apartments_count', $building->apartments_count) }}" step="1" required>
-                                    @if ($errors->has('apartments_count'))
+                                        for="project_name">{{ trans('cruds.building.fields.project_name') }}</label>
+                                    <input class="form-control {{ $errors->has('project_name') ? 'is-invalid' : '' }}"
+                                        type="text" name="project_name" id="project_name"
+                                        value="{{ old('project_name', $building->project_name) }}" required>
+                                    @if ($errors->has('project_name'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('apartments_count') }}
+                                            {{ $errors->first('project_name') }}
                                         </div>
                                     @endif
                                     <span
-                                        class="help-block">{{ trans('cruds.building.fields.apartments_count_helper') }}</span>
+                                        class="help-block">{{ trans('cruds.building.fields.project_name_helper') }}</span>
                                 </div>
-                                <div class="form-group col-md-6 mt-4">
+                            </div>
+                            <div class="row">
+                                <div class="form-group  col-md-4 mt-4">
+                                    <label class="mb-2 font-14 bold black"
+                                        for="building_photos">{{ trans('cruds.building.fields.building_photos') }}</label>
+                                    <div class="needsclick dropzone style--three {{ $errors->has('building_photos') ? 'is-invalid' : '' }}"
+                                        id="building_photos-dropzone">
+                                    </div>
+                                    @if ($errors->has('building_photos'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('building_photos') }}
+                                        </div>
+                                    @endif
+                                    <span
+                                        class="help-block">{{ trans('cruds.building.fields.building_photos_helper') }}</span>
+                                </div>
+                                <div class="form-group col-md-4 mt-4">
+                                    <label class="required mb-2 font-14 bold black"
+                                        for="buidling_age">{{ trans('cruds.building.fields.buidling_age') }}</label>
+                                    <input class="form-control {{ $errors->has('buidling_age') ? 'is-invalid' : '' }}"
+                                        type="number" name="buidling_age" id="buidling_age"
+                                        value="{{ old('buidling_age', $building->buidling_age) }}" step="1" required>
+                                    @if ($errors->has('buidling_age'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('buidling_age') }}
+                                        </div>
+                                    @endif
+                                    <span
+                                        class="help-block">{{ trans('cruds.building.fields.buidling_age_helper') }}</span>
+                                </div>
+                                <div class="form-group col-md-4 mt-4">
                                     <label class="mb-2 font-14 bold black"
                                         for="birth_data">{{ trans('cruds.building.fields.birth_data') }}</label>
                                     <input class="form-control  {{ $errors->has('birth_data') ? 'is-invalid' : '' }}"
-                                        type="text" name="birth_data" id="birth_data" value="{{ old('birth_data' , $building->birth_data) }}">
+                                        type="text" name="birth_data" id="birth_data"
+                                        value="{{ old('birth_data', $building->birth_data) }}">
                                     @if ($errors->has('birth_data'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('birth_data') }}
@@ -109,27 +169,16 @@
                                 <input type="hidden" name="longtude" id="longtude" value="{{ $building->longtude }}">
 
                                 <div class="form-group col-md-12 mt-4">
-                                    <input id="search-input" type="text" class="form-control" placeholder="Search for places" style="width:300px">
+                                    <input id="search-input" type="text" class="form-control"
+                                        placeholder="Search for places" style="width:300px">
                                     <div id="map" style="height: 400px;"></div>
-                                </div> 
-                            </div>
-                            <div class="form-group mt-4">
-                                <label class="mb-2 font-14 bold black"
-                                    for="building_photos">{{ trans('cruds.building.fields.building_photos') }}</label>
-                                <div class="needsclick dropzone style--three {{ $errors->has('building_photos') ? 'is-invalid' : '' }}"
-                                    id="building_photos-dropzone">
                                 </div>
-                                @if ($errors->has('building_photos'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('building_photos') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.building.fields.building_photos_helper') }}</span>
                             </div>
                             <!-- Button Group -->
                             <div class="button-group  row justify-content-center  pt-1">
                                 <button type="submit" class="btn long col-4">تعديل</button>
-                                <a href="{{route('organization.building.index')}}" class="link-btn bg-transparent mr-3 soft-pink">إلغاء</a>
+                                <a href="{{ route('organization.building.index') }}"
+                                    class="link-btn bg-transparent mr-3 soft-pink">إلغاء</a>
                             </div>
                             <!-- End Button Group -->
                         </form>
@@ -146,8 +195,9 @@
 @endsection
 
 @section('scripts')
-
-    <script src="https://maps.googleapis.com/maps/api/js?key={{config('app.google_api_key')}}&libraries=places&callback=initMap" async defer></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_api_key') }}&libraries=places&callback=initMap"
+        async defer></script>
 
     <script>
         let map;
@@ -165,19 +215,23 @@
             marker = new google.maps.Marker({
                 position: location,
                 map: map,
-            }); 
+            });
 
             $('#latitude').val(location.lat());
             $('#longtude').val(location.lng());
         }
+
         function initMap() {
             // Specify the initial latitude and longitude
-            const initialLatLng = { lat: parseFloat('{{ $building->latitude }}'), lng: parseFloat('{{ $building->longtude }}') };
+            const initialLatLng = {
+                lat: parseFloat('{{ $building->latitude }}'),
+                lng: parseFloat('{{ $building->longtude }}')
+            };
             map = new google.maps.Map(document.getElementById('map'), {
                 center: initialLatLng,
                 zoom: 13,
             });
-            
+
             // Initialize the marker at the specified location
             marker = new google.maps.Marker({
                 position: initialLatLng,
@@ -219,7 +273,7 @@
                 });
 
                 map.setCenter(place.geometry.location);
-            }); 
+            });
         }
     </script>
     <script>
@@ -279,5 +333,4 @@
             }
         }
     </script>
-    
 @endsection

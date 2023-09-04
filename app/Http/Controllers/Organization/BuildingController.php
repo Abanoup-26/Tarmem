@@ -49,6 +49,9 @@ class BuildingController extends Controller
     {
         // validate the form data 
         $data = $request->validate([
+            'name'=> 'required',
+            'project_name'=> 'required|unique:building,project_name',
+            'buidling_age' => 'required',
             'building_type' => 'required',
             'building_number' => 'required|numeric',
             'floor_count' => 'required|numeric',
@@ -65,6 +68,9 @@ class BuildingController extends Controller
         }
         //create a new Building 
         $building = Building::create([
+            'name' =>$data['name'],
+            'project_name' =>$data['project_name'],
+            'buidling_age' =>$data['buidling_age'],
             'building_type'  => $data['building_type'],
             'building_number' => $data['building_number'],
             'floor_count' => $data['floor_count'],
@@ -91,6 +97,9 @@ class BuildingController extends Controller
         $building = Building::findOrFail($request->id);
         // validate the form data 
         $updatedData = $request->validate([
+            'name'=> 'required',
+            'project_name'=> 'required|unique:building,project_name',
+            'buidling_age' => 'required|numeric',
             'building_type' => 'required',
             'building_number' => 'required|numeric',
             'floor_count' => 'required|numeric',
@@ -101,6 +110,9 @@ class BuildingController extends Controller
         ]);
         // update the building 
         $building->update([
+            'name'=> $updatedData['name'] , 
+            'project_name'=> $updatedData['project_name'] , 
+            'buidling_age'=> $updatedData['buidling_age'] , 
             'building_type'  => $updatedData['building_type'],
             'building_number' => $updatedData['building_number'],
             'floor_count' => $updatedData['floor_count'],

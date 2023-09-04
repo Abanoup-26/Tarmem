@@ -37,6 +37,20 @@ class UpdateBuildingRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ], 
+            'project_name' => [
+                'string',
+                'required',
+            ],
+            'buidling_age' => [
+                'required',
+                'integer',
+                'min:0',
+                'max:2147483647',
+            ],
+            'name' => [
+                'string',
+                'required',
+            ],
         ];
     }
 }

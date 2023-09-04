@@ -71,6 +71,15 @@ class BuildingsController extends Controller
             $table->addColumn('organization_name', function ($row) {
                 return $row->organization ? $row->organization->name : '';
             });
+            $table->editColumn('project_name', function ($row) {
+                return $row->project_name ? $row->project_name : '';
+            });
+            $table->editColumn('buidling_age', function ($row) {
+                return $row->buidling_age ? $row->buidling_age : '';
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'building_photos', 'research_vist_result', 'engineering_vist_result', 'organization']);
 

@@ -321,6 +321,12 @@ return [
             'engineering_vist_result_helper' => ' ',
             'organization'                   => 'Organization',
             'organization_helper'            => ' ',
+            'project_name'                   => 'Project Name',
+            'project_name_helper'            => ' ',
+            'buidling_age'                   => 'Buidling Age',
+            'buidling_age_helper'            => ' ',
+            'name'                           => 'Name',
+            'name_helper'                    => ' ',
         ],
     ],
     'beneficiary' => [

@@ -16,6 +16,9 @@
                             {{ trans('cruds.building.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.building.fields.name') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.building.fields.building_number') }}
                         </th>
                         <th>
@@ -29,6 +32,12 @@
                         </th> 
                         <th>
                             {{ trans('cruds.building.fields.organization') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.building.fields.project_name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.building.fields.buidling_age') }}
                         </th>
                         <th>
                             &nbsp;
@@ -63,6 +72,10 @@
                     },
 
                     {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
                         data: 'building_number',
                         name: 'building_number'
                     },
@@ -83,6 +96,14 @@
                     {
                         data: 'organization_name',
                         name: 'organization.name'
+                    },
+                    {
+                        data: 'project_name',
+                        name: 'project_name'
+                    },
+                    {
+                        data: 'buidling_age',
+                        name: 'buidling_age'
                     },
                     {
                         data: 'actions',

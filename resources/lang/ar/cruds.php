@@ -321,6 +321,12 @@ return [
             'engineering_vist_result_helper' => ' ',
             'organization'                   => 'المنظمه التابع لها',
             'organization_helper'            => ' ',
+            'project_name'                   => ' اسم المشروع',
+            'project_name_helper'            => ' ',
+            'buidling_age'                   => ' عمر المبني',
+            'buidling_age_helper'            => ' ',
+            'name'                           => 'اسم المبني',
+            'name_helper'                    => ' ',
         ],
     ],
     'beneficiary' => [

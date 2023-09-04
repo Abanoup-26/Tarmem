@@ -66,6 +66,20 @@ class StoreBuildingRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'project_name' => [
+                'string',
+                'required',
+            ],
+            'buidling_age' => [
+                'required',
+                'integer',
+                'min:0',
+                'max:2147483647',
+            ],
+            'name' => [
+                'string',
+                'required',
+            ],
         ];
     }
 }

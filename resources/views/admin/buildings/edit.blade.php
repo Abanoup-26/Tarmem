@@ -10,6 +10,16 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group">
+                    <label class="required" for="name">{{ trans('cruds.building.fields.name') }}</label>
+                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $building->name) }}" required>
+                    @if($errors->has('name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('name') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.building.fields.name_helper') }}</span>
+                </div>
+                <div class="form-group">
                     <label>{{ trans('cruds.building.fields.building_type') }}</label>
                     <select class="form-control {{ $errors->has('building_type') ? 'is-invalid' : '' }}" name="building_type"
                         id="building_type">
@@ -227,6 +237,26 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.building.fields.organization_helper') }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="project_name">{{ trans('cruds.building.fields.project_name') }}</label>
+                    <input class="form-control {{ $errors->has('project_name') ? 'is-invalid' : '' }}" type="text" name="project_name" id="project_name" value="{{ old('project_name', $building->project_name) }}" required>
+                    @if($errors->has('project_name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('project_name') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.building.fields.project_name_helper') }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="buidling_age">{{ trans('cruds.building.fields.buidling_age') }}</label>
+                    <input class="form-control {{ $errors->has('buidling_age') ? 'is-invalid' : '' }}" type="number" name="buidling_age" id="buidling_age" value="{{ old('buidling_age', $building->buidling_age) }}" step="1" required>
+                    @if($errors->has('buidling_age'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('buidling_age') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.building.fields.buidling_age_helper') }}</span>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-danger" type="submit">

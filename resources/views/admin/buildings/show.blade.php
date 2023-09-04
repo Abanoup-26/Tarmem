@@ -142,6 +142,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.building.fields.name') }}
+                                    </th>
+                                    <td>
+                                        {{ $building->name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.building.fields.building_number') }}
                                     </th>
                                     <td>
@@ -269,7 +277,22 @@
                                         {{ $building->organization->name ?? '' }}
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.building.fields.project_name') }}
+                                    </th>
+                                    <td>
+                                        {{ $building->project_name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.building.fields.buidling_age') }}
+                                    </th>
+                                    <td>
+                                        {{ $building->buidling_age }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Building Updates</h1>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-----Reject form---->
@@ -66,8 +66,6 @@
                 </form>
             @endif
             <!-----End ReReject form---->
-            
-
             <!-----Research vist  form ---->
             @if ($building->stages == 'engineering' && $building->research_vist_date == null)
                 <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}" enctype="multipart/form-data">
@@ -186,8 +184,6 @@
                 </form>
             @endif
             <!-----End Engineering result form ---->
-
-
         </div>
     </div>
 </div>
