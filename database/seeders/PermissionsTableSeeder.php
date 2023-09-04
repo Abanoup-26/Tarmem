@@ -434,7 +434,26 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 106,
                 'title' => 'supporting_stage',
             ],
-
+            [
+                'id'    => 107,
+                'title' => 'building_managment_create',
+            ],
+            [
+                'id'    => 108,
+                'title' => 'building_managment_edit',
+            ],
+            [
+                'id'    => 109,
+                'title' => 'building_managment_show',
+            ],
+            [
+                'id'    => 110,
+                'title' => 'building_managment_delete',
+            ],
+            [
+                'id'    => 111,
+                'title' => 'building_managment_access',
+            ],
         ];
 
         Permission::insert($permissions);
