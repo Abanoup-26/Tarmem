@@ -214,6 +214,17 @@ class OrganizationsController extends Controller
         } elseif ($organization->partnership_agreement) {
             $organization->partnership_agreement->delete();
         }
+
+        if ($request->input('logo', false)) {
+            if (!$organization->logo || $request->input('logo') !== $organization->logo->file_name) {
+                if ($organization->logo) {
+                    $organization->logo->delete();
+                }
+                $organization->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
+            }
+        } elseif ($organization->logo) {
+            $organization->logo->delete();
+        }
         Alert::success(trans('flash.update.title'), trans('flash.update.body'));
         return redirect()->route('admin.organizations.index');
     }

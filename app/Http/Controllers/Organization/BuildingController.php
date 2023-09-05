@@ -50,7 +50,7 @@ class BuildingController extends Controller
         // validate the form data 
         $data = $request->validate([
             'name'=> 'required',
-            'project_name'=> 'required|unique:building,project_name',
+            'project_name'=> 'required|unique:buildings,project_name',
             'buidling_age' => 'required',
             'building_type' => 'required',
             'building_number' => 'required|numeric',
@@ -98,7 +98,7 @@ class BuildingController extends Controller
         // validate the form data 
         $updatedData = $request->validate([
             'name'=> 'required',
-            'project_name'=> 'required|unique:building,project_name',
+            'project_name'=> 'required|unique',
             'buidling_age' => 'required|numeric',
             'building_type' => 'required',
             'building_number' => 'required|numeric',

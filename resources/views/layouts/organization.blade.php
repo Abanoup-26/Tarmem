@@ -51,11 +51,12 @@
         <header class="header white-bg fixed-top d-flex align-content-center flex-wrap">
             @php
                 $org = \App\Models\Organization::where('user_id', Auth::user()->id)->first();
+                $logo = $org->logo == null ? asset('frontend/img/logo.png') : $org->logo->getUrl();
             @endphp
             <!-- Logo -->
             <div class="logo">
-                <a href="#" class="default-logo"><img src="{{ $org->logo->getUrl() }}" alt=""></a>
-                <a href="#" class="mobile-logo"><img src="{{ $org->logo->getUrl() }}" alt=""></a>
+                <a href="#" class="default-logo"><img src="{{ $logo }}" alt=""></a>
+                <a href="#" class="mobile-logo"><img src="{{ $logo }}" alt=""></a>
             </div>
             <!-- End Logo -->
 

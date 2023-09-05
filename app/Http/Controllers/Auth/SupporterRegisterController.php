@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Building;
 use App\Models\Supporter;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -34,7 +35,9 @@ class SupporterRegisterController extends Controller
     // override functions 
     public function showRegistrationForm()
     {
-        return view('auth.supporter-register');
+        $project_name = Building::pluck('project_name','id'); 
+        
+        return view('auth.supporter-register' , compact('project_name'));
     }
 
     /**

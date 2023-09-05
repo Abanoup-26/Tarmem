@@ -85,7 +85,8 @@ class RegisterController extends Controller
             'phone_number' => 'nullable|string|max:255',
             'organization_mobile_number' => 'nullable|string|max:255',
             'position' => 'required|max:50',
-            'mobile_number' => 'required'
+            'mobile_number' => 'required',
+            'logo'           => 'required',
         ]);
     }
 

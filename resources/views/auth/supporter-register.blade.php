@@ -89,7 +89,33 @@
                                             class="help-block">{{ trans('cruds.user.fields.mobile_number_helper') }}</span>
                                     </div>
                                     <!-- End User Mobile-Number -->
-
+                                    <!----- Project's name ------>
+                                    <div class="form-group">
+                                        <label class="required"
+                                            for="project_name">{{ trans('cruds.building.fields.project_name') }}</label>
+                                        <div style="padding-bottom: 4px">
+                                            <span class="btn  btn-xs select-all"
+                                                style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                            <span class="btn  btn-xs deselect-all"
+                                                style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                                        </div>
+                                        <select
+                                            class="form-control select2 {{ $errors->has('project_name') ? 'is-invalid' : '' }}"
+                                            name="project_name[]" id="project_name" multiple required>
+                                            @foreach ($project_name as $id => $role)
+                                                <option value="{{ $id }}"
+                                                    {{ in_array($id, old('project_name', [])) ? 'selected' : '' }}>
+                                                    {{ $role }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('project_name'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('project_name') }}
+                                            </div>
+                                        @endif
+                                        <span
+                                            class="help-block">{{ trans('cruds.building.fields.project_name_helper') }}</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -104,3 +130,4 @@
         </div>
     </div>
 @endsection
+
