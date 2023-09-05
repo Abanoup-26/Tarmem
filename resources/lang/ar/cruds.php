@@ -329,6 +329,10 @@ return [
             'buidling_age_helper'            => ' ',
             'name'                           => 'اسم المبني',
             'name_helper'                    => ' ',
+            'researchers'                    => 'القائم بالزياره البحثيه',      
+            'researchers_helper'             => ' ',
+            'engineers'                    => '  القائم بالزياره الهندسيه',      
+            'engineers_helper'             => ' ',
         ],
     ],
     'beneficiary' => [

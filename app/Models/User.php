@@ -126,4 +126,8 @@ class User extends Authenticatable implements HasMedia
         return $this->getMedia('identity_photos');
     }
 
+    public function buildings()
+    {
+        return $this->belongsToMany(Building::class);
+    }
 }

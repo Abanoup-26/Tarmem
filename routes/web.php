@@ -93,6 +93,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Buildings
     Route::post('buildings/media', 'BuildingsController@storeMedia')->name('buildings.storeMedia');
     Route::post('buildings/ckmedia', 'BuildingsController@storeCKEditorImages')->name('buildings.storeCKEditorImages');
+    Route::get('buildings/visits/{id}', 'BuildingsController@visits')->name('buildings.visits');
+    Route::post('buildings/visits/store', 'BuildingsController@storeVisits')->name('buildings.visits.store');
+
     Route::resource('buildings', 'BuildingsController');
 
     // Beneficiary

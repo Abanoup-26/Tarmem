@@ -329,6 +329,10 @@ return [
             'buidling_age_helper'            => ' ',
             'name'                           => 'Name',
             'name_helper'                    => ' ',
+            'researchers'                    => ' Research Visitor',      
+            'researchers_helper'             => ' ',
+            'engineers'                    => ' Engineer Visitor',      
+            'engineers_helper'             => ' ',
         ],
     ],
     'beneficiary' => [

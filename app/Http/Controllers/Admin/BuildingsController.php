@@ -10,7 +10,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Models\BuildingContractor;
 use App\Models\Contractor;
+use App\Models\Organization;
 use App\Models\Supporter;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,14 +35,10 @@ class BuildingsController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'building_show';
-                $editGate      = 'building_edit';
-                $deleteGate    = 'building_delete';
                 $crudRoutePart = 'buildings';
 
-                return view('partials.datatablesActions', compact(
+                return view('partials.buildingActions', compact(
                     'viewGate',
-                    'editGate',
-                    'deleteGate',
                     'crudRoutePart',
                     'row'
                 ));
@@ -89,11 +87,19 @@ class BuildingsController extends Controller
         return view('admin.buildings.index');
     }
 
-
     public function show(Building $building)
     {
         abort_if(Gate::denies('building_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $supporters = Supporter::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // get only the approved supporters
+        $supporters = Supporter::with(['user' => function ($query) {
+            $query->where('approved', 1)->whereNotNull('name');
+        }])
+        ->whereHas('user', function ($query) {
+            $query->where('approved', 1)->whereNotNull('name');
+        })
+        ->get()
+        ->pluck('user.name', 'id')
+        ->prepend(trans('global.pleaseSelect'), '');
         // get only the approved contractors 
         $contractors = Contractor::with(['user' => function ($query) {
             $query->where('approved', 1)->whereNotNull('name');
@@ -105,8 +111,26 @@ class BuildingsController extends Controller
             ->pluck('user.name', 'id')
             ->prepend(trans('global.pleaseSelect'), '');
 
-        $building->load('organization', 'buildingBuildingContractors.contractor.user', 'buildingBuildingContractors.building', 'buildingBeneficiaries.illness_type', 'buildingBuildingSupporters');
+        $building->load('organization', 'buildingBuildingContractors.contractor.user', 'buildingBuildingContractors.building', 'buildingBeneficiaries.illness_type', 'buildingBuildingSupporters.supporter.user');
         return view('admin.buildings.show', compact('building', 'contractors','supporters'));
+    }
+
+    public function visits(Request $request)
+    {
+        $buildingId = $request->id;
+        // $users = User::pluck('name','id')->prepend(trans(''),'');
+        $users = User::where('user_type','staff')->pluck('name','id')->prepend(trans(''),'');
+        return view('admin.buildings.visits',compact('users','buildingId'));
+    }
+    public function storeVisits(Request $request)
+    {
+        // building
+        $building = Building::with('researchers','engineers')->findOrfail($request->building_id)->first();
+        $building->researchers()->attach($request->researchers);
+        $building->engineers()->attach($request->engineers);
+        $building->save();
+        Alert::success('تم تحديد الاشخاص للزياره البحثيه والزياره الهندسيه للمبني ');
+        return redirect()->route('admin.buildings.index');
     }
 
     public function edit(Building $building)

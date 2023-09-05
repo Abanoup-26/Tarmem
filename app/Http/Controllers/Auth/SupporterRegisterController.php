@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Building;
+use App\Models\BuildingSupporter;
 use App\Models\Supporter;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -53,6 +54,8 @@ class SupporterRegisterController extends Controller
             'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'mobile_number' => ['required' ,'numeric' , 'min:12' ] ,
+            'project_name' => ['required', 'array'], 
+            'project_name.*' => ['required', 'exists:buildings,id'],
         ]);
     }
     /**
@@ -63,7 +66,6 @@ class SupporterRegisterController extends Controller
      */
     protected function create(array $data)
     {   
-
         $supporterUser = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -72,11 +74,23 @@ class SupporterRegisterController extends Controller
             'user_type' => 'supporter',
             'mobile_number' => $data['mobile_number'],
         ]);
-
-        Supporter::create([
+        $supporter = Supporter::create([
             'user_id' => $supporterUser->id 
         ]);
 
+         // Access the selected project IDs from the request
+         $selectedProjectIds = $data['project_name'];
+
+        // Iterate through the selected IDs
+        foreach ($selectedProjectIds as $buildingId) {
+            // Create a BuildingSupporter record for the supporter and building
+            BuildingSupporter::create([
+                'supporter_id' => $supporter->id,
+                'building_id'  => $buildingId,
+                'supporter_status' => 'accepted',
+            ]);
+        }
+       
         return  $supporterUser ; 
     }
 }

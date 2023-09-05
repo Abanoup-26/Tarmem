@@ -151,4 +151,13 @@ class Building extends Model implements HasMedia
     {
         return $this->belongsTo(Organization::class, 'organization_id');
     }
+    public function researchers()
+    {
+        return $this->belongsToMany(User::class, 'building_researcher_user', 'building_id', 'user_id');
+    }
+    
+    public function engineers()
+    {
+        return $this->belongsToMany(User::class, 'building_engineer_user', 'building_id', 'user_id');
+    }
 }
