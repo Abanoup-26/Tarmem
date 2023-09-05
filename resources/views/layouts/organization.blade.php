@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <!-- ======= END MAIN STYLES ======= -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
     <style>
         .ui-datepicker {
             z-index: 99 !important;
@@ -319,11 +320,10 @@
     <script src="{{ asset('dashboard_offline/js/dropzone.min.js') }}"></script>
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!----Date Scripts ----->
     <script>
-        $(document).ready(function() {
-            $('.form-group .date').datepicker({
-                format: 'DD/MM/YYYY',
+        $(function() {
+            $(".form-group .date").datepicker({
+                dateFormat: 'dd/mm/yy',
                 locale: 'en',
                 icons: {
                     up: 'fas fa-chevron-up',

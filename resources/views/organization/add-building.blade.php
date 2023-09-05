@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         #map {
-        height: 400px;
+            height: 400px;
         }
     </style>
 @endsection
@@ -33,9 +33,11 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-4 mt-4">
-                                    <label class="required mb-2 font-14 bold black" for="name">{{ trans('cruds.building.fields.name') }}</label>
-                                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                                    @if($errors->has('name'))
+                                    <label class="required mb-2 font-14 bold black"
+                                        for="name">{{ trans('cruds.building.fields.name') }}</label>
+                                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                        type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                                    @if ($errors->has('name'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('name') }}
                                         </div>
@@ -107,16 +109,20 @@
                                     <span class="help-block">{{ trans('cruds.building.fields.floor_count_helper') }}</span>
                                 </div>
                                 <div class="form-group col-md-4 mt-4 ">
-                                    <label class="required mb-2 font-14 bold black" for="project_name">{{ trans('cruds.building.fields.project_name') }}</label>
-                                    <input class="form-control {{ $errors->has('project_name') ? 'is-invalid' : '' }}" type="text" name="project_name" id="project_name" value="{{ old('project_name', '') }}" required>
-                                    @if($errors->has('project_name'))
+                                    <label class="required mb-2 font-14 bold black"
+                                        for="project_name">{{ trans('cruds.building.fields.project_name') }}</label>
+                                    <input class="form-control {{ $errors->has('project_name') ? 'is-invalid' : '' }}"
+                                        type="text" name="project_name" id="project_name"
+                                        value="{{ old('project_name', '') }}" required>
+                                    @if ($errors->has('project_name'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('project_name') }}
                                         </div>
                                     @endif
-                                    <span class="help-block">{{ trans('cruds.building.fields.project_name_helper') }}</span>
+                                    <span
+                                        class="help-block">{{ trans('cruds.building.fields.project_name_helper') }}</span>
                                 </div>
-                               
+
                             </div>
                             <div class="row">
                                 <div class="form-group  col-md-4 mt-4">
@@ -130,23 +136,29 @@
                                             {{ $errors->first('building_photos') }}
                                         </div>
                                     @endif
-                                    <span class="help-block">{{ trans('cruds.building.fields.building_photos_helper') }}</span>
+                                    <span
+                                        class="help-block">{{ trans('cruds.building.fields.building_photos_helper') }}</span>
                                 </div>
                                 <div class="form-group col-md-4 mt-4">
-                                    <label class="required mb-2 font-14 bold black" for="buidling_age">{{ trans('cruds.building.fields.buidling_age') }}</label>
-                                    <input class="form-control {{ $errors->has('buidling_age') ? 'is-invalid' : '' }}" type="number" name="buidling_age" id="buidling_age" value="{{ old('buidling_age', '') }}" step="1" required>
-                                    @if($errors->has('buidling_age'))
+                                    <label class="required mb-2 font-14 bold black"
+                                        for="buidling_age">{{ trans('cruds.building.fields.buidling_age') }}</label>
+                                    <input class="form-control {{ $errors->has('buidling_age') ? 'is-invalid' : '' }}"
+                                        type="number" name="buidling_age" id="buidling_age"
+                                        value="{{ old('buidling_age', '') }}" step="1" required>
+                                    @if ($errors->has('buidling_age'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('buidling_age') }}
                                         </div>
                                     @endif
-                                    <span class="help-block">{{ trans('cruds.building.fields.buidling_age_helper') }}</span>
+                                    <span
+                                        class="help-block">{{ trans('cruds.building.fields.buidling_age_helper') }}</span>
                                 </div>
                                 <div class="form-group col-md-4 mt-4">
                                     <label class="mb-2 font-14 bold black"
                                         for="birth_data">{{ trans('cruds.building.fields.birth_data') }}</label>
                                     <input class="form-control date {{ $errors->has('birth_data') ? 'is-invalid' : '' }}"
-                                        type="text" name="birth_data" id="birth_data" value="{{ old('birth_data') }}">
+                                        type="text" name="birth_data" id="birth_data"
+                                        value="{{ old('birth_data') }}">
                                     @if ($errors->has('birth_data'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('birth_data') }}
@@ -161,9 +173,10 @@
                                 <input type="hidden" name="longtude" id="longtude">
 
                                 <div class="form-group col-md-12 mt-4">
-                                    <input id="search-input" type="text" class="form-control" placeholder="Search for places" style="width:300px">
+                                    <input id="search-input" type="text" class="form-control"
+                                        placeholder="Search for places" style="width:300px">
                                     <div id="map" style="height: 400px;"></div>
-                                </div> 
+                                </div>
                             </div>
                             <!-- Button Group -->
                             <div class="button-group  row justify-content-center  pt-1">
@@ -184,9 +197,10 @@
     <!-- End Main Content -->
 @endsection
 
-@section('scripts') 
-
-    <script src="https://maps.googleapis.com/maps/api/js?key={{config('app.google_api_key')}}&libraries=places&callback=initMap" async defer></script>
+@section('scripts')
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_api_key') }}&libraries=places&callback=initMap"
+        async defer></script>
 
     <script>
         let map;
@@ -204,14 +218,18 @@
             marker = new google.maps.Marker({
                 position: location,
                 map: map,
-            }); 
+            });
 
             $('#latitude').val(location.lat());
             $('#longtude').val(location.lng());
         }
+
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 51.505, lng: -0.09 },
+                center: {
+                    lat: 51.505,
+                    lng: -0.09
+                },
                 zoom: 13,
             });
 
@@ -256,13 +274,16 @@
             if ('geolocation' in navigator) {
                 navigator.geolocation.getCurrentPosition(
                     position => {
-                        const { latitude, longitude } = position.coords;
+                        const {
+                            latitude,
+                            longitude
+                        } = position.coords;
                         $('#latitude').val(latitude);
                         $('#longtude').val(longitude);
                         const userLatLng = new google.maps.LatLng(latitude, longitude);
 
                         map.setCenter(userLatLng);
-                        
+
                         if (marker) {
                             marker.setMap(null);
                         }
@@ -336,5 +357,4 @@
             }
         }
     </script>
-    
 @endsection

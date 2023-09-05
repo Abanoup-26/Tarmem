@@ -65,10 +65,10 @@ class BeneficiaryController extends Controller
             'identity_number' => 'required|max:10|min:10',
             'qualifications' => 'required',
             'job_status' => 'required',
-            'job_title' => 'required',
-            'job_salary' => 'required|numeric',
+            'job_title' => 'nullable',
+            'job_salary' => 'nullable|numeric',
             'illness_status' => 'required',
-            'illness_type_id' => 'required',
+            'illness_type_id' => 'nullable',
             'marital_status' => 'required',
             'marital_state_date' => 'required|date_format:' . config('panel.date_format'),
             'building_id' => 'required',
@@ -81,9 +81,9 @@ class BeneficiaryController extends Controller
             "familyrelation_id" => 'required',
             "family_qualifications" => 'required',
             "family_job_status" => 'required',
-            "family_job_salary" => 'required',
+            "family_job_salary" => 'nullable|numeric',
             "family_illness_status" => 'required',
-            "family_illness_type_id" => 'required',
+            "family_illness_type_id" => 'nullable',
         ]);
 
         // create Beneficiary 

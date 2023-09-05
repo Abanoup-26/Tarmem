@@ -199,7 +199,7 @@
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <!---  job_title-->
-                                                    <div class="form-group">
+                                                    <div class="form-group" id="job_title_container">
                                                         <label class="font-14 bold mb-2"
                                                             for="job_title">{{ trans('cruds.beneficiary.fields.job_title') }}</label>
                                                         <input
@@ -217,7 +217,7 @@
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <!---  job_salary-->
-                                                    <div class="form-group">
+                                                    <div class="form-group" id="job_sallary_container">
                                                         <label class="font-14 bold mb-2"
                                                             for="job_salary">{{ trans('cruds.beneficiary.fields.job_salary') }}</label>
                                                         <input
@@ -261,9 +261,10 @@
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.illness_status_helper') }}</span>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-lg-6">
                                                     <!---  illness_type_id-->
-                                                    <div class="form-group">
+                                                    <div class="form-group" id="illness_type_container">
                                                         <label class="font-14 bold mb-2"
                                                             for="illness_type_id">{{ trans('cruds.beneficiary.fields.illness_type') }}</label>
                                                         <select
@@ -633,7 +634,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <!--job_salary -->
-                                                    <div class="form-group">
+                                                    <div class="form-group" id="family_job_sallary_container">
                                                         <label class="font-14 bold mb-2"
                                                             for="family_job_salary">{{ trans('cruds.beneficiaryFamily.fields.job_salary') }}</label>
                                                         <input
@@ -655,7 +656,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <!--illness_status -->
-                                                    <div class="form-group">
+                                                    <div class="form-group ">
                                                         <label
                                                             class="required font-14 bold mb-2">{{ trans('cruds.beneficiaryFamily.fields.illness_status') }}</label>
                                                         <select
@@ -682,13 +683,12 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <!--illness_type_id -->
-                                                    <div class="form-group">
-                                                        <label class="required font-14 bold mb-2"
+                                                    <div class="form-group" id="family_illness_type_container">
+                                                        <label class=" font-14 bold mb-2"
                                                             for="family_illness_type_id">{{ trans('cruds.beneficiaryFamily.fields.illness_type') }}</label>
                                                         <select
                                                             class="form-control select2 {{ $errors->has('illness_type') ? 'is-invalid' : '' }}"
-                                                            name="family_illness_type_id" id="family_illness_type_id"
-                                                            required>
+                                                            name="family_illness_type_id" id="family_illness_type_id">
                                                             @foreach ($illness_types as $id => $entry)
                                                                 <option value="{{ $id }}"
                                                                     {{ old('illness_type_id') == $id ? 'selected' : '' }}>
@@ -924,5 +924,75 @@
                 return _results
             }
         }
+    </script>
+
+    <!------illness ---->
+    <script>
+        $(document).ready(function() {
+            var illnessStatusSelect = $('#illness_status');
+            var illnessTypeContainer = $('#illness_type_container');
+
+            var FamIllnessStatusSelect = $('#family_illness_status')
+            var FamContainer = $('#family_illness_type_container')
+            illnessTypeContainer.hide();
+            FamContainer.hide();
+            // Attach a change event listener to the "illness_status" dropdown
+            illnessStatusSelect.change(function() {
+                var selectedValue = $(this).val();
+                // Check if the selected value is not empty and not equal to "safe"
+                if (selectedValue && selectedValue !== "safe") {
+                    // Show the "illness_type" field
+                    illnessTypeContainer.show();
+                } else {
+                    // Hide the "illness_type" field if the value is empty or equals "!safe"
+                    illnessTypeContainer.hide();
+                }
+            });
+            // Attach a change event listener to the "family_illness_type" dropdown
+            FamIllnessStatusSelect.change(function() {
+                var selectedValue = $(this).val();
+                // Check if the selected value is not empty and not equal to "safe"
+                if (selectedValue && selectedValue !== "safe") {
+                    FamContainer.show();
+                } else {
+                    // Hide the "illness_type" field if the value is empty or equals "!safe"
+                    FamContainer.hide();
+                }
+            });
+        });
+    </script>
+    <!------work ---->
+    <script>
+        $(document).ready(function() {
+            var jobStatusSelect = $('#job_status');
+            var jobTitleContainer = $('#job_title_container');
+            var jobSallaryContainer = $('#job_sallary_container');
+            var familyJobStatusSelect = $('#family_job_status');
+            var FamJobSallaryContainer = $('#family_job_sallary_container');
+            jobTitleContainer.hide();
+            jobSallaryContainer.hide();
+            FamJobSallaryContainer.hide();
+            // Attach a change event listener to the "job_status" dropdown
+            jobStatusSelect.change(function() {
+                var selectedValue = $(this).val();
+                // Check if the selected value is not empty and not equal to "safe"
+                if (selectedValue && selectedValue !== "idle") {
+                    jobTitleContainer.show();
+                    jobSallaryContainer.show();
+                } else {
+                    jobTitleContainer.hide();
+                    jobSallaryContainer.hide();
+                }
+            });
+            // Attach a change event listener to the "family_job_status" dropdown
+            familyJobStatusSelect.change(function() {
+                var selectedValue = $(this).val();
+                if (selectedValue && selectedValue !== "idle") {
+                    FamJobSallaryContainer.show();
+                } else {
+                    FamJobSallaryContainer.hide();
+                }
+            })
+        });
     </script>
 @endsection
