@@ -57,8 +57,8 @@ class BuildingController extends Controller
             'floor_count' => 'required|numeric',
             'apartments_count' => 'required|numeric',
             'birth_data' => 'required|date_format:' . config('panel.date_format'),
-            "longtude" => 'required',
-            "latitude" => "required",
+            'longtude' => 'required',
+            'latitude' => 'required',
         ]);
 
         $organization = Organization::where('user_id',Auth::id())->first();
@@ -98,15 +98,15 @@ class BuildingController extends Controller
         // validate the form data 
         $updatedData = $request->validate([
             'name'=> 'required',
-            'project_name'=> 'required|unique',
+            'project_name' => 'required|unique:buildings,project_name,' . $request->id,
             'buidling_age' => 'required|numeric',
             'building_type' => 'required',
             'building_number' => 'required|numeric',
             'floor_count' => 'required|numeric',
             'apartments_count' => 'required|numeric',
             'birth_data' => 'required|date_format:' . config('panel.date_format'),
-            "longtude" => 'required',
-            "latitude" => "required",
+            'longtude' => 'required',
+            'latitude' => 'required',
         ]);
         // update the building 
         $building->update([
