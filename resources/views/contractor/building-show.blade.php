@@ -28,7 +28,7 @@
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> نوع المبني </span>
                                     <span
-                                    class="font-20  text-primary text-start bold c4 ml-4">{{  \App\Models\Building::BUILDING_TYPE_SELECT[$building->building_type] }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\Building::BUILDING_TYPE_SELECT[$building->building_type] }}</span>
                                 </div>
                                 <!-- floor_count -->
                                 <div class="review-list mb-20">
@@ -47,31 +47,28 @@
                                 <!-- latitude /longtude -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> العنوان </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">
-                                        <a target="_blanc" href="https://www.google.com/maps/place/{{$building->latitude}},{{$building->longtude}}">
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">
+                                        <a target="_blanc"
+                                            href="https://www.google.com/maps/place/{{ $building->latitude }},{{ $building->longtude }}">
                                             عرض في الخريطة
-                                        </a> 
+                                        </a>
                                     </span>
-                                </div> 
-                                @php
-                                    $buildingContractor = $building->buildingBuildingContractors->first();
-                                @endphp
-                                @if($buildingContractor && $buildingContractor->stages != 'pending')
+                                </div>
+                                @if ($buildingcontractor && $buildingcontractor->stages != 'pending')
                                     <div class="review-list mb-20">
                                         <span class="font-14 bold c4 ml-4">السعر بالمواد</span>
                                         <span
-                                            class="font-20  text-primary text-start bold c4 ml-4">{{ $buildingContractor->quotation_with_materials ?? ''  }}</span>
+                                            class="font-20  text-primary text-start bold c4 ml-4">{{ $buildingcontractor->quotation_with_materials ?? '' }}</span>
                                     </div>
                                     <div class="review-list mb-20">
                                         <span class="font-14 bold c4 ml-4">السعر بدون المواد</span>
                                         <span
-                                            class="font-20  text-primary text-start bold c4 ml-4">{{ $buildingContractor->quotation_without_materials  ?? '' }}</span>
+                                            class="font-20  text-primary text-start bold c4 ml-4">{{ $buildingcontractor->quotation_without_materials ?? '' }}</span>
                                     </div>
                                     <div class="review-list mb-20">
                                         <span class="font-14 bold c4 ml-4">الحالة</span>
                                         <span
-                                            class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\BuildingContractor::STAGES_2_SELECT[$buildingContractor->stages] }}</span>
+                                            class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\BuildingContractor::STAGES_2_SELECT[$buildingcontractor->stages] }}</span>
                                     </div>
                                 @endif
                             </div>

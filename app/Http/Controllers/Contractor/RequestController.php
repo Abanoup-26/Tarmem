@@ -28,9 +28,14 @@ class RequestController extends Controller
     public function show(Request $request )
     {
         $building =Building::findOrFail( $request->id );
-        $building->load('buildingBuildingContractors');
-        // start her to know what is the  بيانات الوحدات  وتكمل مهمات الcontrctor 
-        return view('contractor.building-show',compact('building'));
+        $building->load('buildingBuildingContractors.contractor.user');
+        // get the auth contractor 
+        $buildingcontractor =  $building->buildingBuildingContractors()
+        ->whereHas('contractor.user', function ($query) {
+            $query->where('id', auth()->user()->id);
+        })->first();
+        // return $contractor ;
+        return view('contractor.building-show',compact('building' ,'buildingcontractor'));
     }
 
     public function edit($id)

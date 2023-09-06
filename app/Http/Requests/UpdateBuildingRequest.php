@@ -39,17 +39,17 @@ class UpdateBuildingRequest extends FormRequest
             ], 
             'project_name' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'buidling_age' => [
-                'required',
+                'nullable',
                 'integer',
                 'min:0',
                 'max:2147483647',
             ],
             'name' => [
                 'string',
-                'required',
+                'nullable',
             ],
         ];
     }
