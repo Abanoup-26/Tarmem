@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class RegisterController extends Controller
@@ -76,18 +77,20 @@ class RegisterController extends Controller
         $availableOrg_Types = OrganizationType::pluck('id')->toArray();
 
         return Validator::make($data, [
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'organization_name' => 'required|string|max:255',
             'organization_type_id' => 'required|in:' . implode(',', $availableOrg_Types),
             'website' => 'required|string|max:255',
-            'phone_number' => 'nullable|string|max:255',
-            'organization_mobile_number' => 'nullable|string|max:255',
-            'position' => 'required|max:50',
-            'mobile_number' => 'required',
-            'logo'           => 'required',
+            'phone_number' => ['required', 'string', 'max:10', 'regex:/^01[1-9][0-9]{7}$/', Rule::unique('organizations', 'phone_number')],
+            'organization_mobile_number' => ['required', 'string', 'max:10', 'regex:/^05[0-9]{8}$/', Rule::unique('organizations', 'mobile_number')],
+            'position' => 'required|string|max:50',
+            'mobile_number' => ['required', 'string', 'max:10', 'regex:/^05[0-9]{8}$/', Rule::unique('users', 'mobile_number')],
+            'logo' => 'required',
         ]);
+        
+        
     }
 
     /**

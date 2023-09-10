@@ -61,10 +61,16 @@
                 </div>
                 <!---  qualifications-->
                 <div class="form-group">
-                    <label class="required"
-                        for="qualifications">{{ trans('cruds.beneficiary.fields.qualifications') }}</label>
-                    <input class="form-control {{ $errors->has('qualifications') ? 'is-invalid' : '' }}" type="text"
-                        name="qualifications" id="qualifications" value="{{ old('qualifications', '') }}" required>
+                    <label class="required">{{ trans('cruds.beneficiary.fields.qualifications') }}</label>
+                    @foreach (App\Models\Beneficiary::QUALIFICATIONS_SELECT as $key => $label)
+                        <div class="form-check {{ $errors->has('qualifications') ? 'is-invalid' : '' }}">
+                            <input class="form-check-input" type="radio" id="qualifications_{{ $key }}"
+                                name="qualifications" value="{{ $key }}"
+                                {{ old('qualifications', '') === (string) $key ? 'checked' : '' }} required>
+                            <label class="form-check-label"
+                                for="qualifications_{{ $key }}">{{ $label }}</label>
+                        </div>
+                    @endforeach
                     @if ($errors->has('qualifications'))
                         <div class="invalid-feedback">
                             {{ $errors->first('qualifications') }}
@@ -102,6 +108,17 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.beneficiary.fields.job_title_helper') }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="employer">{{ trans('cruds.beneficiary.fields.employer') }}</label>
+                    <input class="form-control {{ $errors->has('employer') ? 'is-invalid' : '' }}" type="text"
+                        name="employer" id="employer" value="{{ old('employer', '') }}">
+                    @if ($errors->has('employer'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('employer') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.beneficiary.fields.employer_helper') }}</span>
                 </div>
                 <!---  job_salary-->
                 <div class="form-group">

@@ -51,7 +51,7 @@
 
     <!-- Footer -->
     <footer class="footer style--two ">
-        Tarmem system © 2023 created by <a href=""> Integerated visions</a>
+        <span>Created By &nbsp; <a href=""> &nbsp; Integerated visions © 2023</a> </span>
     </footer>
     <!-- End Footer -->
 

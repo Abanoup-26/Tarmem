@@ -78,6 +78,9 @@ class BeneficiaryFamilyController extends Controller
             $table->editColumn('job_status', function ($row) {
                 return $row->job_status ? BeneficiaryFamily::JOB_STATUS_RADIO[$row->job_status] : '';
             });
+            $table->editColumn('employer', function ($row) {
+                return $row->employer ? $row->employer : '';
+            });
             $table->editColumn('job_sallary', function ($row) {
                 return $row->job_sallary ? $row->job_sallary : '';
             });

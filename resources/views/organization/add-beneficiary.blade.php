@@ -114,7 +114,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <!---  identity_number-->
                                                     <div class="form-group ">
                                                         <label class="required font-14 bold mb-2"
@@ -133,7 +133,7 @@
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.identity_number_helper') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <!---  identity_photo-->
                                                     <div class="form-group">
                                                         <label class="required mb-2 font-14 bold black"
@@ -151,26 +151,34 @@
                                                     </div>
 
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-4">
                                                     <!---  qualifications-->
                                                     <div class="form-group">
-                                                        <label class="required font-14 bold mb-2"
-                                                            for="qualifications">{{ trans('cruds.beneficiary.fields.qualifications') }}</label>
-                                                        <input
-                                                            class="form-control {{ $errors->has('qualifications') ? 'is-invalid' : '' }}"
-                                                            type="text" name="qualifications" id="qualifications"
-                                                            value="{{ old('qualifications', '') }}" required>
+                                                        <label
+                                                            class="required font-14 bold mb-2">{{ trans('cruds.beneficiary.fields.qualifications') }}</label>
+                                                        <select
+                                                            class="form-control font-14 bold mb-2 {{ $errors->has('qualifications') ? 'is-invalid' : '' }}"
+                                                            name="qualifications" id="qualifications" >
+                                                            <option value disabled
+                                                                {{ old('qualifications', null) === null ? 'selected' : '' }}>
+                                                                {{ trans('global.pleaseSelect') }}</option>
+                                                            @foreach (App\Models\Beneficiary::QUALIFICATIONS_SELECT as $key => $label)
+                                                                <option value="{{ $key }}"
+                                                                    {{ old('qualifications', '') === (string) $key ? 'selected' : '' }}>
+                                                                    {{ $label }}</option>
+                                                            @endforeach
+                                                        </select>
                                                         @if ($errors->has('qualifications'))
                                                             <div class="invalid-feedback">
                                                                 {{ $errors->first('qualifications') }}
                                                             </div>
                                                         @endif
                                                         <span
-                                                            class="help-block">{{ trans('cruds.beneficiary.fields.qualifications_helper') }}</span>
+                                                            class="help-block">{{ trans('cruds.beneficiary.fields.job_status_helper') }}</span>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-lg-3">
                                                     <!---  job_status-->
                                                     <div class="form-group">
@@ -196,6 +204,7 @@
                                                         <span
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.job_status_helper') }}</span>
                                                     </div>
+
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <!---  job_title-->
@@ -231,6 +240,25 @@
                                                         @endif
                                                         <span
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.job_salary_helper') }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3">
+                                                    <!--Employeer--->
+                                                    <div class="form-group" id="employer_container">
+                                                        <label class="font-14 bold mb-2"
+                                                            for="employer">{{ trans('cruds.beneficiary.fields.employer') }}</label>
+                                                        <input
+                                                            class="form-control {{ $errors->has('employer') ? 'is-invalid' : '' }}"
+                                                            type="text" name="employer" id="employer"
+                                                            value="{{ old('employer', '') }}">
+                                                        @if ($errors->has('employer'))
+                                                            <div class="invalid-feedback">
+                                                                {{ $errors->first('employer') }}
+                                                            </div>
+                                                        @endif
+                                                        <span
+                                                            class="help-block">{{ trans('cruds.beneficiary.fields.employer_helper') }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -588,25 +616,33 @@
                                                 <div class="col-lg-6">
                                                     <!--qualifications -->
                                                     <div class="form-group">
-                                                        <label class="font-14 bold mb-2"
-                                                            for="family_qualifications">{{ trans('cruds.beneficiaryFamily.fields.qualifications') }}</label>
-                                                        <input
-                                                            class="form-control {{ $errors->has('qualifications') ? 'is-invalid' : '' }}"
-                                                            type="text" name="family_qualifications"
-                                                            id="family_qualifications"
-                                                            value="{{ old('qualifications', '') }}">
+                                                        <label
+                                                            class="required font-14 bold mb-2">{{ trans('cruds.beneficiary.fields.qualifications') }}</label>
+                                                        <select
+                                                            class="form-control font-14 bold mb-2 {{ $errors->has('qualifications') ? 'is-invalid' : '' }}"
+                                                            name="family_qualifications" id="family_qualifications"
+                                                            >
+                                                            <option value disabled
+                                                                {{ old('qualifications', null) === null ? 'selected' : '' }}>
+                                                                {{ trans('global.pleaseSelect') }}</option>
+                                                            @foreach (App\Models\Beneficiary::QUALIFICATIONS_SELECT as $key => $label)
+                                                                <option value="{{ $key }}"
+                                                                    {{ old('qualifications', '') === (string) $key ? 'selected' : '' }}>
+                                                                    {{ $label }}</option>
+                                                            @endforeach
+                                                        </select>
                                                         @if ($errors->has('qualifications'))
                                                             <div class="invalid-feedback">
                                                                 {{ $errors->first('qualifications') }}
                                                             </div>
                                                         @endif
                                                         <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.qualifications_helper') }}</span>
+                                                            class="help-block">{{ trans('cruds.beneficiary.fields.job_status_helper') }}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <!--job_status -->
                                                     <div class="form-group">
                                                         <label
@@ -632,7 +668,7 @@
                                                             class="help-block">{{ trans('cruds.beneficiaryFamily.fields.job_status_helper') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <!--job_salary -->
                                                     <div class="form-group" id="family_job_sallary_container">
                                                         <label class="font-14 bold mb-2"
@@ -649,6 +685,24 @@
                                                         @endif
                                                         <span
                                                             class="help-block">{{ trans('cruds.beneficiaryFamily.fields.job_salary_helper') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <!--- employer---->
+                                                    <div class="form-group" id="family_employer_container">
+                                                        <label class="font-14 bold mb-2"
+                                                            for="employer">{{ trans('cruds.beneficiary.fields.employer') }}</label>
+                                                        <input
+                                                            class="form-control {{ $errors->has('employer') ? 'is-invalid' : '' }}"
+                                                            type="text" name="family_employer" id="family_employer"
+                                                            value="{{ old('employer', '') }}">
+                                                        @if ($errors->has('employer'))
+                                                            <div class="invalid-feedback">
+                                                                {{ $errors->first('employer') }}
+                                                            </div>
+                                                        @endif
+                                                        <span
+                                                            class="help-block">{{ trans('cruds.beneficiary.fields.employer_helper') }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -966,12 +1020,16 @@
         $(document).ready(function() {
             var jobStatusSelect = $('#job_status');
             var jobTitleContainer = $('#job_title_container');
+            var empContainer = $('#employer_container');
             var jobSallaryContainer = $('#job_sallary_container');
             var familyJobStatusSelect = $('#family_job_status');
             var FamJobSallaryContainer = $('#family_job_sallary_container');
+            var familyEmpContainer = $('#family_employer_container')
             jobTitleContainer.hide();
             jobSallaryContainer.hide();
             FamJobSallaryContainer.hide();
+            empContainer.hide();
+            familyEmpContainer.hide();
             // Attach a change event listener to the "job_status" dropdown
             jobStatusSelect.change(function() {
                 var selectedValue = $(this).val();
@@ -979,9 +1037,11 @@
                 if (selectedValue && selectedValue !== "idle") {
                     jobTitleContainer.show();
                     jobSallaryContainer.show();
+                    empContainer.show();
                 } else {
                     jobTitleContainer.hide();
                     jobSallaryContainer.hide();
+                    empContainer.hide();
                 }
             });
             // Attach a change event listener to the "family_job_status" dropdown
@@ -989,8 +1049,10 @@
                 var selectedValue = $(this).val();
                 if (selectedValue && selectedValue !== "idle") {
                     FamJobSallaryContainer.show();
+                    familyEmpContainer.show();
                 } else {
                     FamJobSallaryContainer.hide();
+                    familyEmpContainer.hide();
                 }
             })
         });

@@ -159,7 +159,7 @@
                                     <div class="form-group mb-20">
                                         <label class="required"
                                             for="logo">{{ trans('cruds.organization.fields.logo') }}</label>
-                                        <div class="needsclick dropzone style--three{{ $errors->has('logo') ? 'is-invalid' : '' }}"
+                                        <div class="needsclick dropzone style--three {{ $errors->has('logo') ? 'is-invalid' : '' }}"
                                             id="logo-dropzone">
                                         </div>
                                         @if ($errors->has('logo'))

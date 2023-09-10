@@ -62,7 +62,7 @@ class BeneficiaryController extends Controller
             //     return implode(' ', $links);
             // });
             $table->editColumn('qualifications', function ($row) {
-                return $row->qualifications ? $row->qualifications : '';
+                return $row->qualifications ? Beneficiary::QUALIFICATIONS_SELECT[$row->qualifications] : '';
             });
             // $table->editColumn('job_status', function ($row) {
             //     return $row->job_status ? Beneficiary::JOB_STATUS_RADIO[$row->job_status] : '';

@@ -10,9 +10,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Models\BeneficiaryFamily;
 use App\Models\BeneficiaryNeed;
+use App\Models\Organization;
 use App\Models\Relative;
 use App\Models\Unit;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Return_;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -21,16 +23,25 @@ class BeneficiaryController extends Controller
 {
     use MediaUploadingTrait;
     public function index()
-    {
-        $beneficiaries = Beneficiary::with('building', 'beneficiaryBeneficiaryFamilies', 'beneficiaryBeneficiaryNeeds.unit')->get();
+{
+    $authUserId = Auth::id();
+    
+    $beneficiaries = Beneficiary::with('building.organization.user', 'beneficiaryBeneficiaryFamilies', 'beneficiaryBeneficiaryNeeds.unit')
+        ->whereHas('building.organization.user', function ($query) use ($authUserId) {
+            $query->where('id', $authUserId);
+        })
+        ->get();
 
-        return view('organization.beneficiaries', compact('beneficiaries'));
-    }
+    return view('organization.beneficiaries', compact('beneficiaries'));
+}
 
     public function create()
     {
+        $authUserId = Auth::id();
         $illness_types = Illnesstype::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::pluck('building_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::with('organization.user')->whereHas('organization', function ($query) use ($authUserId) {
+            $query->where('user_id', $authUserId);
+        })->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $units = Unit::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $familyrelations = Relative::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -38,12 +49,15 @@ class BeneficiaryController extends Controller
     }
 
     public function edit(Request $request)
-    {
+    {   
+        $authUserId = Auth::id();
         // get the beneficiary 
         $beneficiary = Beneficiary::findOrFail($request->id);
         // get important pluckes
         $illness_types = Illnesstype::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::pluck('building_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::with('organization.user')->whereHas('organization', function ($query) use ($authUserId) {
+            $query->where('user_id', $authUserId);
+        })->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $units = Unit::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $familyrelations = Relative::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $beneficiaries = Beneficiary::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -63,9 +77,10 @@ class BeneficiaryController extends Controller
             'birth_date' => 'required|date_format:' . config('panel.date_format'),
             'address' => 'required',
             'identity_number' => 'required|max:10|min:10',
-            'qualifications' => 'required',
+            'qualifications' => ['required', 'in:' . implode(',', array_keys(Beneficiary::QUALIFICATIONS_SELECT))],
             'job_status' => 'required',
             'job_title' => 'nullable',
+            'employer'  => 'nullable',
             'job_salary' => 'nullable|numeric',
             'illness_status' => 'required',
             'illness_type_id' => 'nullable',
@@ -75,15 +90,16 @@ class BeneficiaryController extends Controller
             'unit_id'  => 'required',
             'trmem_type' => 'required',
             'description' => 'required',
-            "family_name" => 'required',
-            "family_birth_date" => 'required|date_format:' . config('panel.date_format'),
-            "family_identity_number" => 'required',
-            "familyrelation_id" => 'required',
-            "family_qualifications" => 'required',
-            "family_job_status" => 'required',
-            "family_job_salary" => 'nullable|numeric',
-            "family_illness_status" => 'required',
-            "family_illness_type_id" => 'nullable',
+            'family_name' => 'required',
+            'family_birth_date' => 'required|date_format:' . config('panel.date_format'),
+            'family_identity_number' => 'required',
+            'familyrelation_id' => 'required',
+            'family_qualifications' => 'required',
+            'family_job_status' => 'required',
+            'family_employer' => 'nullable|string',
+            'family_job_salary' => 'nullable|numeric',
+            'family_illness_status' => 'required',
+            'family_illness_type_id' => 'nullable',
         ]);
 
         // create Beneficiary 
@@ -94,6 +110,7 @@ class BeneficiaryController extends Controller
             'qualifications' => $validData['qualifications'],
             'job_status' => $validData['job_status'],
             'job_title' => $validData['job_title'],
+            'employer'  => $validData['employer'],
             'job_salary' => $validData['job_salary'],
             'marital_status' => $validData['marital_status'],
             'marital_state_date' => $validData['marital_state_date'],
@@ -132,6 +149,7 @@ class BeneficiaryController extends Controller
             'illness_status' => $validData['family_illness_status'],
             'illness_type_id' => $validData['family_illness_type_id'],
             'job_status' => $validData['family_job_status'],
+            'employer' => $validData['family_employer'],
             'job_sallary' => $validData['family_job_salary'],
             'beneficiary_id' => $beneficiary->id,
             'familyrelation_id' => $validData['familyrelation_id'],
@@ -161,27 +179,29 @@ class BeneficiaryController extends Controller
             'birth_date' => 'required|date_format:' . config('panel.date_format'),
             'address' => 'required',
             'identity_number' => 'required|max:10|min:10',
-            'qualifications' => 'required',
+            'qualifications' => ['required', 'in:' . implode(',', array_keys(Beneficiary::QUALIFICATIONS_SELECT))],
             'job_status' => 'required',
-            'job_title' => 'required',
-            'job_salary' => 'required|numeric',
+            'job_title' => 'nullable',
+            'employer'  => 'nullable',
+            'job_salary' => 'nullable|numeric',
             'illness_status' => 'required',
-            'illness_type_id' => 'required',
+            'illness_type_id' => 'nullable',
             'marital_status' => 'required',
             'marital_state_date' => 'required|date_format:' . config('panel.date_format'),
             'building_id' => 'required',
             'unit_id'  => 'required',
             'trmem_type' => 'required',
             'description' => 'required',
-            "family_name" => 'required',
-            "family_birth_date" => 'required|date_format:' . config('panel.date_format'),
-            "family_identity_number" => 'required',
-            "familyrelation_id" => 'required',
-            "family_qualifications" => 'required',
-            "family_job_status" => 'required',
-            "family_job_salary" => 'required',
-            "family_illness_status" => 'required',
-            "family_illness_type_id" => 'required',
+            'family_name' => 'required',
+            'family_birth_date' => 'required|date_format:' . config('panel.date_format'),
+            'family_identity_number' => 'required',
+            'familyrelation_id' => 'required',
+            'family_qualifications' => 'required',
+            'family_job_status' => 'required',
+            'family_employer' => 'nullable|string',
+            'family_job_salary' => 'nullable',
+            'family_illness_status' => 'required',
+            'family_illness_type_id' => 'nullable',
         ]);
         // update Beneficiary 
         $beneficiary->update([
@@ -191,6 +211,7 @@ class BeneficiaryController extends Controller
             'qualifications' => $validUpdatedData['qualifications'],
             'job_status' => $validUpdatedData['job_status'],
             'job_title' => $validUpdatedData['job_title'],
+            'employer'=> $validUpdatedData['employer'],
             'job_salary' => $validUpdatedData['job_salary'],
             'marital_status' => $validUpdatedData['marital_status'],
             'marital_state_date' => $validUpdatedData['marital_state_date'],
@@ -242,6 +263,7 @@ class BeneficiaryController extends Controller
             'illness_status' => $validUpdatedData['family_illness_status'],
             'illness_type_id' => $validUpdatedData['family_illness_type_id'],
             'job_status' => $validUpdatedData['family_job_status'],
+            'employer' => $validUpdatedData['family_employer'],
             'job_sallary' => $validUpdatedData['family_job_salary'],
             'beneficiary_id' => $beneficiary->id,
             'familyrelation_id' => $validUpdatedData['familyrelation_id'],

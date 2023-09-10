@@ -16,6 +16,7 @@ class CreateBeneficiariesTable extends Migration
             $table->string('qualifications');
             $table->string('job_status');
             $table->string('job_title')->nullable();
+            $table->string('employer')->nullable();
             $table->decimal('job_salary', 15, 2)->nullable();
             $table->string('marital_status');
             $table->date('marital_state_date')->nullable();

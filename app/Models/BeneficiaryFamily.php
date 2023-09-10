@@ -54,6 +54,7 @@ class BeneficiaryFamily extends Model implements HasMedia
         'illness_status',
         'illness_type_id',
         'job_status',
+        'employer',
         'job_sallary',
         'beneficiary_id',
         'familyrelation_id',

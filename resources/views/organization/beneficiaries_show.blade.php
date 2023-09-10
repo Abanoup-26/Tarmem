@@ -108,9 +108,20 @@
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">الحاله الصحيه - نوع المرض </span>
                                     <span class="font-20  text-primary text-start bold c4 ml-4">
-                                        {{ $beneficiary->illness_status ? \App\Models\Beneficiary::ILLNESS_STATUS_RADIO[$beneficiary->illness_status] : '' }} - {{ $beneficiary->illness_type->name }}</span>
+                                        {{ $beneficiary->illness_status ? \App\Models\Beneficiary::ILLNESS_STATUS_RADIO[$beneficiary->illness_status] : '' }}
+                                        {{ $beneficiary->illness_type->name ?? null }}
+                                    </span>
                                 </div>
                                 <!-- End illness -->
+
+                                <!-- employer -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">جهة العمل </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->employer }}
+                                    </span>
+                                </div>
+                                <!-- End address -->
                             </div>
                         </div>
                     </div>
@@ -130,79 +141,128 @@
                             <h2 class=" m-auto   text-primary text-start mb-20 text-center">بيانات المبني</h2>
                         </div>
                         <div class="row mt-4">
-                            <div class="col-lg-4">
+                            <div class="col-lg-4  ">
+                                <!-- building_name -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">اسم المبني </span>
+                                    <span
+                                        class="font-20   text-primary text-start bold c4 ml-4">{{ $beneficiary->building->name }}</span>
+                                </div>
+                                <!-- building_project_name -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">اسم المشروع </span>
+                                    <span
+                                        class="font-20   text-primary text-start bold c4 ml-4">{{ $beneficiary->building->project_name }}</span>
+                                </div>
                                 <!-- building_number -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">رقم المبني</span>
+                                    <span class="font-14 bold c4 ml-4">رقم المبني </span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->building_number ?? '' }}</span>
+                                        class="font-20   text-primary text-start bold c4 ml-4">{{ $beneficiary->building->building_number }}</span>
                                 </div>
-                                <!-- End building_number -->
+                                <!-- building_type -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> نوع المبني </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\Building::BUILDING_TYPE_SELECT[$beneficiary->building->building_type] }}</span>
+                                </div>
                                 <!-- floor_count -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4"> عدد الادوار </span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->floor_count ?? '' }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->floor_count }}</span>
                                 </div>
-                                <!-- End floor_count -->
                                 <!-- apartments_count -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> عدد الشقه </span>
+                                    <span class="font-14 bold c4 ml-4"> عدد الشقة فى الدور </span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->apartments_count ?? '' }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->apartments_count }}</span>
                                 </div>
-                                <!-- End apartments_count -->
+                            </div>
+                            <div class="col-lg-4">
+                                <!-- latitude /longtude -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> العنوان </span>
+                                    <span class="font-20  text-primary text-start bold c4 ml-4">
+                                        <a target="_blanc"
+                                            href="https://www.google.com/maps/place/{{ $beneficiary->building->latitude }},{{ $beneficiary->building->longtude }}">
+                                            عرض في الخريطة
+                                        </a>
+                                    </span>
+                                </div>
+                                <!-- management_statuses -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> حالة الطلب</span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\Building::MANAGEMENT_STATUSES_SELECT[$beneficiary->building->management_statuses] }}</span>
+                                </div>
+                                <!-- stages -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> مرحلة الطلب</span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\Building::STAGES_SELECT[$beneficiary->building->stages] }}</span>
+                                </div>
+                                <!-- research_visit-date -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> تاريخ الزياره البحثيه </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->research_vist_date }}</span>
+                                </div>
+                                <!-- engineering_visit-date -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> تاريخ الزياره الهندسيه </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->engineering_vist_date }}</span>
+                                </div>
                             </div>
                             <div class="col-lg-4">
                                 <!-- birth_data -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> تاريخ انشاء المبني </span>
+                                    <span class="font-14 bold c4 ml-4">تاريخ تاسيس المبني</span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->birth_data ?? '' }}</span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->birth_data }}</span>
                                 </div>
-                                <!-- End birth_data -->
-                                <!-- address -->
+                                <!-- building_age -->
                                 <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4"> العنوان </span>
+                                    <span class="font-14 bold c4 ml-4"> عمر المبني</span>
                                     <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">
-                                        <a target="_blanc" href="https://www.google.com/maps/place/{{$beneficiary->building->latitude ?? ''}},{{$beneficiary->building->longtude ?? ''}}">
-                                            عرض في الخريطة
-                                        </a> 
-                                    </span>
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building->buidling_age }}</span>
                                 </div>
-                                <!-- End address --> 
-
-                                <!-- management_statuses -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">الحالة الاداريه للطلب </span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building ? \App\Models\Building::MANAGEMENT_STATUSES_SELECT[$beneficiary->building->management_statuses] : ''}}</span>
-                                </div>
-                                <!-- End management_statuses -->
-                            </div>
-                            <div class="col-lg-4">
-                                <!-- stages -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">المرحله للطلب</span>
-                                    <span
-                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $beneficiary->building ? \App\Models\Building::STAGES_SELECT[$beneficiary->building->stages] : '' }}</span>
-                                </div>
-                                <!-- End stages --> 
-
                                 <!-- building_photos -->
-                                <div class="review-list mb-20">
+                                <div class="review-list mb-20 ">
                                     <span class="font-14 bold c4 ml-4"> صور المبني </span>
-                                    <span class=" ml-4">
-                                        @foreach ($beneficiary->building->building_photos as $key => $media)
-                                            <div class="row justifiy-content-between  ">
-                                                <img src="{{ $media->getUrl() }}" alt="identity photos" class="w-50">
-                                            </div>
-                                            <br>
-                                        @endforeach
-                                    </span>
+                                    @foreach ($beneficiary->building->building_photos as $photo)
+                                        <img src="{{ $photo->getUrl('preview') }}" width="150px" height="150px">
+                                    @endforeach
                                 </div>
-                                <!-- End building_photos -->
+                                <!-- research_visit-result -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> نتيجة الزياره البحثيه </span>
+                                    @if ($beneficiary->building->research_vist_result)
+                                        <span class="font-20  text-primary text-start bold c4 ml-4">
+                                            <img src="{{ $building->research_vist_result->getUrl('preview') }}"
+                                                width="150px" height="150px">
+                                        </span>
+                                    @else
+                                        <span class="font-20  text-primary text-start bold c4 ml-4"> لم يتم اضافة
+                                            نتيجه</span>
+                                    @endif
+
+                                </div>
+                                <!-- engineering_visit-result -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> نتيجة الزياره الهندسيه </span>
+                                    @if ($beneficiary->building->engineering_vist_result)
+                                        <span class="font-20  text-primary text-start bold c4 ml-4">
+                                            <img src="{{ $building->engineering_vist_result->getUrl('preview') }}"
+                                                width="150px" height="150px"></span>
+                                    @else
+                                        <span class="font-20  text-primary text-start bold c4 ml-4"> لم يتم اضافة
+                                            نتيجه</span>
+                                    @endif
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -306,7 +366,10 @@
                                         <td>{{ $person->qualifications }}</td>
                                         <td>{{ $person->marital_status }}</td>
                                         <td>{{ $person->illness_status }}</td>
-                                        <td>{{ $person->illness_type->name }}</td>
+                                        <td>
+                                            {{ $beneficiary->illness_type->name ?? null }}
+                                        </td>
+
                                         <td>{{ $person->job_status }}</td>
                                         <td>{{ $person->job_sallary }}</td>
                                         <td>{{ $person->familyrelation->name }}</td>

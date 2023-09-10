@@ -1,0 +1,23 @@
+footer  integratedVisinos  only 
+phone prefeix validation
+9 phone  pre fix        code 01- key1~9 (2)- 6717903  unique
+10 mobile  with prefix 05
+user in organization 
+10 mobile  with prefix 05   example  05 123 456 7890
+
+
+building_age automatic calculated
+building - data  complete 
+qualification drop list 
+
+حالة الوظيفة الى الحاله الوظيفيه
+حالة المرض الى الحالة المرضيه 
+
+if work true add  جهة العمل 
+building in beneficiary  view  building name instead building number 
+building of organization 
+
+علاقة الاسره الى العلاقه الاسريه 
+
+beneficiary index  view only beneficiaries related to organization 
+beneficiary show  راجع على البيانات اللى بتظهر عشان فى مشكله في المرض 

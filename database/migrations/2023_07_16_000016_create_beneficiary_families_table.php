@@ -17,6 +17,7 @@ class CreateBeneficiaryFamiliesTable extends Migration
             $table->string('marital_status');
             $table->string('illness_status');
             $table->string('job_status');
+            $table->string('employer')->nullable();
             $table->decimal('job_sallary', 15, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();

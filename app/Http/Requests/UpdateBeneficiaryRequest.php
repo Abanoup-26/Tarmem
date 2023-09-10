@@ -47,6 +47,10 @@ class UpdateBeneficiaryRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'employer' => [
+                'string',
+                'nullable',
+            ],
             'marital_status' => [
                 'required',
             ],

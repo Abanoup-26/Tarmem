@@ -46,6 +46,20 @@ class Beneficiary extends Model implements HasMedia
         'single'   => 'عازب',
     ];
 
+    public const QUALIFICATIONS_SELECT = [
+        'High School Diploma' => 'شهادة الثانوية العامة',
+        'Bachelor\'s Degree' => 'درجة البكالوريوس',
+        'Master\'s Degree' => 'درجة الماجستير',
+        'Ph.D.' => 'دكتوراه',
+        'Associate Degree' => 'درجة الدبلوم الجامعي',
+        'Technical Certificate' => 'شهادة فنية',
+        'Vocational Diploma' => 'دبلوم مهني',
+        'Professional Certification' => 'شهادة مهنية',
+        'Doctor of Medicine (M.D.)' => 'دكتور في الطب',
+        'Juris Doctor (J.D.)' => 'دكتور في القانون',
+    ];
+    
+
     protected $fillable = [
         'name',
         'birth_date',
@@ -54,6 +68,7 @@ class Beneficiary extends Model implements HasMedia
         'job_status',
         'job_title',
         'job_salary',
+        'employer',
         'marital_status',
         'marital_state_date',
         'address',

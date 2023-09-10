@@ -140,11 +140,24 @@
                                         class="help-block">{{ trans('cruds.building.fields.building_photos_helper') }}</span>
                                 </div>
                                 <div class="form-group col-md-4 mt-4">
+                                    <label class="mb-2 font-14 bold black"
+                                        for="birth_data">{{ trans('cruds.building.fields.birth_data') }}</label>
+                                    <input class="form-control date {{ $errors->has('birth_data') ? 'is-invalid' : '' }}"
+                                        type="text" name="birth_data" id="birth_data" value="{{ old('birth_data') }}">
+                                    @if ($errors->has('birth_data'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('birth_data') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.building.fields.birth_data_helper') }}</span>
+                                </div>
+
+                                <div class="form-group col-md-4 mt-4">
                                     <label class="required mb-2 font-14 bold black"
                                         for="buidling_age">{{ trans('cruds.building.fields.buidling_age') }}</label>
                                     <input class="form-control {{ $errors->has('buidling_age') ? 'is-invalid' : '' }}"
                                         type="number" name="buidling_age" id="buidling_age"
-                                        value="{{ old('buidling_age', '') }}" step="1" required>
+                                        value="{{ old('buidling_age', '') }}" step="1" required readonly>
                                     @if ($errors->has('buidling_age'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('buidling_age') }}
@@ -153,19 +166,8 @@
                                     <span
                                         class="help-block">{{ trans('cruds.building.fields.buidling_age_helper') }}</span>
                                 </div>
-                                <div class="form-group col-md-4 mt-4">
-                                    <label class="mb-2 font-14 bold black"
-                                        for="birth_data">{{ trans('cruds.building.fields.birth_data') }}</label>
-                                    <input class="form-control date {{ $errors->has('birth_data') ? 'is-invalid' : '' }}"
-                                        type="text" name="birth_data" id="birth_data"
-                                        value="{{ old('birth_data') }}">
-                                    @if ($errors->has('birth_data'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('birth_data') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.building.fields.birth_data_helper') }}</span>
-                                </div>
+
+
                             </div>
                             <div class="row">
 
@@ -356,5 +358,17 @@
                 return _results
             }
         }
+    </script>
+    <script>
+        // Calculate age when birth_data changes
+        $('#birth_data').on('change', function() {
+            var birthDate = $(this).val();
+            if (birthDate) {
+                var today = new Date();
+                var dob = new Date(birthDate);
+                var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                $('#buidling_age').val(age);
+            }
+        });
     </script>
 @endsection
