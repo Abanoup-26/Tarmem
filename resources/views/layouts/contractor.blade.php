@@ -27,6 +27,8 @@
     <!-- ======= MAIN STYLES ======= -->
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}" />
     <!-- ======= END MAIN STYLES ======= -->
+    <link rel="stylesheet" href="{{ asset('dashboard_offline/css/dropzone.min.css') }}">
+
     @yield('styles')
 </head>
 
@@ -272,7 +274,7 @@
     <script src="{{ asset('frontend/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('frontend/js/script.js') }}"></script>
     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
-
+    <script src="{{ asset('dashboard_offline/js/dropzone.min.js') }}"></script>
     @yield('scripts')
 </body>
 

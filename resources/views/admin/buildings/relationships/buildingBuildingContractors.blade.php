@@ -5,41 +5,46 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.building-contractors.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.building-contractors.store') }}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="stages" value="pending">
-            <input type="hidden" name="building_id" value="{{$building->id}}">
+            <input type="hidden" name="building_id" value="{{ $building->id }}">
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label class="required" for="contractor_id">{{ trans('cruds.buildingContractor.fields.contractor') }}</label>
-                    <select class="form-control select2 {{ $errors->has('contractor') ? 'is-invalid' : '' }}" name="contractor_id" id="contractor_id" required>
-                        @foreach($contractors as $id => $entry)
-                            <option value="{{ $id }}" {{ old('contractor_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    <label class="required"
+                        for="contractor_id">{{ trans('cruds.buildingContractor.fields.contractor') }}</label>
+                    <select class="form-control select2 {{ $errors->has('contractor') ? 'is-invalid' : '' }}"
+                        name="contractor_id" id="contractor_id" required>
+                        @foreach ($contractors as $id => $entry)
+                            <option value="{{ $id }}" {{ old('contractor_id') == $id ? 'selected' : '' }}>
+                                {{ $entry }}</option>
                         @endforeach
                     </select>
-                    @if($errors->has('contractor'))
+                    @if ($errors->has('contractor'))
                         <div class="invalid-feedback">
                             {{ $errors->first('contractor') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.buildingContractor.fields.contractor_helper') }}</span>
-                </div> 
+                </div>
                 <div class="form-group col-md-4">
-                    <label class="required" for="visit_date">{{ trans('cruds.buildingContractor.fields.visit_date') }}</label>
-                    <input class="form-control date {{ $errors->has('visit_date') ? 'is-invalid' : '' }}" type="text" name="visit_date" id="visit_date" value="{{ old('visit_date') }}" required>
-                    @if($errors->has('visit_date'))
+                    <label class="required"
+                        for="visit_date">{{ trans('cruds.buildingContractor.fields.visit_date') }}</label>
+                    <input class="form-control date {{ $errors->has('visit_date') ? 'is-invalid' : '' }}"
+                        type="text" name="visit_date" id="visit_date" value="{{ old('visit_date') }}" required>
+                    @if ($errors->has('visit_date'))
                         <div class="invalid-feedback">
                             {{ $errors->first('visit_date') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.buildingContractor.fields.visit_date_helper') }}</span>
-                </div> 
+                </div>
                 <div class="form-group col-md-4">
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
-            </div> 
+            </div>
         </form>
     </div>
 </div>
@@ -114,12 +119,14 @@
                             </td>
                             <td>
                                 {{ $buildingContractor->quotation_without_materials ?? '' }}
-                            </td> 
+                            </td>
                             <td>
-                                @if ($buildingContractor->stages == 'pending') 
-                                    <form method="POST" action="{{ route("admin.building-contractors.update", [$buildingContractor->id]) }}" enctype="multipart/form-data">
+                                @if ($buildingContractor->stages == 'pending')
+                                    <form method="POST"
+                                        action="{{ route('admin.building-contractors.update', [$buildingContractor->id]) }}"
+                                        enctype="multipart/form-data">
                                         @method('PUT')
-                                        @csrf 
+                                        @csrf
                                         <input type="hidden" name="stages" value="request_quotation">
                                         <div class="form-group">
                                             <button class="btn btn-info btn-sm" type="submit">
@@ -129,9 +136,11 @@
                                     </form>
                                 @endif
                                 @if ($buildingContractor->stages == 'send_quotation')
-                                    <form method="POST" action="{{ route("admin.building-contractors.update", [$buildingContractor->id]) }}" enctype="multipart/form-data">
+                                    <form method="POST"
+                                        action="{{ route('admin.building-contractors.update', [$buildingContractor->id]) }}"
+                                        enctype="multipart/form-data">
                                         @method('PUT')
-                                        @csrf 
+                                        @csrf
                                         <input type="hidden" name="stages" value="accepted">
                                         <div class="form-group">
                                             <button class="btn btn-success btn-sm" type="submit">
@@ -139,9 +148,11 @@
                                             </button>
                                         </div>
                                     </form>
-                                    <form method="POST" action="{{ route("admin.building-contractors.update", [$buildingContractor->id]) }}" enctype="multipart/form-data">
+                                    <form method="POST"
+                                        action="{{ route('admin.building-contractors.update', [$buildingContractor->id]) }}"
+                                        enctype="multipart/form-data">
                                         @method('PUT')
-                                        @csrf 
+                                        @csrf
                                         <input type="hidden" name="stages" value="rejected">
                                         <div class="form-group">
                                             <button class="btn btn-warning btn-sm" type="submit">

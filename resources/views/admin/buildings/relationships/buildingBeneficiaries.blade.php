@@ -54,15 +54,12 @@
                             {{ trans('cruds.beneficiary.fields.illness_type') }}
                         </th>
                         <th>
-                            {{ trans('cruds.beneficiary.fields.building') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($beneficiaries as $key => $beneficiary)
+                    @foreach ($beneficiaries as $key => $beneficiary)
                         <tr data-entry-id="{{ $beneficiary->id }}">
                             <td>
 
@@ -80,7 +77,7 @@
                                 {{ $beneficiary->identity_number ?? '' }}
                             </td>
                             <td>
-                                @foreach($beneficiary->identity_photo as $key => $media)
+                                @foreach ($beneficiary->identity_photo as $key => $media)
                                     <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
                                         <img src="{{ $media->getUrl('thumb') }}">
                                     </a>
@@ -113,12 +110,11 @@
                             <td>
                                 {{ $beneficiary->illness_type->name ?? '' }}
                             </td>
-                            <td>
-                                {{ $beneficiary->building->building_number ?? '' }}
-                            </td>
+
                             <td>
                                 @can('beneficiary_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.beneficiaries.show', $beneficiary->id) }}">
+                                    <a class="btn btn-xs btn-primary"
+                                        href="{{ route('admin.beneficiaries.show', $beneficiary->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
@@ -136,23 +132,26 @@
 </div>
 
 @section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-  
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  });
-  let table = $('.datatable-buildingBeneficiaries:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  
-})
+    @parent
+    <script>
+        $(function() {
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
-</script>
+            $.extend(true, $.fn.dataTable.defaults, {
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+                pageLength: 100,
+            });
+            let table = $('.datatable-buildingBeneficiaries:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
+            });
+
+        })
+    </script>
 @endsection

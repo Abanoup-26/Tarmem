@@ -10,5 +10,7 @@ Route::group(['prefix' => 'contractor','as' => 'contractor.', 'namespace' => 'Co
         Route::get('building/show/{id}', 'RequestController@show')->name('building.show');
         Route::get('building/edit/{id}', 'RequestController@edit')->name('building.edit');
         Route::post('building/update', 'RequestController@update')->name('building.update');
+        Route::post('building-contractors/media', 'RequestController@storeMedia')->name('building-contractors.storeMedia');
+    Route::post('building-contractors/ckmedia', 'RequestController@storeCKEditorImages')->name('building-contractors.storeCKEditorImages');
         
 });

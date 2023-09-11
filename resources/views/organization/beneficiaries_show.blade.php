@@ -131,11 +131,11 @@
         </div>
         <!------Building------>
         <div class="row justify-content-center">
-            <!------Beneficiary info Section ------>
+            <!------Building info Section ------>
             <div class="col-12">
                 <div class="card mb-30">
                     <!-- Main Review-->
-                    <!-- Beneificary data -->
+                    <!-- Beneificary Building data -->
                     <div class="card-body p-30">
                         <div class="container  w-25  p-2 border-success border-bottom">
                             <h2 class=" m-auto   text-primary text-start mb-20 text-center">بيانات المبني</h2>

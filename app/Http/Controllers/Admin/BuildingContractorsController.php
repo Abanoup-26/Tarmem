@@ -11,7 +11,7 @@ use App\Models\Building;
 use App\Models\BuildingContractor;
 use App\Models\Contractor;
 use Gate;
-use Alert;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -128,17 +128,6 @@ class BuildingContractorsController extends Controller
     public function update(UpdateBuildingContractorRequest $request, BuildingContractor $buildingContractor)
     {
         $buildingContractor->update($request->all());
-
-        if ($request->input('contract', false)) {
-            if (! $buildingContractor->contract || $request->input('contract') !== $buildingContractor->contract->file_name) {
-                if ($buildingContractor->contract) {
-                    $buildingContractor->contract->delete();
-                }
-                $buildingContractor->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
-            }
-        } elseif ($buildingContractor->contract) {
-            $buildingContractor->contract->delete();
-        }
         Alert::success(trans('flash.update.title'),trans('flash.update.body'));
         return redirect()->route('admin.buildings.show',$buildingContractor->building_id);
     }

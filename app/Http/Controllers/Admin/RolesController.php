@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use RealRashid\SweetAlert\Facades\Alert;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,17 +29,18 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permissions = Permission::pluck('title', 'id');
-
-        return view('admin.roles.create', compact('permissions'));
-    }
-
-    public function store(StoreRoleRequest $request)
-    {
-        $role = Role::create($request->all());
-        $role->permissions()->sync($request->input('permissions', []));
-
+        // return view('admin.roles.create', compact('permissions'));
+        Alert::toast("You Can't Add Roles Please Ask the Developer",'warning')->position('center');
         return redirect()->route('admin.roles.index');
     }
+
+    // public function store(StoreRoleRequest $request)
+    // {
+    //     $role = Role::create($request->all());
+    //     $role->permissions()->sync($request->input('permissions', []));
+
+    //     return redirect()->route('admin.roles.index');
+    // }
 
     public function edit(Role $role)
     {
@@ -48,7 +50,9 @@ class RolesController extends Controller
 
         $role->load('permissions');
 
-        return view('admin.roles.edit', compact('permissions', 'role'));
+        // return view('admin.roles.edit', compact('permissions', 'role'));
+        Alert::toast("You Can't Edit Roles Please Ask the Developer",'warning')->position('center');
+        return redirect()->route('admin.roles.index');
     }
 
     public function update(UpdateRoleRequest $request, Role $role)
@@ -56,6 +60,8 @@ class RolesController extends Controller
         $role->update($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
+        // return redirect()->route('admin.roles.index');
+        Alert::toast("You Can't Update Roles Please Ask the Developer",'warning')->position('center');
         return redirect()->route('admin.roles.index');
     }
 
@@ -65,26 +71,30 @@ class RolesController extends Controller
 
         $role->load('permissions');
 
-        return view('admin.roles.show', compact('role'));
+        // return view('admin.roles.show', compact('role'));
+        Alert::toast("You Can't show Roles Please Ask the Developer",'warning')->position('center');
+        return redirect()->route('admin.roles.index');
     }
 
     public function destroy(Role $role)
     {
         abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $role->delete();
-
-        return back();
+        Alert::toast("You Can't Delete Roles Please Ask the Developer",'warning')->position('center');
+        return redirect()->route('admin.roles.index');
+        // $role->delete();
+        
+        // return back();
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)
     {
         $roles = Role::find(request('ids'));
+        Alert::toast("You Can't Delete Roles Please Ask the Developer",'warning')->position('center');
+        return redirect()->route('admin.roles.index');
+        // foreach ($roles as $role) {
+        //     $role->delete();
+        // }
 
-        foreach ($roles as $role) {
-            $role->delete();
-        }
-
-        return response(null, Response::HTTP_NO_CONTENT);
+        // return response(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Contractor;
-
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Controllers\Controller;
 use App\Models\Building;
 use App\Models\BuildingContractor;
 use App\Models\Contractor;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class RequestController extends Controller
 {
+    use MediaUploadingTrait;
     public function index()
     {
         // contractor_ id 
@@ -55,7 +57,20 @@ class RequestController extends Controller
         $buildingContractor->quotation_with_materials = $request->quotation_with_materials;
         $buildingContractor->quotation_without_materials = $request->quotation_without_materials;
         $buildingContractor->stages = 'send_quotation';
+
+         if ($request->input('contract', false)) {
+            $buildingContractor->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
+        }
+        
         $buildingContractor->save();  
         return redirect()->route('contractor.requests');
+    }public function storeCKEditorImages(Request $request)
+    {
+        $model         = new BuildingContractor();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

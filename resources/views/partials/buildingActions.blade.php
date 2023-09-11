@@ -3,6 +3,6 @@
         {{ trans('global.view') }}
     </a>
 @endcan
-<a class="btn btn-xs btn-success" href="{{ route('admin.' . $crudRoutePart . '.visits', $row->id) }}">
+<a class="btn btn-xs btn-danger" href="{{ route('admin.' . $crudRoutePart . '.visits', $row->id) }}">
     تحديد الزائرين
 </a>

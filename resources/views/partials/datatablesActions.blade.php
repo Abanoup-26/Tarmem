@@ -4,7 +4,7 @@
     </a>
 @endcan
 @can($editGate)
-    <a class="btn btn-xs btn-danger" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
+    <a class="btn btn-xs btn-success" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
         {{ trans('global.edit') }}
     </a>
 @endcan

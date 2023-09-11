@@ -18,6 +18,18 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-lg-4  ">
+                                <!-- building_name -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">اسم المبني </span>
+                                    <span
+                                        class="font-20   text-primary text-start bold c4 ml-4">{{ $building->name }}</span>
+                                </div>
+                                <!-- building_project_name -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4">اسم المشروع </span>
+                                    <span
+                                        class="font-20   text-primary text-start bold c4 ml-4">{{ $building->project_name }}</span>
+                                </div>
                                 <!-- building_number -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">رقم المبني </span>
@@ -54,23 +66,30 @@
                                         </a>
                                     </span>
                                 </div>
-                                @if ($buildingcontractor && $buildingcontractor->stages != 'pending')
-                                    <div class="review-list mb-20">
-                                        <span class="font-14 bold c4 ml-4">السعر بالمواد</span>
-                                        <span
-                                            class="font-20  text-primary text-start bold c4 ml-4">{{ $buildingcontractor->quotation_with_materials ?? '' }}</span>
-                                    </div>
-                                    <div class="review-list mb-20">
-                                        <span class="font-14 bold c4 ml-4">السعر بدون المواد</span>
-                                        <span
-                                            class="font-20  text-primary text-start bold c4 ml-4">{{ $buildingcontractor->quotation_without_materials ?? '' }}</span>
-                                    </div>
-                                    <div class="review-list mb-20">
-                                        <span class="font-14 bold c4 ml-4">الحالة</span>
-                                        <span
-                                            class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\BuildingContractor::STAGES_2_SELECT[$buildingcontractor->stages] }}</span>
-                                    </div>
-                                @endif
+                                <!-- management_statuses -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> حالة الطلب</span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\Building::MANAGEMENT_STATUSES_SELECT[$building->management_statuses] }}</span>
+                                </div>
+                                <!-- stages -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> مرحلة الطلب</span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ \App\Models\Building::STAGES_SELECT[$building->stages] }}</span>
+                                </div>
+                                <!-- research_visit-date -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> تاريخ الزياره البحثيه </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->research_vist_date }}</span>
+                                </div>
+                                <!-- engineering_visit-date -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> تاريخ الزياره الهندسيه </span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->engineering_vist_date }}</span>
+                                </div>
                             </div>
                             <div class="col-lg-4">
                                 <!-- birth_data -->
@@ -79,12 +98,45 @@
                                     <span
                                         class="font-20  text-primary text-start bold c4 ml-4">{{ $building->birth_data }}</span>
                                 </div>
+                                <!-- building_age -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> عمر المبني</span>
+                                    <span
+                                        class="font-20  text-primary text-start bold c4 ml-4">{{ $building->buidling_age }}</span>
+                                </div>
                                 <!-- building_photos -->
-                                <div class="review-list mb-20 row">
-                                    <span class="font-14 bold c4 ml-4"> صور المبني قبل الترميم </span>
+                                <div class="review-list mb-20 ">
+                                    <span class="font-14 bold c4 ml-4"> صور المبني </span>
                                     @foreach ($building->building_photos as $photo)
                                         <img src="{{ $photo->getUrl('preview') }}" width="150px" height="150px">
                                     @endforeach
+                                </div>
+                                <!-- research_visit-result -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> نتيجة الزياره البحثيه </span>
+                                    @if ($building->research_vist_result)
+                                        <span class="font-20  text-primary text-start bold c4 ml-4">
+                                            <img src="{{ $building->research_vist_result->getUrl('preview') }}"
+                                                width="150px" height="150px">
+                                        </span>
+                                    @else
+                                        <span class="font-20  text-primary text-start bold c4 ml-4"> لم يتم اضافة
+                                            نتيجه</span>
+                                    @endif
+
+                                </div>
+                                <!-- engineering_visit-result -->
+                                <div class="review-list mb-20">
+                                    <span class="font-14 bold c4 ml-4"> نتيجة الزياره الهندسيه </span>
+                                    @if ($building->engineering_vist_result)
+                                        <span class="font-20  text-primary text-start bold c4 ml-4">
+                                            <img src="{{ $building->engineering_vist_result->getUrl('preview') }}"
+                                                width="150px" height="150px"></span>
+                                    @else
+                                        <span class="font-20  text-primary text-start bold c4 ml-4"> لم يتم اضافة
+                                            نتيجه</span>
+                                    @endif
+
                                 </div>
 
                             </div>
