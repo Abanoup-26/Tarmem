@@ -26,8 +26,8 @@ Route::post('organizations/ckmedia', [RegisterController::class, 'storeCKEditorI
 Route::post('organizations/users/media', [RegisterController::class, 'storeMedia'])->name('organizations.users.storeMedia');
 
 // Supporter
-Route::get('register-supporter', [SupporterRegisterController::class ,'showRegistrationForm'])->name('register-supporter');
-Route::post('login-supporter', [SupporterRegisterController::class,'register'])->name('login-supporter');
+Route::get('register-supporter', [SupporterRegisterController::class, 'showRegistrationForm'])->name('register-supporter');
+Route::post('login-supporter', [SupporterRegisterController::class, 'register'])->name('login-supporter');
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'staff']], function () {
@@ -95,6 +95,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('buildings/ckmedia', 'BuildingsController@storeCKEditorImages')->name('buildings.storeCKEditorImages');
     Route::get('buildings/visits/{id}', 'BuildingsController@visits')->name('buildings.visits');
     Route::post('buildings/visits/store', 'BuildingsController@storeVisits')->name('buildings.visits.store');
+    Route::get('buildings/prices/{id}', 'BuildingsController@showPriceForm')->name('buildings.showPriceForm');
+    Route::post('buildings/prices/store/{id}', 'BuildingsController@storePrices')->name('buildings.prices.store');
 
     Route::resource('buildings', 'BuildingsController');
 

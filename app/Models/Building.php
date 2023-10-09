@@ -27,6 +27,7 @@ class Building extends Model implements HasMedia
         'building_photos',
         'research_vist_result',
         'engineering_vist_result',
+        'price_items',
     ];
 
     protected $dates = [
@@ -155,9 +156,13 @@ class Building extends Model implements HasMedia
     {
         return $this->belongsToMany(User::class, 'building_researcher_user', 'building_id', 'user_id');
     }
-    
+
     public function engineers()
     {
         return $this->belongsToMany(User::class, 'building_engineer_user', 'building_id', 'user_id');
+    }
+    public function getPriceItemsAttribute()
+    {
+        return $this->getMedia('price_items')->last();
     }
 }

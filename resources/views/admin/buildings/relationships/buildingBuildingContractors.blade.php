@@ -79,12 +79,6 @@
                             {{ trans('cruds.buildingContractor.fields.contract') }}
                         </th>
                         <th>
-                            {{ trans('cruds.buildingContractor.fields.quotation_with_materials') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.buildingContractor.fields.quotation_without_materials') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -113,12 +107,6 @@
                                         {{ trans('global.view_file') }}
                                     </a>
                                 @endif
-                            </td>
-                            <td>
-                                {{ $buildingContractor->quotation_with_materials ?? '' }}
-                            </td>
-                            <td>
-                                {{ $buildingContractor->quotation_without_materials ?? '' }}
                             </td>
                             <td>
                                 @if ($buildingContractor->stages == 'pending')

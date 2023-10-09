@@ -54,8 +54,6 @@ class RequestController extends Controller
         if(!$buildingContractor){
             return abort(404);
         }
-        $buildingContractor->quotation_with_materials = $request->quotation_with_materials;
-        $buildingContractor->quotation_without_materials = $request->quotation_without_materials;
         $buildingContractor->stages = 'send_quotation';
 
          if ($request->input('contract', false)) {

@@ -200,6 +200,23 @@
 @endsection
 
 @section('scripts')
+    <script>
+        // Calculate age when birth_data changes
+        $('#birth_data').on('change', function() {
+            var birthDate = $(this).val();
+
+            // Check if birthDate is a valid date
+            if (!isNaN(Date.parse(birthDate))) {
+                var today = new Date();
+                var dob = new Date(birthDate);
+                var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                $('#buidling_age').val(age);
+            } else {
+                $('#buidling_age').val(0);
+            }
+        });
+    </script>
+
     <script
         src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_api_key') }}&libraries=places&callback=initMap"
         async defer></script>
@@ -358,17 +375,5 @@
                 return _results
             }
         }
-    </script>
-    <script>
-        // Calculate age when birth_data changes
-        $('#birth_data').on('change', function() {
-            var birthDate = $(this).val();
-            if (birthDate) {
-                var today = new Date();
-                var dob = new Date(birthDate);
-                var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
-                $('#buidling_age').val(age);
-            }
-        });
     </script>
 @endsection

@@ -21,42 +21,8 @@
                         <form action="{{ route('contractor.building.update') }}" method="POST">
                             @csrf
                             <input type="hidden" name="building_id" value="{{ $building->id }}">
-                            <div class="row">
-                                <div class="form-group col-md-4 mt-4">
-                                    <label class="required mb-2 font-14 bold black"
-                                        for="quotation_with_materials">{{ trans('cruds.buildingContractor.fields.quotation_with_materials') }}</label>
-                                    <input
-                                        class="form-control {{ $errors->has('quotation_with_materials') ? 'is-invalid' : '' }}"
-                                        type="number" name="quotation_with_materials" id="quotation_with_materials"
-                                        value="{{ old('quotation_with_materials', $building->quotation_with_materials) }}"
-                                        step="1" required>
-                                    @if ($errors->has('quotation_with_materials'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('quotation_with_materials') }}
-                                        </div>
-                                    @endif
-                                    <span
-                                        class="help-block">{{ trans('cruds.buildingContractor.fields.quotation_with_materials_helper') }}</span>
-                                </div>
-
-                                <div class="form-group col-md-4 mt-4">
-                                    <label class="required mb-2 font-14 bold black"
-                                        for="quotation_without_materials">{{ trans('cruds.buildingContractor.fields.quotation_without_materials') }}</label>
-                                    <input
-                                        class="form-control {{ $errors->has('quotation_without_materials') ? 'is-invalid' : '' }}"
-                                        type="number" name="quotation_without_materials" id="quotation_without_materials"
-                                        value="{{ old('quotation_without_materials', $building->quotation_without_materials) }}"
-                                        step="1" required>
-                                    @if ($errors->has('quotation_without_materials'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('quotation_without_materials') }}
-                                        </div>
-                                    @endif
-                                    <span
-                                        class="help-block">{{ trans('cruds.buildingContractor.fields.quotation_without_materials_helper') }}</span>
-                                </div>
-
-                                <div class="form-group col-md-4 mt-4 ">
+                            <div class="row justify-content-center">
+                                <div class="form-group col-md-6 mt-4 ">
                                     <label class="required"
                                         for="contract">{{ trans('cruds.buildingContractor.fields.contract') }}</label>
                                     <div class="needsclick dropzone style--three {{ $errors->has('contract') ? 'is-invalid' : '' }}"

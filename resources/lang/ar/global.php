@@ -322,5 +322,6 @@ return [
     'leave'                          => 'مغادرة',
     'calendar'                       => 'التقويم',
     'messenger'                      => 'مراسل',
-
+    'identifying visitors'           => 'تحديد الزائرين',
+    'identifying prices'           => 'تحديد بنود الاسعار'
 ];

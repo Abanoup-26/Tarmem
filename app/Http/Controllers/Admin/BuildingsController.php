@@ -27,7 +27,7 @@ class BuildingsController extends Controller
         abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Building::with(['organization'])->where('management_statuses','!=','pending')->select(sprintf('%s.*', (new Building)->table));
+            $query = Building::with(['organization'])->where('management_statuses', '!=', 'pending')->select(sprintf('%s.*', (new Building)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -78,8 +78,11 @@ class BuildingsController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
+            $table->editColumn('price_items', function ($row) {
+                return $row->price_items ? '<a href="' . $row->price_items->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'building_photos', 'research_vist_result', 'engineering_vist_result', 'organization']);
+            $table->rawColumns(['actions', 'placeholder', 'building_photos', 'research_vist_result', 'engineering_vist_result', 'organization', 'price_items']);
 
             return $table->make(true);
         }
@@ -94,12 +97,12 @@ class BuildingsController extends Controller
         $supporters = Supporter::with(['user' => function ($query) {
             $query->where('approved', 1)->whereNotNull('name');
         }])
-        ->whereHas('user', function ($query) {
-            $query->where('approved', 1)->whereNotNull('name');
-        })
-        ->get()
-        ->pluck('user.name', 'id')
-        ->prepend(trans('global.pleaseSelect'), '');
+            ->whereHas('user', function ($query) {
+                $query->where('approved', 1)->whereNotNull('name');
+            })
+            ->get()
+            ->pluck('user.name', 'id')
+            ->prepend(trans('global.pleaseSelect'), '');
         // get only the approved contractors 
         $contractors = Contractor::with(['user' => function ($query) {
             $query->where('approved', 1)->whereNotNull('name');
@@ -111,21 +114,51 @@ class BuildingsController extends Controller
             ->pluck('user.name', 'id')
             ->prepend(trans('global.pleaseSelect'), '');
 
+        $buildingcontractors = $building->buildingBuildingContractors;
+
+        // Check if at least one contractor has a contract
+        $hasContract = $buildingcontractors->contains(function ($contractor) {
+            return $contractor->has_contract;
+        });
+
         $building->load('organization', 'buildingBuildingContractors.contractor.user', 'buildingBuildingContractors.building', 'buildingBeneficiaries.illness_type', 'buildingBuildingSupporters.supporter.user');
-        return view('admin.buildings.show', compact('building', 'contractors','supporters'));
+        return view('admin.buildings.show', compact('building', 'contractors', 'supporters' , 'hasContract'));
     }
 
+    public function showPriceForm(Request $request)
+    {
+        $buildingId = $request->id;
+        return view('admin.buildings.buildingPrice', compact('buildingId'));
+    }
+    public function storePrices(Request $request)
+    {
+
+        $building = Building::findOrFail($request->id);
+        $building->update($request->all());
+        if ($request->input('price_items', false)) {
+            if (!$building->price_items || $request->input('price_items') !== $building->price_items->file_name) {
+                if ($building->price_items) {
+                    $building->price_items->delete();
+                }
+                $building->addMedia(storage_path('tmp/uploads/' . basename($request->input('price_items'))))->toMediaCollection('price_items');
+            }
+        } elseif ($building->price_items) {
+            $building->price_items->delete();
+        }
+        Alert::success('تم اضافة بنود الاسعار للمبني رقم    '    . $request->id .      '   بنجاح     ');
+        return redirect()->route('admin.buildings.index');
+    }
     public function visits(Request $request)
     {
         $buildingId = $request->id;
         // $users = User::pluck('name','id')->prepend(trans(''),'');
-        $users = User::where('user_type','staff')->pluck('name','id')->prepend(trans(''),'');
-        return view('admin.buildings.visits',compact('users','buildingId'));
+        $users = User::where('user_type', 'staff')->pluck('name', 'id')->prepend(trans(''), '');
+        return view('admin.buildings.visits', compact('users', 'buildingId'));
     }
     public function storeVisits(Request $request)
     {
         // building
-        $building = Building::with('researchers','engineers')->findOrfail($request->building_id)->first();
+        $building = Building::with('researchers', 'engineers')->findOrfail($request->building_id)->first();
         $building->researchers()->attach($request->researchers);
         $building->engineers()->attach($request->engineers);
         $building->save();
@@ -151,9 +184,9 @@ class BuildingsController extends Controller
             }
         }
 
-        
+
         if ($request->stages == 'supporting') {
-            foreach($building->buildingBuildingSupporters as $raw){
+            foreach ($building->buildingBuildingSupporters as $raw) {
                 $raw->supporter_status = 'on_review';
                 $raw->save();
             }
@@ -161,7 +194,7 @@ class BuildingsController extends Controller
 
         $building->update($request->all());
 
-        if($request->has('building_photos')){
+        if ($request->has('building_photos')) {
             if (count($building->building_photos) > 0) {
                 foreach ($building->building_photos as $media) {
                     if (!in_array($media->file_name, $request->input('building_photos', []))) {
@@ -176,8 +209,8 @@ class BuildingsController extends Controller
                 }
             }
         }
-        
-        if($request->has('research_vist_result')){
+
+        if ($request->has('research_vist_result')) {
             if ($building->stages == 'research_visit' && $building->research_vist_result == null) {
                 if ($request->input('research_vist_result', false)) {
                     if (!$building->research_vist_result || $request->input('research_vist_result') !== $building->research_vist_result->file_name) {
@@ -193,7 +226,7 @@ class BuildingsController extends Controller
         }
 
 
-        if($request->has('engineering_vist_result')){
+        if ($request->has('engineering_vist_result')) {
             if ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null) {
                 if ($request->input('engineering_vist_result', false)) {
                     if (!$building->engineering_vist_result || $request->input('engineering_vist_result') !== $building->engineering_vist_result->file_name) {

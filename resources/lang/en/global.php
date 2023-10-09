@@ -322,5 +322,7 @@ return [
     'leave'                          => 'Leave',
     'calendar'                       => 'Calendar',
     'messenger'                      => 'Messenger',
+    'identifying visitors'           => 'Identifying visitors',
+    'identifying prices'           => 'Identifying prices'
 
 ];

@@ -39,7 +39,7 @@ class BuildingContractor extends Model implements HasMedia
 
     public const STAGES_2_SELECT = [ // for contractor dashboard purpose
         'pending'          => 'زيارة هندسية', //لسه ضايف المقاول للمبني 
-        'request_quotation' => 'في أنتطار عرض سعرك', 
+        'request_quotation' => 'في أنتطار عرض سعرك',
         'send_quotation'    => 'تم أرسال السعر للأدارة',
         'accepted'          => 'تم قبولك',
         'rejected'          => 'تم رفضك',
@@ -48,8 +48,6 @@ class BuildingContractor extends Model implements HasMedia
     protected $fillable = [
         'visit_date',
         'stages',
-        'quotation_with_materials',
-        'quotation_without_materials',
         'contractor_id',
         'building_id',
         'created_at',
@@ -91,5 +89,9 @@ class BuildingContractor extends Model implements HasMedia
     public function building()
     {
         return $this->belongsTo(Building::class, 'building_id');
+    }
+    public function getHasContractAttribute()
+    {
+        return $this->getMedia('contract')->isNotEmpty();
     }
 }

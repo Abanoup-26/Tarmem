@@ -215,17 +215,19 @@
                         @endcan
                         @can('done_stage')
                             @if ($building->stages == 'send_to_contractor')
-                                <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
-                                    enctype="multipart/form-data">
-                                    @method('PUT')
-                                    @csrf
-                                    <input type="hidden" name="stages" value="done">
-                                    <div class="form-group">
-                                        <button class="btn btn-danger" type="submit">
-                                            الموافقه على عرض الاسعار
-                                        </button>
-                                    </div>
-                                </form>
+                                @if ($building->buildingBuildingContractors()->count() >= 3 && $hasContract)
+                                    <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <input type="hidden" name="stages" value="done">
+                                        <div class="form-group">
+                                            <button class="btn btn-danger" type="submit">
+                                                الموافقه على عرض الاسعار
+                                            </button>
+                                        </div>
+                                    </form>
+                                @endif
                             @endif
                         @endcan
                         @can('supporting_stage')

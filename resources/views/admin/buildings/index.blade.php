@@ -26,15 +26,18 @@
                         </th>
                         <th>
                             {{ trans('cruds.building.fields.management_statuses') }}
-                        </th> 
+                        </th>
                         <th>
                             {{ trans('cruds.building.fields.stages') }}
-                        </th> 
+                        </th>
                         <th>
                             {{ trans('cruds.building.fields.organization') }}
                         </th>
                         <th>
                             {{ trans('cruds.building.fields.project_name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.building.fields.price_items') }}
                         </th>
                         <th>
                             {{ trans('cruds.building.fields.buidling_age') }}
@@ -47,6 +50,7 @@
             </table>
         </div>
     </div>
+ 
 @endsection
 @section('scripts')
     @parent
@@ -88,11 +92,11 @@
                     {
                         data: 'management_statuses',
                         name: 'management_statuses'
-                    }, 
+                    },
                     {
                         data: 'stages',
                         name: 'stages'
-                    }, 
+                    },
                     {
                         data: 'organization_name',
                         name: 'organization.name'
@@ -100,6 +104,10 @@
                     {
                         data: 'project_name',
                         name: 'project_name'
+                    },
+                    {
+                        data: 'price_items',
+                        name: 'price_items',
                     },
                     {
                         data: 'buidling_age',

@@ -57,12 +57,6 @@ class BuildingContractorsController extends Controller
             $table->editColumn('contract', function ($row) {
                 return $row->contract ? '<a href="' . $row->contract->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
-            $table->editColumn('quotation_with_materials', function ($row) {
-                return $row->quotation_with_materials ? $row->quotation_with_materials : '';
-            });
-            $table->editColumn('quotation_without_materials', function ($row) {
-                return $row->quotation_without_materials ? $row->quotation_without_materials : '';
-            });
             $table->addColumn('contractor_position', function ($row) {
                 return $row->contractor ? $row->contractor->position : '';
             });
@@ -91,12 +85,12 @@ class BuildingContractorsController extends Controller
     }
 
     public function store(StoreBuildingContractorRequest $request)
-    {    
+    {
 
         // prevent from adding the contractor to the same building mutliple times
-        if(BuildingContractor::where('contractor_id',$request->contractor_id)->where('building_id',$request->building_id)->first()){
-            Alert::warning('The Contractor Already Exsist','');
-            return redirect()->route('admin.buildings.show',$request->building_id);
+        if (BuildingContractor::where('contractor_id', $request->contractor_id)->where('building_id', $request->building_id)->first()) {
+            Alert::warning('The Contractor Already Exsist', '');
+            return redirect()->route('admin.buildings.show', $request->building_id);
         }
 
         $buildingContractor = BuildingContractor::create($request->all());
@@ -108,8 +102,8 @@ class BuildingContractorsController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $buildingContractor->id]);
         }
-        Alert::success(trans('flash.store.title'),trans('flash.store.body'));
-        return redirect()->route('admin.buildings.show',$buildingContractor->building_id);
+        Alert::success(trans('flash.store.title'), trans('flash.store.body'));
+        return redirect()->route('admin.buildings.show', $buildingContractor->building_id);
     }
 
     public function edit(BuildingContractor $buildingContractor)
@@ -128,8 +122,8 @@ class BuildingContractorsController extends Controller
     public function update(UpdateBuildingContractorRequest $request, BuildingContractor $buildingContractor)
     {
         $buildingContractor->update($request->all());
-        Alert::success(trans('flash.update.title'),trans('flash.update.body'));
-        return redirect()->route('admin.buildings.show',$buildingContractor->building_id);
+        Alert::success(trans('flash.update.title'), trans('flash.update.body'));
+        return redirect()->route('admin.buildings.show', $buildingContractor->building_id);
     }
 
     public function show(BuildingContractor $buildingContractor)
@@ -146,7 +140,7 @@ class BuildingContractorsController extends Controller
         abort_if(Gate::denies('building_contractor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $buildingContractor->delete();
-        Alert::success(trans('flash.destroy.title'),trans('flash.destroy.body'));
+        Alert::success(trans('flash.destroy.title'), trans('flash.destroy.body'));
         return back();
     }
 
