@@ -4,10 +4,32 @@
     <div class="main-content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-10">
+                    <div class="form-element base-control mb-30">
+                        <h4 class="font-20 mb-4">بنود اسعار الادارة</h4>
+                        <div class="container">
+                            @php
+                                isset($building->price_items) ? ($file = $building->price_items->getUrl()) : ($file = null);
+                            @endphp
+                            @if ($file == null)
+                                <h3 class="text-center">لم يتم تحديد بنود الاسعار من الاداره حتي الان </h3>
+                            @else
+                                <div class="container text-center">
+                                    <div class="alert alert-success" role="alert">
+                                        حتي يتم قبول عرض اسعارك برجاء تحميل الملف الموجود واضافة اسعارك داخل البنود ومن ثم
+                                        رفعه للاداره
+                                    </div>
+
+                                    <a class="btn " href="{{ $file }}" download>Download</a>
+                                </div>
+                            @endif
+
+                        </div>
+                    </div>
                     <!-- Base Control -->
                     <div class="form-element base-control mb-30">
-                        <h4 class="font-20 mb-4">أرسال السعر للأدارة </h4>
+                        <h4 class="font-20 mb-4">أرسل السعر للادارة </h4>
+
                         @if ($errors->count() > 0)
                             <div class="alert alert-danger">
                                 <ul class="list-unstyled">
@@ -48,8 +70,6 @@
                         <!-- End Form -->
                     </div>
                     <!-- End Base Control -->
-
-
                 </div>
             </div>
         </div>
