@@ -231,7 +231,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <!---  illness_status-->
                                 <div class="form-group">
                                     <label
@@ -258,7 +258,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <!---  illness_type_id-->
                                 <div class="form-group" id="illness_type_container">
                                     <label class="font-14 bold mb-2"
@@ -353,6 +353,7 @@
                     </div>
                     <!-- End Beneficiary Details -->
                     <input type="hidden" name="beneficiary_id" value="{{ $beneficiary_id }}">
+                    <input type="hidden" name="building_id" value="{{ $building_id }}">
                     <div class="form-group">
                         <button class="btn btn-danger" type="submit">
                             {{ trans('global.save') }}

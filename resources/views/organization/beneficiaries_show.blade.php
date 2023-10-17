@@ -392,7 +392,10 @@
         </div>
     </div>
 
-    @include('organization.familypopup', ['beneficiary_id' => $beneficiary->id])
+    @include('organization.familypopup', [
+        'beneficiary_id' => $beneficiary->id,
+        'building_id' => $beneficiary->building_id,
+    ])
     @include('organization.needspopup', ['beneficiary_id' => $beneficiary->id])
 @endsection
 @section('scripts')

@@ -16,8 +16,7 @@ class BeneficiaryFamilyController extends Controller
     use MediaUploadingTrait;
     public function store(Request $request)
     {
-
-        $beneficiary_id = $request->input('beneficiary_id');
+        $beneficiary_id = $request->beneficiary_id ;
         // validae data 
         $validData = $request->validate([
             'name' => 'required',
@@ -33,8 +32,10 @@ class BeneficiaryFamilyController extends Controller
             'illness_type_id' => 'nullable',
             'marital_status' => 'required',
             'marital_state_date' => 'nullable|date_format:' . config('panel.date_format'),
-            "beneficiary_id" => 'required',
-            "familyrelation_id" => 'required',
+            'building_id' => 'required',
+            'beneficiary_id' => 'required',
+            'familyrelation_id' => 'required',
+            
 
         ]);
         // create 
@@ -52,9 +53,10 @@ class BeneficiaryFamilyController extends Controller
             'illness_type_id' => $validData['illness_type_id'],
             'marital_status' => $validData['marital_status'],
             'marital_state_date' => $validData['marital_state_date'],
-            "beneficiary_id" => $validData["beneficiary_id"],
+            'building_id' => $validData['building_id'],
             'family_id' => $beneficiary_id,
-            "relative_id" => $validData["familyrelation_id"],
+            'relative_id' => $validData['familyrelation_id'],
+            
         ]);
 
         foreach ($request->input('identity_photos', []) as $file) {

@@ -208,51 +208,6 @@
                 </div>
             </div>
             <!------End Beneificary info Section ------>
-            <!------Start Family info Section ------>
-            {{-- <div class="col-md-12">
-                <div class="card mb-30">
-                    <div class="card-body p-30">
-                        <div class="container  w-25  p-2 border-success border-bottom">
-                            <h4 class=" m-auto font-25  text-primary text-start mb-20 text-center">بيانات الأسرة</h4>
-                        </div>
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.name') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.birth_date') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.identity_number') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.qualifications') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.marital_status') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.illness_status') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.illness_type') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.job_status') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.job_salary') }}</th>
-                                    <th>{{ trans('cruds.beneficiaryFamily.fields.familyrelation') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($building->buildingBeneficiaries->where('building_id', $building->id) as $beneficiary)
-                                    @foreach ($beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id', $beneficiary->id) as $person)
-                                        <tr>
-                                            <td>{{ $person->name }}</td>
-                                            <td>{{ $person->birth_date }}</td>
-                                            <td>{{ $person->identity_number }}</td>
-                                            <td>{{ $person->qualifications }}</td>
-                                            <td>{{ $person->marital_status }}</td>
-                                            <td>{{ $person->illness_status }}</td>
-                                            <td>{{ $person->illness_type->name }}</td>
-                                            <td>{{ $person->job_status }}</td>
-                                            <td>{{ $person->job_salary }}</td>
-                                            <td>{{ $person->familyrelation->name }}</td>
-                                        </tr>
-                                    @endforeach
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> --}}
-            <!------End Family info Section ------>
         </div>
     </div>
 @endsection
