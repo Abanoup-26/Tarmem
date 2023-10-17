@@ -5,10 +5,11 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-beneficiaryBeneficiaryFamilies">
+            <table
+                class=" table table-bordered table-striped table-hover datatable datatable-beneficiaryBeneficiaryFamilies">
                 <thead>
                     <tr>
-                      
+
                         <th>
                             {{ trans('cruds.beneficiaryFamily.fields.name') }}
                         </th>
@@ -27,10 +28,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($beneficiaryFamilies as $key => $beneficiaryFamily)
+
+                    @foreach ($beneficiaryFamilies as $key => $beneficiaryFamily)
                         <tr data-entry-id="{{ $beneficiaryFamily->id }}">
-                       
-                           
                             <td>
                                 {{ $beneficiaryFamily->name ?? '' }}
                             </td>
@@ -41,17 +41,26 @@
                                 {{ $beneficiaryFamily->birth_date ?? '' }}
                             </td>
                             <td>
-                                {{ $beneficiaryFamily->familyrelation->name ?? '' }}
+                                {{ $beneficiaryFamily->family_relation->name ?? '' }}
                             </td>
-                            
+
                             <td>
-                                @can('beneficiary_family_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.beneficiary-families.show', $beneficiaryFamily->id) }}">
+                                @can('beneficiary_show')
+                                    <a class="btn btn-xs btn-primary"
+                                        href="{{ route('admin.beneficiaries.show', $beneficiaryFamily->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
-
-
+                                @can('beneficiary_change')
+                                    @if (!isset($beneficiaryFamily->apartment) && !!isset($beneficiaryFamily->family_id))
+                                        <a class="btn btn-xs btn-info"
+                                            href="{{ route('admin.beneficiaries.change', $beneficiaryFamily->id) }}">
+                                            تحويل الى مستفيد
+                                        </a>
+                                    @else
+                                        <p class="alert alert-warning"> مستفيد رئيسي </p>
+                                    @endif
+                                @endcan
 
                             </td>
 

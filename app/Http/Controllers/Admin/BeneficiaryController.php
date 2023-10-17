@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\UpdateBeneficiaryRequest;
+use App\Models\Apartment;
 use App\Models\Beneficiary;
+use App\Models\Building;
+use App\Models\Illnesstype;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -42,55 +46,19 @@ class BeneficiaryController extends Controller
                 ));
             });
 
-           
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-
-            // $table->editColumn('identity_number', function ($row) {
-            //     return $row->identity_number ? $row->identity_number : '';
-            // });
-            // $table->editColumn('identity_photo', function ($row) {
-            //     if (! $row->identity_photo) {
-            //         return '';
-            //     }
-            //     $links = [];
-            //     foreach ($row->identity_photo as $media) {
-            //         $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-            //     }
-
-            //     return implode(' ', $links);
-            // });
             $table->editColumn('qualifications', function ($row) {
                 return $row->qualifications ? Beneficiary::QUALIFICATIONS_SELECT[$row->qualifications] : '';
             });
-            // $table->editColumn('job_status', function ($row) {
-            //     return $row->job_status ? Beneficiary::JOB_STATUS_RADIO[$row->job_status] : '';
-            // });
-            // $table->editColumn('job_title', function ($row) {
-            //     return $row->job_title ? $row->job_title : '';
-            // });
-            // $table->editColumn('job_salary', function ($row) {
-            //     return $row->job_salary ? $row->job_salary : '';
-            // });
+
             $table->editColumn('marital_status', function ($row) {
                 return $row->marital_status ? Beneficiary::MARITAL_STATUS_SELECT[$row->marital_status] : '';
             });
-
-            // $table->editColumn('address', function ($row) {
-            //     return $row->address ? $row->address : '';
-            // });
-            // $table->editColumn('illness_status', function ($row) {
-            //     return $row->illness_status ? Beneficiary::ILLNESS_STATUS_RADIO[$row->illness_status] : '';
-            // });
-            // $table->addColumn('illness_type_name', function ($row) {
-            //     return $row->illness_type ? $row->illness_type->name : '';
-            // });
-
-            // $table->addColumn('building_building_type', function ($row) {
-            //     return $row->building ? $row->building->building_type : '';
-            // });
-
+            $table->editColumn('building', function ($row) {
+                return $row->name ? $row->building->name : '';
+            });
             $table->rawColumns(['actions', 'placeholder', 'identity_photo', 'illness_type', 'building']);
 
             return $table->make(true);
@@ -98,14 +66,69 @@ class BeneficiaryController extends Controller
 
         return view('admin.beneficiaries.index');
     }
+    public function change(Request $request)
+    {
+        $beneficiaryFamilyPerson = Beneficiary::find($request->id);
+        $mainBeneficiary = Beneficiary::find($beneficiaryFamilyPerson->family_id);
+
+        if ($beneficiaryFamilyPerson && $mainBeneficiary) {
+            $beneficiaryFamilyPerson->apartment = $mainBeneficiary->building_id . '-' . $mainBeneficiary->building->name . '-' . 'تقسيم-' . $beneficiaryFamilyPerson->id;
+            $beneficiaryFamilyPerson->save();
+            $mainBeneficiary->apartment = $mainBeneficiary->building_id . '-' . $mainBeneficiary->building->name . '-' . 'تقسيم-' . $mainBeneficiary->id;
+            $mainBeneficiary->save();
+            alert('success', 'تم تقسيم الشقة للمستفيد ' . $mainBeneficiary->name . ' إلى قسمين');
+        } else {
+            // Handle the case where the beneficiaries are not found
+            alert('error', 'مستفيد غير موجود');
+        }
+
+        return back();
+    }
+
+
+
 
     public function show(Beneficiary $beneficiary)
     {
         abort_if(Gate::denies('beneficiary_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $beneficiary->load('illness_type', 'building', 'beneficiaryBeneficiaryFamilies','beneficiaryBeneficiaryNeeds.unit');
-
+        $beneficiary->load('illness_type', 'building', 'familyMembers.family_relation', 'beneficiaryBeneficiaryNeeds.unit');
+        // return $beneficiary;
         return view('admin.beneficiaries.show', compact('beneficiary'));
+    }
+    public function edit(Beneficiary $beneficiary)
+    {
+        abort_if(Gate::denies('beneficiary_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $illness_types = Illnesstype::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $buildings = Building::pluck('building_type', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $beneficiary->load('illness_type', 'building');
+
+        return view('admin.beneficiaries.edit', compact('beneficiary', 'buildings', 'illness_types'));
+    }
+
+    public function update(UpdateBeneficiaryRequest $request, Beneficiary $beneficiary)
+    {
+        // return $request->all();
+        $beneficiary->update($request->all());
+
+        if (count($beneficiary->identity_photo) > 0) {
+            foreach ($beneficiary->identity_photo as $media) {
+                if (!in_array($media->file_name, $request->input('identity_photo', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $beneficiary->identity_photo->pluck('file_name')->toArray();
+        foreach ($request->input('identity_photo', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $beneficiary->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photo');
+            }
+        }
+
+        return redirect()->route('admin.beneficiaries.index');
     }
 
     public function storeCKEditorImages(Request $request)

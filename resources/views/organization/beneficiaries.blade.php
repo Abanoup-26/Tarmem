@@ -30,7 +30,8 @@
                                     <tr>
                                         <td>{{ $beneficiary->id }}</td>
                                         <td>{{ $beneficiary->name }}</td>
-                                        <td>{{ $beneficiary->job_status ? \App\Models\Beneficiary::JOB_STATUS_RADIO[$beneficiary->job_status] : '' }}</td>
+                                        <td>{{ $beneficiary->job_status ? \App\Models\Beneficiary::JOB_STATUS_RADIO[$beneficiary->job_status] : '' }}
+                                        </td>
                                         <td class="border border-3 table-success">
                                             <div class="row" dir="ltr">
                                                 @foreach ($beneficiary->beneficiaryBeneficiaryNeeds as $item)
@@ -44,9 +45,10 @@
                                                 @endforeach
                                             </div>
                                         </td>
-                                        <td>{{ $beneficiary->building ? \App\Models\Building::STAGES_SELECT[$beneficiary->building->stages] : '' }}</td>
+                                        <td>{{ $beneficiary->building ? \App\Models\Building::STAGES_SELECT[$beneficiary->building->stages] : '' }}
+                                        </td>
                                         <td>{{ $beneficiary->building->building_number ?? '' }}</td>
-                                        <td>{{ $beneficiary->beneficiaryBeneficiaryFamilies->count() }}
+                                        <td>{{ $beneficiary->familyMembers->count() }}
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-between align-items-center">

@@ -13,6 +13,8 @@ class AddRelationshipFieldsToBeneficiariesTable extends Migration
             $table->foreign('illness_type_id', 'illness_type_fk_8757619')->references('id')->on('illnesstypes');
             $table->unsignedBigInteger('building_id')->nullable();
             $table->foreign('building_id', 'building_fk_8758431')->references('id')->on('buildings');
+            $table->unsignedBigInteger('relative_id')->nullable();
+            $table->foreign('relative_id')->references('id')->on('relatives');
         });
     }
 }

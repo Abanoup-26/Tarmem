@@ -152,11 +152,25 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>
-                                    {{ trans('cruds.beneficiary.fields.building') }}
+                                <th rowspan="2" class="m-auto">
+                                    <div class="mb-4"> {{ trans('cruds.building.fields.building_number') }}</div>
+                                    <div> {{ trans('cruds.building.fields.name') }} </div>
                                 </th>
                                 <td>
-                                    {{ $beneficiary->building->id ?? '' }}
+                                    {{ $beneficiary->building->building_number ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ $beneficiary->building->name ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ trans('cruds.beneficiary.fields.apartment') }}
+                                </th>
+                                <td>
+                                    <span>{{ $beneficiary->apartment ?? '' }}</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -188,18 +202,52 @@
                     </a>
                 </li>
             </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" role="tabpanel" id="beneficiary_beneficiary_families">
-                    @includeIf('admin.beneficiaries.relationships.beneficiaryBeneficiaryFamilies', [
-                        'beneficiaryFamilies' => $beneficiary->beneficiaryBeneficiaryFamilies,
-                    ])
+
+            <!---if beneficiary is a family owner family_id will be null  رب/ة الاسره -->
+            @if ($beneficiary->family_id == null)
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="beneficiary_beneficiary_families">
+                        @includeIf('admin.beneficiaries.relationships.beneficiaryFamilies', [
+                            'beneficiaryFamilies' => $beneficiary->familyMembers,
+                        ])
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="beneficiary_beneficiary_needs">
+                        @includeIf('admin.beneficiaries.relationships.beneficiaryNeeds', [
+                            'beneficiaryNeeds' => $beneficiary->beneficiaryBeneficiaryNeeds,
+                        ])
+                    </div>
                 </div>
-                <div class="tab-pane" role="tabpanel" id="beneficiary_beneficiary_needs">
-                    @includeIf('admin.beneficiaries.relationships.beneficiaryBeneficiaryneeds', [
-                        'beneficiaryNeeds' => $beneficiary->beneficiaryBeneficiaryNeeds,
-                    ])
+                <!---if beneficiary is a family member and i need to get his Family-->
+            @elseif ($beneficiary->familyMembers->count() == 0)
+                @php
+                    $memberIdToRemove = $beneficiary->id;
+                    // Load the family_owner and their family_members with 'family_relation' relationship
+                    $familyOwner = \App\Models\Beneficiary::with('familyMembers.family_relation')->findOrFail($beneficiary->family_id);
+                    $familyOwner->update(['relative_id' => 5]);
+                    $familyOwner->save();
+
+                    // Filter the family members to exclude the one to be removed
+                    $family = $familyOwner->familyMembers->filter(function ($member) use ($memberIdToRemove) {
+                        return $member->id !== $memberIdToRemove;
+                    });
+
+                    // Add the family_owner to the filtered family members
+                    $family->push($familyOwner);
+                @endphp
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="beneficiary_beneficiary_families">
+                        @includeIf('admin.beneficiaries.relationships.beneficiaryFamilies', [
+                            'beneficiaryFamilies' => $family,
+                        ])
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="beneficiary_beneficiary_needs">
+                        @includeIf('admin.beneficiaries.relationships.beneficiaryNeeds', [
+                            'beneficiaryNeeds' => $beneficiary->beneficiaryBeneficiaryNeeds,
+                        ])
+                    </div>
                 </div>
-            </div>
+            @endif
+
         </div>
     </div>
 </div>

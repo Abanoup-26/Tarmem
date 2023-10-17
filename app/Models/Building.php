@@ -51,6 +51,8 @@ class Building extends Model implements HasMedia
         'engineering'        => 'القسم الهندسي ',
         'research_visit'     => 'الزيارة البحثيه',
         'engineering_visit'  => 'الزياره الهندسيه',
+        // 'Finances'           => 'الماليه',
+        // 'Executive director' => 'المدير التنفيذي',
         'send_to_contractor' => 'ارسال الى المقاولين',
         'done'               => 'تم',
         'supporting'         => 'ارسال للمناحين',

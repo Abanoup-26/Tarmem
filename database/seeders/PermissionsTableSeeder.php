@@ -264,11 +264,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 64,
-                'title' => 'beneficiary_family_show',
-            ],
-            [
-                'id'    => 65,
-                'title' => 'beneficiary_family_access',
+                'title' => 'beneficiary_change',
             ],
             [
                 'id'    => 66,
@@ -409,7 +405,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id'    => 100,
                 'title' => 'building_update',
-            ], 
+            ],
             [
                 'id'    => 101,
                 'title' => 'managment_stage',
@@ -434,7 +430,14 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 106,
                 'title' => 'supporting_stage',
             ],
+            [
+                'id'    => 112,
+                'title' => 'beneficiary_edit',
+            ],
+
         ];
+        //  65  and 106 to 112 is free to use 
+
 
         Permission::insert($permissions);
     }

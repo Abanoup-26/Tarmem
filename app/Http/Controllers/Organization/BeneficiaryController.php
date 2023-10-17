@@ -23,17 +23,17 @@ class BeneficiaryController extends Controller
 {
     use MediaUploadingTrait;
     public function index()
-{
-    $authUserId = Auth::id();
-    
-    $beneficiaries = Beneficiary::with('building.organization.user', 'beneficiaryBeneficiaryFamilies', 'beneficiaryBeneficiaryNeeds.unit')
-        ->whereHas('building.organization.user', function ($query) use ($authUserId) {
-            $query->where('id', $authUserId);
-        })
-        ->get();
+    {
+        $authUserId = Auth::id();
 
-    return view('organization.beneficiaries', compact('beneficiaries'));
-}
+        $beneficiaries = Beneficiary::with('building.organization.user', 'familyMembers.family_relation', 'beneficiaryBeneficiaryNeeds.unit')
+            ->whereHas('building.organization.user', function ($query) use ($authUserId) {
+                $query->where('id', $authUserId);
+            })->where('family_id', null)
+            ->get();
+
+        return view('organization.beneficiaries', compact('beneficiaries'));
+    }
 
     public function create()
     {
@@ -41,7 +41,7 @@ class BeneficiaryController extends Controller
         $illness_types = Illnesstype::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::with('organization.user')->whereHas('organization', function ($query) use ($authUserId) {
             $query->where('user_id', $authUserId);
-        })->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        })->pluck('project_name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $units = Unit::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $familyrelations = Relative::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -49,10 +49,10 @@ class BeneficiaryController extends Controller
     }
 
     public function edit(Request $request)
-    {   
+    {
         $authUserId = Auth::id();
         // get the beneficiary 
-        $beneficiary = Beneficiary::findOrFail($request->id);
+        $beneficiary = Beneficiary::with('illness_type', 'familyMembers.family_relation')->findOrFail($request->id);
         // get important pluckes
         $illness_types = Illnesstype::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::with('organization.user')->whereHas('organization', function ($query) use ($authUserId) {
@@ -64,13 +64,12 @@ class BeneficiaryController extends Controller
 
         // get the beneficiary related data 
         $beneficiaryNeed = BeneficiaryNeed::with('unit', 'beneficiary')->where('beneficiary_id', $beneficiary->id)->first();
-        $beneficiaryFamily = BeneficiaryFamily::with('illness_type', 'familyrelation')->where('beneficiary_id', $beneficiary->id)->first();
 
-        return view('organization.edit-beneficiary', compact('beneficiary', 'beneficiaryNeed', 'beneficiaryFamily', 'illness_types', 'buildings', 'units', 'familyrelations'));
+        return view('organization.edit-beneficiary', compact('beneficiary', 'beneficiaryNeed', 'illness_types', 'buildings', 'units', 'familyrelations'));
     }
 
     public function store(Request $request)
-    { 
+    {
         // validate all data 
         $validData = $request->validate([
             'name' => 'required',
@@ -80,29 +79,35 @@ class BeneficiaryController extends Controller
             'qualifications' => ['required', 'in:' . implode(',', array_keys(Beneficiary::QUALIFICATIONS_SELECT))],
             'job_status' => 'required',
             'job_title' => 'nullable',
-            'employer'  => 'nullable',
             'job_salary' => 'nullable|numeric',
+            'employer'  => 'nullable',
             'illness_status' => 'required',
             'illness_type_id' => 'nullable',
             'marital_status' => 'required',
-            'marital_state_date' => 'required|date_format:' . config('panel.date_format'),
+            'marital_state_date' => 'nullable|date_format:' . config('panel.date_format'),
             'building_id' => 'required',
+            'apartment' => 'required',
             'unit_id'  => 'required',
             'trmem_type' => 'required',
             'description' => 'required',
             'family_name' => 'required',
             'family_birth_date' => 'required|date_format:' . config('panel.date_format'),
-            'family_identity_number' => 'required',
-            'familyrelation_id' => 'required',
-            'family_qualifications' => 'required',
+            'family_address' => 'required',
+            'family_identity_number' => 'required|max:10|min:10',
+            'family_qualifications' => ['required', 'in:' . implode(',', array_keys(Beneficiary::QUALIFICATIONS_SELECT))],
             'family_job_status' => 'required',
-            'family_employer' => 'nullable|string',
+            'family_job_title' => 'nullable',
             'family_job_salary' => 'nullable|numeric',
+            'family_employer' => 'nullable',
             'family_illness_status' => 'required',
             'family_illness_type_id' => 'nullable',
+            'family_marital_status' => 'required',
+            'family_marital_state_date' => 'nullable|date_format:' . config('panel.date_format'),
+            'familyrelation_id' => 'required',
         ]);
 
-        // create Beneficiary 
+
+        // create MainBeneficiary 
         $beneficiary = Beneficiary::create([
             'name' => $validData['name'],
             'birth_date' => $validData['birth_date'],
@@ -118,6 +123,9 @@ class BeneficiaryController extends Controller
             'illness_status' => $validData['illness_status'],
             'illness_type_id' => $validData['illness_type_id'],
             'building_id' => $validData['building_id'],
+            'apartment' => $validData['apartment'],
+            'family_id' => null,
+            'relative_id' => null,
         ]);
         foreach ($request->input('identity_photo', []) as $file) {
             $beneficiary->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photo');
@@ -140,22 +148,26 @@ class BeneficiaryController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $beneficiaryNeed->id]);
         }
         // create beneficiary familes
-        $beneficiaryFamily = BeneficiaryFamily::create([
+        $beneficiaryFamily = Beneficiary::create([
             'name' => $validData['family_name'],
             'birth_date' => $validData['family_birth_date'],
             'identity_number' => $validData['family_identity_number'],
             'qualifications' => $validData['family_qualifications'],
-            'marital_status' => 'single',
+            'job_status' => $validData['family_job_status'],
+            'job_title' => $validData['family_job_title'],
+            'employer'  => $validData['family_employer'],
+            'job_salary' => $validData['family_job_salary'],
+            'marital_status' => $validData['family_marital_status'],
+            'marital_state_date' => $validData['family_marital_state_date'],
+            'address' => $validData['family_address'],
             'illness_status' => $validData['family_illness_status'],
             'illness_type_id' => $validData['family_illness_type_id'],
-            'job_status' => $validData['family_job_status'],
-            'employer' => $validData['family_employer'],
-            'job_sallary' => $validData['family_job_salary'],
-            'beneficiary_id' => $beneficiary->id,
-            'familyrelation_id' => $validData['familyrelation_id'],
+            'building_id' => $beneficiary->building->id,
+            'family_id' => $beneficiary->id,
+            'relative_id' => $validData['familyrelation_id'],
         ]);
 
-        foreach ($request->input('family_identity_photos', []) as $file) {
+        foreach ($request->input('family_identity_photo', []) as $file) {
             $beneficiaryFamily->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photos');
         }
 
@@ -172,7 +184,7 @@ class BeneficiaryController extends Controller
 
         $beneficiary = Beneficiary::findOrFail($request->id);
         $beneficiaryNeed = BeneficiaryNeed::where('beneficiary_id', $beneficiary->id)->first();
-        $beneficiaryFamily = BeneficiaryFamily::where('beneficiary_id', $beneficiary->id)->first();
+
         // validate all data 
         $validUpdatedData = $request->validate([
             'name' => 'required',
@@ -182,26 +194,17 @@ class BeneficiaryController extends Controller
             'qualifications' => ['required', 'in:' . implode(',', array_keys(Beneficiary::QUALIFICATIONS_SELECT))],
             'job_status' => 'required',
             'job_title' => 'nullable',
-            'employer'  => 'nullable',
             'job_salary' => 'nullable|numeric',
+            'employer'  => 'nullable',
             'illness_status' => 'required',
             'illness_type_id' => 'nullable',
             'marital_status' => 'required',
-            'marital_state_date' => 'required|date_format:' . config('panel.date_format'),
+            'marital_state_date' => 'nullable|date_format:' . config('panel.date_format'),
             'building_id' => 'required',
+            'apartment' => 'required',
             'unit_id'  => 'required',
             'trmem_type' => 'required',
             'description' => 'required',
-            'family_name' => 'required',
-            'family_birth_date' => 'required|date_format:' . config('panel.date_format'),
-            'family_identity_number' => 'required',
-            'familyrelation_id' => 'required',
-            'family_qualifications' => 'required',
-            'family_job_status' => 'required',
-            'family_employer' => 'nullable|string',
-            'family_job_salary' => 'nullable',
-            'family_illness_status' => 'required',
-            'family_illness_type_id' => 'nullable',
         ]);
         // update Beneficiary 
         $beneficiary->update([
@@ -211,7 +214,7 @@ class BeneficiaryController extends Controller
             'qualifications' => $validUpdatedData['qualifications'],
             'job_status' => $validUpdatedData['job_status'],
             'job_title' => $validUpdatedData['job_title'],
-            'employer'=> $validUpdatedData['employer'],
+            'employer'  => $validUpdatedData['employer'],
             'job_salary' => $validUpdatedData['job_salary'],
             'marital_status' => $validUpdatedData['marital_status'],
             'marital_state_date' => $validUpdatedData['marital_state_date'],
@@ -219,6 +222,9 @@ class BeneficiaryController extends Controller
             'illness_status' => $validUpdatedData['illness_status'],
             'illness_type_id' => $validUpdatedData['illness_type_id'],
             'building_id' => $validUpdatedData['building_id'],
+            'apartment' => $validUpdatedData['apartment'],
+            'family_id' => null,
+            'relative_id' => null,
         ]);
         if (count($beneficiary->identity_photo) > 0) {
             foreach ($beneficiary->identity_photo as $media) {
@@ -253,45 +259,16 @@ class BeneficiaryController extends Controller
                 $beneficiaryNeed->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos_before');
             }
         }
-        //update beneficiary family 
-        $beneficiaryFamily->update([
-            'name' => $validUpdatedData['family_name'],
-            'birth_date' => $validUpdatedData['family_birth_date'],
-            'identity_number' => $validUpdatedData['family_identity_number'],
-            'qualifications' => $validUpdatedData['family_qualifications'],
-            'marital_status' => 'single',
-            'illness_status' => $validUpdatedData['family_illness_status'],
-            'illness_type_id' => $validUpdatedData['family_illness_type_id'],
-            'job_status' => $validUpdatedData['family_job_status'],
-            'employer' => $validUpdatedData['family_employer'],
-            'job_sallary' => $validUpdatedData['family_job_salary'],
-            'beneficiary_id' => $beneficiary->id,
-            'familyrelation_id' => $validUpdatedData['familyrelation_id'],
-        ]);
-        if (count($beneficiaryFamily->identity_photos) > 0) {
-            foreach ($beneficiaryFamily->identity_photos as $media) {
-                if (!in_array($media->file_name, $request->input('family_identity_photos', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $beneficiaryFamily->identity_photos->pluck('file_name')->toArray();
-        foreach ($request->input('family_identity_photos', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $beneficiaryFamily->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('identity_photos');
-            }
-        }
-        Alert::success('Data Updated Successfully');
+        Alert::success('تم تحديث بيانات المستفيد بنجاح ');
         return redirect()->route('organization.beneficiary.index');
     }
 
     public function show(Request $request)
     {
         $beneficiary = Beneficiary::findOrFail($request->id);
-        $beneficiary->load('building','beneficiaryBeneficiaryFamilies.familyrelation', 'beneficiaryBeneficiaryFamilies.illness_type', 'beneficiaryBeneficiaryNeeds.unit', 'illness_type', 'building');
+        $beneficiary->load('building', 'familyMembers.family_relation', 'familyMembers.illness_type', 'beneficiaryBeneficiaryNeeds.unit', 'illness_type', 'building');
         return view('organization.beneficiaries_show', compact('beneficiary'));
     }
-
     public function destroy(Request $request)
     {
 
@@ -324,7 +301,7 @@ class BeneficiaryController extends Controller
     public function storeCKEditorImages3(Request $request)
     {
 
-        $model         = new BeneficiaryFamily();
+        $model         = new Beneficiary();
         $model->id     = $request->input('crud_id', 0);
         $model->exists = true;
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

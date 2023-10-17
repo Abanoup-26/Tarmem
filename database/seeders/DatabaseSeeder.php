@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             OrganizationTypeTableSeeder::class,
             UnitTableSeeder::class,
             IllnessTypeTableSeeder::class,
-            ContractorTableSeeder::class
+            ContractorTableSeeder::class,
+            BuildingTableSeeder::class,
         ]);
     }
 }

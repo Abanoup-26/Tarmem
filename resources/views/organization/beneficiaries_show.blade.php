@@ -240,7 +240,7 @@
                                     <span class="font-14 bold c4 ml-4"> نتيجة الزياره البحثيه </span>
                                     @if ($beneficiary->building->research_vist_result)
                                         <span class="font-20  text-primary text-start bold c4 ml-4">
-                                            <img src="{{ $building->research_vist_result->getUrl('preview') }}"
+                                            <img src="{{ $beneficiary->building->research_vist_result->getUrl('preview') }}"
                                                 width="150px" height="150px">
                                         </span>
                                     @else
@@ -254,7 +254,7 @@
                                     <span class="font-14 bold c4 ml-4"> نتيجة الزياره الهندسيه </span>
                                     @if ($beneficiary->building->engineering_vist_result)
                                         <span class="font-20  text-primary text-start bold c4 ml-4">
-                                            <img src="{{ $building->engineering_vist_result->getUrl('preview') }}"
+                                            <img src="{{ $beneficiary->building->engineering_vist_result->getUrl('preview') }}"
                                                 width="150px" height="150px"></span>
                                     @else
                                         <span class="font-20  text-primary text-start bold c4 ml-4"> لم يتم اضافة
@@ -358,7 +358,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($beneficiary->beneficiaryBeneficiaryFamilies->where('beneficiary_id', $beneficiary->id) as $person)
+
+                                @foreach ($beneficiary->familyMembers as $person)
                                     <tr>
                                         <td>{{ $person->name }}</td>
                                         <td>{{ $person->birth_date }}</td>
@@ -367,12 +368,14 @@
                                         <td>{{ $person->marital_status }}</td>
                                         <td>{{ $person->illness_status }}</td>
                                         <td>
-                                            {{ $beneficiary->illness_type->name ?? null }}
+                                            {{ $person->illness_type->name ?? null }}
                                         </td>
 
                                         <td>{{ $person->job_status }}</td>
                                         <td>{{ $person->job_sallary }}</td>
-                                        <td>{{ $person->familyrelation->name }}</td>
+                                        <td>
+                                            {{ $person->family_relation ? $person->family_relation->name : null }}
+                                        </td>
                                         <td>
                                             <button class="btn btn-danger deleteFamilyMember"
                                                 data-family-member-id="{{ $person->id }}"
@@ -634,4 +637,68 @@
             }
         }
     </script>
+    <!-- identity photo of family -->
+    <script>
+        var uploadedFamilyIdentityPhotoMap = {}
+        Dropzone.options.familyIdentityPhotoDropzone = {
+            url: '{{ route('organization.beneficiary-families.storeMedia') }}',
+            maxFilesize: 4, // MB
+            acceptedFiles: '.jpeg,.jpg,.png,.gif',
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            params: {
+                size: 4,
+                width: 4096,
+                height: 4096
+            },
+            success: function(file, response) {
+                $('form').append('<input type="hidden" name="family_identity_photo[]" value="' + response.name +
+                    '">')
+                uploadedFamilyIdentityPhotoMap[file.name] = response.name
+            },
+            removedfile: function(file) {
+                console.log(file)
+                file.previewElement.remove()
+                var name = ''
+                if (typeof file.file_name !== 'undefined') {
+                    name = file.file_name
+                } else {
+                    name = uploadedFamilyIdentityPhotoMap[file.name]
+                }
+                $('form').find('input[name="family_identity_photo[]"][value="' + name + '"]').remove()
+            },
+            init: function() {
+                @if (isset($beneficiaryFamily) && $beneficiaryFamily->family_identity_photo)
+                    var files = {!! json_encode($beneficiaryFamily->family_identity_photo) !!}
+                    for (var i in files) {
+                        var file = files[i]
+                        this.options.addedfile.call(this, file)
+                        this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+                        file.previewElement.classList.add('dz-complete')
+                        $('form').append('<input type="hidden" name="family_identity_photo[]" value="' + file
+                            .file_name + '">')
+                    }
+                @endif
+            },
+            error: function(file, response) {
+                if ($.type(response) === 'string') {
+                    var message = response // Dropzone sends its own error messages as a string
+                } else {
+                    var message = response.errors.file
+                }
+                file.previewElement.classList.add('dz-error')
+                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                _results = []
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    node = _ref[_i]
+                    _results.push(node.textContent = message)
+                }
+
+                return _results
+            }
+        }
+    </script>
+    <script src="{{ asset('js/FormActions.js') }}"></script>
 @endsection

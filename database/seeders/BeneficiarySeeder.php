@@ -14,7 +14,7 @@ class BeneficiarySeeder extends Seeder
      */ public function run()
     {
         $B1 = Beneficiary::create([
-            'name' => 'John Doe', 
+            'name' => 'John Doe',
             'identity_number' => '123456789',
             'qualifications' => 'Bachelor\'s Degree',
             'job_status' => 'employee',
@@ -26,10 +26,11 @@ class BeneficiarySeeder extends Seeder
             'illness_status' => 'safe',
             'illness_type_id' => null, // You might need to adjust this based on your data
             'building_id' => 1, // You might need to adjust this based on your data
+            'apartment' => null
         ]);
-        $B1->addMediaFromUrl(asset('frontend/img/user.jpg'))->toMediaCollection('identity_photo') ;
-        $B2 =Beneficiary::create([
-            'name' => 'Jane Smith', 
+        $B1->addMediaFromUrl(asset('frontend/img/user.jpg'))->toMediaCollection('identity_photo');
+        $B2 = Beneficiary::create([
+            'name' => 'Jane Smith',
             'identity_number' => '987654321',
             'qualifications' => 'Master\'s Degree',
             'job_status' => 'idle',
@@ -41,10 +42,11 @@ class BeneficiarySeeder extends Seeder
             'illness_status' => 'safe',
             'illness_type_id' => null, // You might need to adjust this based on your data
             'building_id' => 1, // You might need to adjust this based on your data
+            'apartment' => null
         ]);
         $B2->addMediaFromUrl(asset('frontend/img/user.jpg'))->toMediaCollection('identity_photo');
         $B3 = Beneficiary::create([
-            'name' => 'Michael Johnson', 
+            'name' => 'Michael Johnson',
             'identity_number' => '555555555',
             'qualifications' => 'High School Diploma',
             'job_status' => 'idle',
@@ -56,6 +58,7 @@ class BeneficiarySeeder extends Seeder
             'illness_status' => 'endemic',
             'illness_type_id' => null, // You might need to adjust this based on your data
             'building_id' => 1, // You might need to adjust this based on your data
+            'apartment' => null
         ]);
         $B3->addMediaFromUrl(asset('frontend/img/user.jpg'))->toMediaCollection('identity_photo');
     }

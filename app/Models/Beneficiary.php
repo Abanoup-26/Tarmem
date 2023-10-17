@@ -58,7 +58,7 @@ class Beneficiary extends Model implements HasMedia
         'Doctor of Medicine (M.D.)' => 'دكتور في الطب',
         'Juris Doctor (J.D.)' => 'دكتور في القانون',
     ];
-    
+
 
     protected $fillable = [
         'name',
@@ -73,8 +73,11 @@ class Beneficiary extends Model implements HasMedia
         'marital_state_date',
         'address',
         'illness_status',
+        'apartment',
         'illness_type_id',
         'building_id',
+        'family_id',
+        'relative_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -91,11 +94,11 @@ class Beneficiary extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function beneficiaryBeneficiaryFamilies()
+    public function familyMembers()
     {
-        return $this->hasMany(BeneficiaryFamily::class, 'beneficiary_id');
+        return $this->hasMany(Beneficiary::class, 'family_id');
     }
-    
+
     public function beneficiaryBeneficiaryNeeds()
     {
         return $this->hasMany(BeneficiaryNeed::class, 'beneficiary_id');
@@ -142,5 +145,10 @@ class Beneficiary extends Model implements HasMedia
     public function building()
     {
         return $this->belongsTo(Building::class, 'building_id');
+    }
+
+    public function family_relation()
+    {
+        return $this->belongsTo(Relative::class, 'relative_id');
     }
 }

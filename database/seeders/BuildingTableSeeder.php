@@ -18,10 +18,11 @@ class BuildingTableSeeder extends Seeder
         // Seed buildings data
         $buildings = [
             [
+                'project_name' => 'مشروع الاختبار',
                 'building_type' => 'public',
                 'building_number' => 1,
-                'floor_count' => 5,
-                'apartments_count' => 20,
+                'floor_count' => 12,
+                'apartments_count' => 60,
                 'birth_data' => '01/01/2023', // Updated format to "d/m/Y"
                 'latitude' => 37.7749,
                 'longtude' => -122.4194,
@@ -33,6 +34,8 @@ class BuildingTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => null,
+                'buidling_age' => 10,
+                'name' => "الدمام",
             ],
             // Add more buildings as needed...
         ];

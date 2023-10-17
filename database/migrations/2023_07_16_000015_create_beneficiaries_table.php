@@ -22,6 +22,9 @@ class CreateBeneficiariesTable extends Migration
             $table->date('marital_state_date')->nullable();
             $table->string('address')->nullable();
             $table->string('illness_status');
+            $table->unsignedBigInteger('family_id')->nullable();
+            $table->string('apartment')->nullable();
+            $table->foreign('family_id')->references('id')->on('beneficiaries');
             $table->timestamps();
             $table->softDeletes();
         });

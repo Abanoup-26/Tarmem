@@ -103,12 +103,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Beneficiary
     Route::post('beneficiaries/media', 'BeneficiaryController@storeMedia')->name('beneficiaries.storeMedia');
     Route::post('beneficiaries/ckmedia', 'BeneficiaryController@storeCKEditorImages')->name('beneficiaries.storeCKEditorImages');
-    Route::resource('beneficiaries', 'BeneficiaryController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+    Route::resource('beneficiaries', 'BeneficiaryController', ['except' => ['create', 'store', 'destroy']]);
+    Route::get('beneficiaries/change/{id}', 'BeneficiaryController@change')->name('beneficiaries.change');
 
-    // Beneficiary Family
-    Route::post('beneficiary-families/media', 'BeneficiaryFamilyController@storeMedia')->name('beneficiary-families.storeMedia');
-    Route::post('beneficiary-families/ckmedia', 'BeneficiaryFamilyController@storeCKEditorImages')->name('beneficiary-families.storeCKEditorImages');
-    Route::resource('beneficiary-families', 'BeneficiaryFamilyController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 
     // Building Contractors
     Route::delete('building-contractors/destroy', 'BuildingContractorsController@massDestroy')->name('building-contractors.massDestroy');
@@ -131,6 +128,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Units
     Route::delete('units/destroy', 'UnitsController@massDestroy')->name('units.massDestroy');
     Route::resource('units', 'UnitsController');
+
+    // Floor
+    Route::delete('floors/destroy', 'FloorController@massDestroy')->name('floors.massDestroy');
+    Route::resource('floors', 'FloorController');
+
+    // Apartment
+    Route::delete('apartments/destroy', 'ApartmentController@massDestroy')->name('apartments.massDestroy');
+    Route::resource('apartments', 'ApartmentController');
 
     // Building Supporter
     Route::delete('building-supporters/destroy', 'BuildingSupporterController@massDestroy')->name('building-supporters.massDestroy');

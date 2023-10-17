@@ -13,19 +13,23 @@ class RelativeTableSeeder extends Seeder
     public function run(): void
     {
         Relative::create([
-            'name'=> 'أخ/ة', 
-        ]);
-        
-        Relative::create([
-            'name'=> 'عم/ة', 
+            'name' => 'أخ/ة',
         ]);
 
         Relative::create([
-            'name'=> 'خال/ة', 
+            'name' => 'عم/ة',
         ]);
 
         Relative::create([
-            'name'=> 'زوج/ة', 
+            'name' => 'خال/ة',
+        ]);
+
+        Relative::create([
+            'name' => 'زوج/ة',
+        ]);
+
+        Relative::create([
+            'name' => 'رب/ة الاسره',
         ]);
     }
 }

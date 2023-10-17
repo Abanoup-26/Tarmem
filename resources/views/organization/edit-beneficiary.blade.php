@@ -41,12 +41,6 @@
                                     </li>
                                     <li>
                                         <a class="nav-link inactive" href="#stepp-3">
-                                            <i class="icofont-check-circled"></i>
-                                            <span class="d-block">بيانات الأسرة</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link inactive" href="#stepp-4">
                                         </a>
                                     </li>
                                 </ul>
@@ -176,9 +170,8 @@
                                                             </div>
                                                         @endif
                                                         <span
-                                                            class="help-block">{{ trans('cruds.beneficiary.fields.qualifications_helper') }}</span>
+                                                            class="help-block">{{ trans('cruds.beneficiary.fields.job_status_helper') }}</span>
                                                     </div>
-
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -207,6 +200,7 @@
                                                         <span
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.job_status_helper') }}</span>
                                                     </div>
+
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <!---  job_title-->
@@ -216,7 +210,7 @@
                                                         <input
                                                             class="form-control theme-input-style {{ $errors->has('job_title') ? 'is-invalid' : '' }}"
                                                             type="text" name="job_title" id="job_title"
-                                                            value="{{ old('job_title', $beneficiary->job_status) }}">
+                                                            value="{{ old('job_title', $beneficiary->job_title) }}">
                                                         @if ($errors->has('job_title'))
                                                             <div class="invalid-feedback">
                                                                 {{ $errors->first('job_title') }}
@@ -245,16 +239,16 @@
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.job_salary_helper') }}</span>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-lg-3">
-                                                    <!---  employer-->
+                                                    <!--Employeer--->
                                                     <div class="form-group" id="employer_container">
                                                         <label class="font-14 bold mb-2"
                                                             for="employer">{{ trans('cruds.beneficiary.fields.employer') }}</label>
                                                         <input
-                                                            class="form-control theme-input-style {{ $errors->has('employer') ? 'is-invalid' : '' }}"
+                                                            class="form-control {{ $errors->has('employer') ? 'is-invalid' : '' }}"
                                                             type="text" name="employer" id="employer"
-                                                            value="{{ old('employer', $beneficiary->employer) }}"
-                                                            step="0.01">
+                                                            value="{{ old('employer', $beneficiary->employer) }}">
                                                         @if ($errors->has('employer'))
                                                             <div class="invalid-feedback">
                                                                 {{ $errors->first('employer') }}
@@ -292,6 +286,7 @@
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.illness_status_helper') }}</span>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-lg-6">
                                                     <!---  illness_type_id-->
                                                     <div class="form-group" id="illness_type_container">
@@ -317,7 +312,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <!---  marital_status-->
                                                     <div class="form-group">
                                                         <label
@@ -343,9 +338,9 @@
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.marital_status_helper') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <!---  marital_state_date-->
-                                                    <div class="form-group mb-4">
+                                                    <div class="form-group mb-4" id="marital_status_date_container">
                                                         <label class="mb-2 black bold"
                                                             for="marital_state_date">{{ trans('cruds.beneficiary.fields.marital_state_date') }}</label>
                                                         <input
@@ -362,18 +357,18 @@
                                                             class="help-block">{{ trans('cruds.beneficiary.fields.marital_state_date_helper') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <!---  building_id-->
                                                     <div class="form-group">
                                                         <label class="required mb-2 black bold"
-                                                            for="building_id">{{ trans('cruds.beneficiary.fields.building') }}</label>
+                                                            for="building_id">{{ trans('cruds.building.fields.project_name') }}</label>
                                                         <select
                                                             class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}"
                                                             name="building_id" id="building_id" required>
                                                             @foreach ($buildings as $id => $entry)
                                                                 <option value="{{ $id }}"
                                                                     {{ old('building_id', $beneficiary->building_id) == $id ? 'selected' : '' }}>
-                                                                    {{ $id }} {{ $entry }} </option>
+                                                                    {{ $id }} - {{ $entry }} </option>
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->has('building'))
@@ -382,7 +377,26 @@
                                                             </div>
                                                         @endif
                                                         <span
-                                                            class="help-block">{{ trans('cruds.beneficiary.fields.building_helper') }}</span>
+                                                            class="help-block">{{ trans('cruds.building.fields.project_name_helper') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="required font-14 bold mb-2"
+                                                            for="apartment">{{ trans('cruds.beneficiary.fields.apartment') }}</label>
+                                                        <input
+                                                            class="form-control theme-input-style {{ $errors->has('apartment') ? 'is-invalid' : '' }}"
+                                                            type="text" name="apartment" id="apartment"
+                                                            placeholder="الشقه"
+                                                            value="{{ old('apartment', $beneficiary->apartment) }}"
+                                                            required>
+                                                        @if ($errors->has('apartment'))
+                                                            <div class="invalid-feedback">
+                                                                {{ $errors->first('apartment') }}
+                                                            </div>
+                                                        @endif
+                                                        <span
+                                                            class="help-block">{{ trans('cruds.beneficiary.fields.apartment_helper') }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -485,289 +499,7 @@
                                         </div>
                                         <!-- End Beneficiary Needs -->
                                     </div>
-                                    <div id="stepp-3" class="tab-pane p-0" role="tabpanel" tyle="display: none;">
-                                        <!-- Beneficiary Family -->
-                                        <div class="card-body p-0">
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <!--name -->
-                                                    <div class="form-group">
-                                                        <label class="required font-14 bold mb-2"
-                                                            for="family_name">{{ trans('cruds.beneficiaryFamily.fields.name') }}</label>
-                                                        <input
-                                                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                            type="text" name="family_name" id="family_name"
-                                                            placeholder="اسم المستفيد"
-                                                            value="{{ old('name', $beneficiaryFamily->name) }}" required>
-                                                        @if ($errors->has('name'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('name') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.name_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <!--birth_date -->
-                                                    <div class="form-group mb-4">
-                                                        <label class="required mb-2 black bold"
-                                                            for="family_birth_date">{{ trans('cruds.beneficiaryFamily.fields.birth_date') }}</label>
-                                                        <input
-                                                            class="form-control date {{ $errors->has('birth_date') ? 'is-invalid' : '' }}"
-                                                            type="text" name="family_birth_date"
-                                                            id="family_birth_date"
-                                                            value="{{ old('birth_date', $beneficiaryFamily->birth_date) }}"
-                                                            required>
-                                                        @if ($errors->has('birth_date'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('birth_date') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.birth_date_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <!--identity_number -->
-                                                    <div class="form-group">
-                                                        <label class="required font-14 bold mb-2"
-                                                            for="family_identity_number">{{ trans('cruds.beneficiaryFamily.fields.identity_number') }}</label>
-                                                        <input
-                                                            class="form-control {{ $errors->has('identity_number') ? 'is-invalid' : '' }}"
-                                                            type="text" name="family_identity_number"
-                                                            id="family_identity_number"
-                                                            value="{{ old('identity_number', $beneficiaryFamily->identity_number) }}"
-                                                            required>
-                                                        @if ($errors->has('identity_number'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('identity_number') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.identity_number_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <!--identity_photos -->
-                                                    <div class="form-group mb-4">
-                                                        <label class="required font-14 bold mb-2"
-                                                            for="family_identity_photos">{{ trans('cruds.beneficiaryFamily.fields.identity_photos') }}</label>
-                                                        <div class="needsclick dropzone style--three{{ $errors->has('identity_photos') ? 'is-invalid' : '' }}"
-                                                            id="identity_photos-dropzone">
-                                                        </div>
-                                                        @if ($errors->has('identity_photos'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('identity_photos') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.identity_photos_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <!---  marital_status-->
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="required">{{ trans('cruds.beneficiary.fields.marital_status') }}</label>
-                                                        <select
-                                                            class="form-control font-14 bold mb-2 {{ $errors->has('marital_status') ? 'is-invalid' : '' }}"
-                                                            name="marital_status" id="marital_status" required>
-                                                            <option value disabled
-                                                                {{ old('marital_status', null) === null ? 'selected' : '' }}>
-                                                                {{ trans('global.pleaseSelect') }}</option>
-                                                            @foreach (App\Models\Beneficiary::MARITAL_STATUS_SELECT as $key => $label)
-                                                                <option value="{{ $key }}"
-                                                                    {{ old('marital_status', $beneficiaryFamily->marital_status) === (string) $key ? 'selected' : '' }}>
-                                                                    {{ $label }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->has('marital_status'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('marital_status') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiary.fields.marital_status_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <!--familyrelation_id -->
-                                                    <div class="form-group">
-                                                        <label class="font-14 bold mb-2"
-                                                            for="familyrelation_id">{{ trans('cruds.beneficiaryFamily.fields.familyrelation') }}</label>
-                                                        <select
-                                                            class="form-control select2 {{ $errors->has('familyrelation') ? 'is-invalid' : '' }}"
-                                                            name="familyrelation_id" id="familyrelation_id">
-                                                            @foreach ($familyrelations as $id => $entry)
-                                                                <option value="{{ $id }}"
-                                                                    {{ old('familyrelation_id', $beneficiaryFamily->familyrelation_id) == $id ? 'selected' : '' }}>
-                                                                    {{ $entry }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->has('familyrelation'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('familyrelation') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.familyrelation_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <!--qualifications -->
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="required font-14 bold mb-2">{{ trans('cruds.beneficiaryFamily.fields.qualifications') }}</label>
-                                                        <select
-                                                            class="form-control font-14 bold mb-2 {{ $errors->has('qualifications') ? 'is-invalid' : '' }}"
-                                                            name="family_qualifications" id="family_qualifications">
-                                                            <option value disabled
-                                                                {{ old('qualifications', null) === null ? 'selected' : '' }}>
-                                                                {{ trans('global.pleaseSelect') }}</option>
-                                                            @foreach (App\Models\Beneficiary::QUALIFICATIONS_SELECT as $key => $label)
-                                                                <option value="{{ $key }}"
-                                                                    {{ old('qualifications', $beneficiaryFamily->qualifications) === (string) $key ? 'selected' : '' }}>
-                                                                    {{ $label }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->has('qualifications'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('qualifications') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.qualifications_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <!--job_status -->
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="required font-14 bold mb-2">{{ trans('cruds.beneficiaryFamily.fields.job_status') }}</label>
-                                                        <select
-                                                            class="form-control font-14 bold mb-2 {{ $errors->has('job_status') ? 'is-invalid' : '' }}"
-                                                            name="family_job_status" id="family_job_status" required>
-                                                            <option value disabled
-                                                                {{ old('job_status', null) === null ? 'selected' : '' }}>
-                                                                {{ trans('global.pleaseSelect') }}</option>
-                                                            @foreach (App\Models\Beneficiary::JOB_STATUS_RADIO as $key => $label)
-                                                                <option value="{{ $key }}"
-                                                                    {{ old('job_status', $beneficiaryFamily->job_status) === (string) $key ? 'selected' : '' }}>
-                                                                    {{ $label }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->has('job_status'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('job_status') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.job_status_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <!--family_employer -->
-                                                    <div class="form-group" id="family_employer_container">
-                                                        <label class="font-14 bold mb-2"
-                                                            for="family_employer">{{ trans('cruds.beneficiaryFamily.fields.employer') }}</label>
-                                                        <input
-                                                            class="form-control {{ $errors->has('employer') ? 'is-invalid' : '' }}"
-                                                            type="text" name="family_employer" id="family_employer"
-                                                            value="{{ old('employer', $beneficiaryFamily->employer) }}"
-                                                            step="0.01">
-                                                        @if ($errors->has('employer'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('employer') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.employer_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <!--job_salary -->
-                                                    <div class="form-group" id="family_job_sallary_container">
-                                                        <label class="font-14 bold mb-2"
-                                                            for="family_job_salary">{{ trans('cruds.beneficiaryFamily.fields.job_salary') }}</label>
-                                                        <input
-                                                            class="form-control {{ $errors->has('job_salary') ? 'is-invalid' : '' }}"
-                                                            type="number" name="family_job_salary"
-                                                            id="family_job_salary"
-                                                            value="{{ old('job_salary', $beneficiaryFamily->job_sallary) }}"
-                                                            step="0.01">
-                                                        @if ($errors->has('job_salary'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('job_salary') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.job_salary_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <!--illness_status -->
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="required font-14 bold mb-2">{{ trans('cruds.beneficiaryFamily.fields.illness_status') }}</label>
-                                                        <select
-                                                            class="form-control font-14 bold mb-2 {{ $errors->has('illness_status') ? 'is-invalid' : '' }}"
-                                                            name="family_illness_status" id="family_illness_status">
-                                                            <option value disabled
-                                                                {{ old('illness_status', null) === null ? 'selected' : '' }}>
-                                                                {{ trans('global.pleaseSelect') }}</option>
-                                                            @foreach (App\Models\Beneficiary::ILLNESS_STATUS_RADIO as $key => $label)
-                                                                <option value="{{ $key }}"
-                                                                    {{ old('illness_status', $beneficiaryFamily->illness_status) === (string) $key ? 'selected' : '' }}>
-                                                                    {{ $label }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->has('illness_status'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('illness_status') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.illness_status_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <!--illness_type_id -->
-                                                    <div class="form-group" id="family_illness_type_container">
-                                                        <label class="required font-14 bold mb-2"
-                                                            for="family_illness_type_id">{{ trans('cruds.beneficiaryFamily.fields.illness_type') }}</label>
-                                                        <select
-                                                            class="form-control select2 {{ $errors->has('illness_type') ? 'is-invalid' : '' }}"
-                                                            name="family_illness_type_id" id="family_illness_type_id">
-                                                            @foreach ($illness_types as $id => $entry)
-                                                                <option value="{{ $id }}"
-                                                                    {{ old('illness_type_id', $beneficiaryFamily->illness_type_id) == $id ? 'selected' : '' }}>
-                                                                    {{ $entry }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->has('illness_type'))
-                                                            <div class="invalid-feedback">
-                                                                {{ $errors->first('illness_type') }}
-                                                            </div>
-                                                        @endif
-                                                        <span
-                                                            class="help-block">{{ trans('cruds.beneficiaryFamily.fields.illness_type_helper') }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Beneficiary Family -->
-                                    </div>
-                                    <div id="stepp-4" class="tab-pane" role="tabpanel" tyle="display: none;">
+                                    <div id="stepp-3" class="tab-pane" role="tabpanel" tyle="display: none;">
                                         <div class="step-done">
                                             <span class="btn-circle done"><i class="icofont-check"></i></span>
                                             <h2 class="text_color font-30 mb-20"> اذا تم الانتهاء من البيانات برجاء
@@ -1005,98 +737,5 @@
         });
     </script>
 
-    <!------illness ---->
-    <script>
-        $(document).ready(function() {
-            var illnessStatusSelect = $('#illness_status');
-            var illnessTypeContainer = $('#illness_type_container');
-
-            var FamIllnessStatusSelect = $('#family_illness_status')
-            var FamContainer = $('#family_illness_type_container')
-
-            var FamIllnessValue = $('#family_illness_status').val();
-            var illnessValue = $('#illness_status').val()
-            if (illnessValue && illnessValue === 'safe') {
-                illnessTypeContainer.hide();
-            }
-            if (FamIllnessValue && FamIllnessValue === 'safe') {
-                FamContainer.hide();
-            }
-
-            // Attach a change event listener to the "illness_status" dropdown
-            illnessStatusSelect.change(function() {
-                var selectedValue = $(this).val();
-                // Check if the selected value is not empty and not equal to "safe"
-                if (selectedValue && selectedValue !== "safe") {
-                    // Show the "illness_type" field
-                    illnessTypeContainer.show();
-                } else {
-                    // Hide the "illness_type" field if the value is empty or equals "!safe"
-                    illnessTypeContainer.hide();
-                }
-            });
-            // Attach a change event listener to the "family_illness_type" dropdown
-            FamIllnessStatusSelect.change(function() {
-                var selectedValue = $(this).val();
-                // Check if the selected value is not empty and not equal to "safe"
-                if (selectedValue && selectedValue !== "safe") {
-                    FamContainer.show();
-                } else {
-                    // Hide the "illness_type" field if the value is empty or equals "!safe"
-                    FamContainer.hide();
-                }
-            });
-        });
-    </script>
-    <!------work ---->
-    <script>
-        $(document).ready(function() {
-            var jobStatusSelect = $('#job_status');
-            var jobTitleContainer = $('#job_title_container');
-            var empContainer = $('#employer_container');
-            var jobSallaryContainer = $('#job_sallary_container');
-            var familyJobStatusSelect = $('#family_job_status');
-            var FamJobSallaryContainer = $('#family_job_sallary_container');
-            var familyEmpContainer = $('#family_employer_container')
-
-            // Get the current jobStatus value and
-            var jobStatusValue = $('#job_status').val();
-            var familyJobStatusValue = $('#family_job_status').val();
-            if (jobStatusValue && jobStatusValue === "idle") {
-                jobTitleContainer.hide();
-                jobSallaryContainer.hide();
-                empContainer.hide();
-            }
-            if (familyJobStatusValue && familyJobStatusValue === "idle") {
-                FamJobSallaryContainer.hide();
-                familyEmpContainer.hide();
-            }
-
-            // Attach a change event listener to the "job_status" dropdown
-            jobStatusSelect.change(function() {
-                var selectedValue = $(this).val();
-                // Check if the selected value is not empty and not equal to "safe"
-                if (selectedValue && selectedValue !== "idle") {
-                    jobTitleContainer.show();
-                    jobSallaryContainer.show();
-                    empContainer.show();
-                } else {
-                    jobTitleContainer.hide();
-                    jobSallaryContainer.hide();
-                    empContainer.hide();
-                }
-            });
-            // Attach a change event listener to the "family_job_status" dropdown
-            familyJobStatusSelect.change(function() {
-                var selectedValue = $(this).val();
-                if (selectedValue && selectedValue !== "idle") {
-                    FamJobSallaryContainer.show();
-                    familyEmpContainer.show();
-                } else {
-                    FamJobSallaryContainer.hide();
-                    familyEmpContainer.hide();
-                }
-            })
-        });
-    </script>
+    <script src="{{ asset('js/FormActions.js') }}"></script>
 @endsection
