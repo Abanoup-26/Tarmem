@@ -9,6 +9,7 @@ use App\Models\ContractorServieceType;
 use App\Models\ContractorType;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\website;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -71,7 +72,7 @@ class ContractorRegisterController extends Controller
             'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'position' => 'required|max:50',
-            'website' => 'required|string|max:150',
+            'website' => ['required', new website],
             'contractor_type_id' => 'required|in:' . implode(',', $contractor_types),
             'services.*' => ['integer'],
             'services' => ['required', 'array'],

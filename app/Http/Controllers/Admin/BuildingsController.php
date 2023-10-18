@@ -122,7 +122,7 @@ class BuildingsController extends Controller
         });
 
         $building->load('organization', 'buildingBuildingContractors.contractor.user', 'buildingBuildingContractors.building', 'buildingBeneficiaries.illness_type', 'buildingBuildingSupporters.supporter.user');
-        return view('admin.buildings.show', compact('building', 'contractors', 'supporters' , 'hasContract'));
+        return view('admin.buildings.show', compact('building', 'contractors', 'supporters', 'hasContract'));
     }
 
     public function showPriceForm(Request $request)
@@ -179,7 +179,7 @@ class BuildingsController extends Controller
     {
         if ($request->stages == 'send_to_contractor') {
             if (BuildingContractor::where('building_id', $building->id)->where('stages', 'request_quotation')->count() < 3) {
-                Alert::warning('You Must add at least 3 contractor with stage request quotation', '');
+                Alert::warning('يجب عليك اضافة 3 مقاولين وطلب عرض اسعارهم على الاقل ', '');
                 return redirect()->route('admin.buildings.show', $building->id);
             }
         }

@@ -18,59 +18,61 @@ class BuildingController extends Controller
     use MediaUploadingTrait;
     public function index()
     {
-        $organization = Organization::where('user_id',Auth::id())->first();
+        $organization = Organization::where('user_id', Auth::id())->first();
 
-        if (!$organization){
+        if (!$organization) {
             return abort(404);
         }
 
-        $buildings = Building::with('buildingBeneficiaries.illness_type', 'buildingBuildingSupporters')->where('organization_id',$organization->id)->get();
-        
+        $buildings = Building::with('buildingBeneficiaries.illness_type', 'buildingBuildingSupporters')->where('organization_id', $organization->id)->get();
+
         return view('organization.building', compact('buildings'));
     }
     public function create()
     {
         return view('organization.add-building');
     }
-    
-    public function edit(Request $request) 
-    {   
+
+    public function edit(Request $request)
+    {
         $building = Building::findOrFail($request->id);
         return view('organization.edit-building', compact('building'));
     }
 
     public function show(Request $request)
     {
-        $building = Building::with('buildingBeneficiaries.beneficiaryBeneficiaryNeeds.unit','buildingBeneficiaries.illness_type','buildingBeneficiaries.beneficiaryBeneficiaryFamilies.illness_type' ,'buildingBeneficiaries.beneficiaryBeneficiaryFamilies.familyrelation')->findOrFail($request->id);
-        return view('organization.building-show',compact('building'));
+        $building = Building::with('buildingBeneficiaries.beneficiaryBeneficiaryNeeds.unit', 'buildingBeneficiaries.illness_type', 'buildingBeneficiaries.beneficiaryBeneficiaryFamilies.illness_type', 'buildingBeneficiaries.beneficiaryBeneficiaryFamilies.familyrelation')->findOrFail($request->id);
+        return view('organization.building-show', compact('building'));
     }
 
     public function store(Request $request)
     {
+
         // validate the form data 
         $data = $request->validate([
-            'name'=> 'required',
-            'project_name'=> 'required|unique:buildings,project_name',
+            'name' => 'required',
+            'project_name' => 'required|unique:buildings,project_name',
             'buidling_age' => 'required',
             'building_type' => 'required',
             'building_number' => 'required|numeric',
             'floor_count' => 'required|numeric',
             'apartments_count' => 'required|numeric',
             'birth_data' => 'required|date_format:' . config('panel.date_format'),
-            'longtude' => 'required',
-            'latitude' => 'required',
+            'longtude' => 'nullable',
+            'latitude' => 'nullable',
         ]);
 
-        $organization = Organization::where('user_id',Auth::id())->first();
 
-        if (!$organization){
+        $organization = Organization::where('user_id', Auth::id())->first();
+
+        if (!$organization) {
             return abort(404);
         }
         //create a new Building 
         $building = Building::create([
-            'name' =>$data['name'],
-            'project_name' =>$data['project_name'],
-            'buidling_age' =>$data['buidling_age'],
+            'name' => $data['name'],
+            'project_name' => $data['project_name'],
+            'buidling_age' => $data['buidling_age'],
             'building_type'  => $data['building_type'],
             'building_number' => $data['building_number'],
             'floor_count' => $data['floor_count'],
@@ -87,17 +89,17 @@ class BuildingController extends Controller
             $building->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('building_photos');
         }
 
-        Alert::success('تم بنجاح' , 'لقد قمت باضافة مبني راجع التفاصيل جيدا ومن ثم ارسله الي الادراة حسب حاجة المستفيد');
+        Alert::success('تم بنجاح', 'لقد قمت باضافة مبني راجع التفاصيل جيدا ومن ثم ارسله الي الادراة حسب حاجة المستفيد');
         return redirect()->route('organization.building.index');
     }
 
-    public function update(Request $request) 
-    {   
+    public function update(Request $request)
+    {
         // get the building 
         $building = Building::findOrFail($request->id);
         // validate the form data 
         $updatedData = $request->validate([
-            'name'=> 'required',
+            'name' => 'required',
             'project_name' => 'required|unique:buildings,project_name,' . $request->id,
             'buidling_age' => 'required|numeric',
             'building_type' => 'required',
@@ -110,28 +112,28 @@ class BuildingController extends Controller
         ]);
         // update the building 
         $building->update([
-            'name'=> $updatedData['name'] , 
-            'project_name'=> $updatedData['project_name'] , 
-            'buidling_age'=> $updatedData['buidling_age'] , 
+            'name' => $updatedData['name'],
+            'project_name' => $updatedData['project_name'],
+            'buidling_age' => $updatedData['buidling_age'],
             'building_type'  => $updatedData['building_type'],
             'building_number' => $updatedData['building_number'],
             'floor_count' => $updatedData['floor_count'],
             'apartments_count' => $updatedData['apartments_count'],
             'birth_data' => $updatedData['birth_data'],
             'latitude' => $updatedData['latitude'],
-            'longtude' => $updatedData['longtude'], 
+            'longtude' => $updatedData['longtude'],
         ]);
 
         if (count($building->building_photos) > 0) {
             foreach ($building->building_photos as $media) {
-                if (! in_array($media->file_name, $request->input('building_photos', []))) {
+                if (!in_array($media->file_name, $request->input('building_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $building->building_photos->pluck('file_name')->toArray();
         foreach ($request->input('building_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $building->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('building_photos');
             }
         }
@@ -145,7 +147,7 @@ class BuildingController extends Controller
     {
         $building = Building::findOrFail($request->id);
         $building->update([
-            'management_statuses' => 'on_review' ,
+            'management_statuses' => 'on_review',
         ]);
         Alert::success('تم ارسال الطلب الى ادارة ترميم بنجاح');
         return redirect()->route('organization.building.index');

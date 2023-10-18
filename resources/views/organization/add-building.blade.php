@@ -204,12 +204,14 @@
         // Calculate age when birth_data changes
         $('#birth_data').on('change', function() {
             var birthDate = $(this).val();
-
-            // Check if birthDate is a valid date
-            if (!isNaN(Date.parse(birthDate))) {
+            console.log(birthDate);
+            // Split the date into day, month, and year components
+            var dateParts = birthDate.split('/');
+            if (dateParts.length === 3) {
+                // Reorder the date parts in 'YYYY-MM-DD' format
+                var dob = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
                 var today = new Date();
-                var dob = new Date(birthDate);
-                var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                var age = Math.floor((today - new Date(dob)) / (365.25 * 24 * 60 * 60 * 1000));
                 $('#buidling_age').val(age);
             } else {
                 $('#buidling_age').val(0);

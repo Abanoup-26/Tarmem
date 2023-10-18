@@ -44,6 +44,9 @@ class Building extends Model implements HasMedia
         'on_review' => 'قيد المراجعة', // تم الارسال من الجهة للاداره للمراجعه 
         'accepted'  => 'مقبول',
         'rejected'  => 'مرفوض',
+        'finances'  => 'تم اعتماد الماليه',
+        'CEO'  => 'تم اعتماد المدير التنفيذي',
+        'Finish' => 'تم الاعتماد'
     ];
 
     public const STAGES_SELECT = [
@@ -51,8 +54,8 @@ class Building extends Model implements HasMedia
         'engineering'        => 'القسم الهندسي ',
         'research_visit'     => 'الزيارة البحثيه',
         'engineering_visit'  => 'الزياره الهندسيه',
-        // 'Finances'           => 'الماليه',
-        // 'Executive director' => 'المدير التنفيذي',
+        'Finances'           => 'في انتظار الماليه',
+        'Executive director' => 'المدير التنفيذي',
         'send_to_contractor' => 'ارسال الى المقاولين',
         'done'               => 'تم',
         'supporting'         => 'ارسال للمناحين',

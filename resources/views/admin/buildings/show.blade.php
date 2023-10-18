@@ -120,14 +120,18 @@
                     @elseif ($building->rejected_reson != null && $building->management_statuses == 'rejected')
                         <p class=" fa-2x "> انتظار الموافقه على طلب </p>
                     @elseif ($building->stages == 'engineering' && $building->research_vist_date == null)
-                        <p class=" fa-2x "> انتظار تحديد زياره بحثيه </p>
+                        <p class=" fa-2x "> انتظار تحديد زيارة المسح المبدئي </p>
                     @elseif ($building->stages == 'research_visit' && $building->research_vist_result == null)
-                        <p class=" fa-2x "> انتظار نتيجة الزياره بحثيه </p>
+                        <p class=" fa-2x "> انتظار نتيجة زيارة المسح المبدئي </p>
                     @elseif ($building->research_vist_result != null && $building->engineering_vist_date == null)
-                        <p class=" fa-2x "> انتظار تحديد الزياره الهندسيه </p>
+                        <p class=" fa-2x "> انتظار تحديد زيارة المسح الهندسي </p>
                     @elseif ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null)
-                        <p class=" fa-2x "> انتظار نتيجة الزياره الهندسيه </p>
-                    @elseif ($building->stages == 'engineering_visit' && $building->engineering_vist_result != null)
+                        <p class=" fa-2x "> انتظار نتيجة زيارة المسح الهندسي </p>
+                    @elseif ($building->stages == 'Finances' && $building->management_statuses == 'finances')
+                        <p class="fa-2x"> انتظار الاعتماد من الماليه</p>
+                    @elseif ($building->stages == 'Executive director' && $building->management_statuses == 'finances')
+                        <p class=" fa-2x "> انتظار الموافقه من المدير التنفيذي </p>
+                    @elseif ($building->stages == 'Executive director' && $building->management_statuses == 'Finish')
                         <p class=" fa-2x "> انتظار طلب عرض سعر من المقاول </p>
                     @elseif ($building->stages == 'send_to_contractor')
                         <p class=" fa-2x "> انتظار الموافقه علي عرض سعر المقاول </p>
@@ -172,19 +176,19 @@
                         @can('research_stage')
                             @if ($building->stages == 'engineering' && $building->research_vist_date == null)
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    تحديد موعد زياره بحثيه
+                                    تحديد موعد زيارة المسح المبدئي
                                 </button>
                             @endif
                             @if ($building->stages == 'research_visit' && $building->research_vist_result == null)
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                    نتيجة الزياره بحثيه
+                                    نتيجة زيارة المسح المبدئي
                                 </button>
                             @endif
                         @endcan
                         @can('engineering_stage')
                             @if ($building->research_vist_result != null && $building->engineering_vist_date == null)
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-                                    تحديد ميعاد الزياره الهندسيه
+                                    تحديد ميعاد زيارة المسح الهندسي
                                 </button>
                             @endif
                         @endcan
@@ -194,12 +198,46 @@
                         @can('engineering_stage')
                             @if ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null)
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-                                    نتيجة الزياره الهندسيه
+                                    نتيجة زيارة المسح الهندسي
                                 </button>
                             @endif
                         @endcan
+
+                        <!--Finance Stage --->
+                        @can('Finance_accreditation')
+                            @if ($building->stages == 'Finances')
+                                <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
+                                    enctype="multipart/form-data">
+                                    @method('PUT')
+                                    @csrf
+                                    <input type="hidden" name="stages" value="Executive director">
+                                    <input type="hidden" name="management_statuses" value="finances">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" type="submit">
+                                            اعتمد المبني
+                                        </button>
+                                    </div>
+                                </form>
+                            @endif
+                        @endcan
+                        <!--CEO Stage --->
+                        @can('CEO_Accreditation')
+                            @if ($building->stages == 'Executive director' && $building->management_statuses == 'finances')
+                                <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
+                                    enctype="multipart/form-data">
+                                    @method('PUT')
+                                    @csrf
+                                    <input type="hidden" name="management_statuses" value="Finish">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">
+                                            الموافقه على بدء العمل فى المبني
+                                        </button>
+                                    </div>
+                                </form>
+                            @endif
+                        @endcan
                         @can('contractor_stage')
-                            @if ($building->stages == 'engineering_visit' && $building->engineering_vist_result != null)
+                            @if ($building->stages == 'Executive director' && $building->management_statuses == 'Finish')
                                 <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
                                     enctype="multipart/form-data">
                                     @method('PUT')
@@ -213,8 +251,9 @@
                                 </form>
                             @endif
                         @endcan
-                        @can('done_stage')
+                        @can('work_stage')
                             @if ($building->stages == 'send_to_contractor')
+                                {{-- at least one Contractor has a contractor --}}
                                 @if ($building->buildingBuildingContractors()->count() >= 3 && $hasContract)
                                     <form method="post" action="{{ route('admin.buildings.update', [$building->id]) }}"
                                         enctype="multipart/form-data">

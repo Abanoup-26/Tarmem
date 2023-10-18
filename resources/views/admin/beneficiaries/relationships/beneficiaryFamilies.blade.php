@@ -52,7 +52,7 @@
                                     </a>
                                 @endcan
                                 @can('beneficiary_change')
-                                    @if (!isset($beneficiaryFamily->apartment) && !!isset($beneficiaryFamily->family_id))
+                                    @if (!isset($beneficiaryFamily->apartment) && isset($beneficiaryFamily->family_id))
                                         <a class="btn btn-xs btn-info"
                                             href="{{ route('admin.beneficiaries.change', $beneficiaryFamily->id) }}">
                                             تحويل الى مستفيد

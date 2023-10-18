@@ -52,13 +52,16 @@ class BeneficiaryController extends Controller
             $table->editColumn('qualifications', function ($row) {
                 return $row->qualifications ? Beneficiary::QUALIFICATIONS_SELECT[$row->qualifications] : '';
             });
-
+            $table->editColumn('job_status', function ($row) {
+                return $row->job_status ? Beneficiary::JOB_STATUS_RADIO[$row->job_status] : '';
+            });
             $table->editColumn('marital_status', function ($row) {
                 return $row->marital_status ? Beneficiary::MARITAL_STATUS_SELECT[$row->marital_status] : '';
             });
             $table->editColumn('building', function ($row) {
                 return $row->name ? $row->building->name : '';
             });
+
             $table->rawColumns(['actions', 'placeholder', 'identity_photo', 'illness_type', 'building']);
 
             return $table->make(true);
@@ -72,9 +75,9 @@ class BeneficiaryController extends Controller
         $mainBeneficiary = Beneficiary::find($beneficiaryFamilyPerson->family_id);
 
         if ($beneficiaryFamilyPerson && $mainBeneficiary) {
-            $beneficiaryFamilyPerson->apartment = $mainBeneficiary->building_id . '-' . $mainBeneficiary->building->name . '-' . 'تقسيم-' . $beneficiaryFamilyPerson->id;
+            $beneficiaryFamilyPerson->apartment = 'B' . $mainBeneficiary->building_id . '-M' . $mainBeneficiary->id . '-' . 'P' . $beneficiaryFamilyPerson->id;
             $beneficiaryFamilyPerson->save();
-            $mainBeneficiary->apartment = $mainBeneficiary->building_id . '-' . $mainBeneficiary->building->name . '-' . 'تقسيم-' . $mainBeneficiary->id;
+            $mainBeneficiary->apartment = 'B' . $mainBeneficiary->building_id . '-M' . $mainBeneficiary->id .  '-Partially';
             $mainBeneficiary->save();
             alert('success', 'تم تقسيم الشقة للمستفيد ' . $mainBeneficiary->name . ' إلى قسمين');
         } else {

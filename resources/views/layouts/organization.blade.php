@@ -322,7 +322,7 @@
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function() {
-            $(".form-group .date").datepicker({
+            $(".form-group #birth_data").datepicker({
                 dateFormat: 'dd/mm/yy',
                 locale: 'en',
                 icons: {

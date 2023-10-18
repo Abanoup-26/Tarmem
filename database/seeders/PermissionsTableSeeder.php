@@ -424,11 +424,19 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 105,
-                'title' => 'done_stage',
+                'title' => 'work_stage',
             ],
             [
                 'id'    => 106,
                 'title' => 'supporting_stage',
+            ],
+            [
+                'id'    => 107,
+                'title' => 'Finance_accreditation',
+            ],
+            [
+                'id'    => 108,
+                'title' => 'CEO_Accreditation',
             ],
             [
                 'id'    => 112,
@@ -436,7 +444,7 @@ class PermissionsTableSeeder extends Seeder
             ],
 
         ];
-        //  65  and 106 to 112 is free to use 
+        //  65  and 108 to 112 is free to use 
 
 
         Permission::insert($permissions);

@@ -116,7 +116,7 @@
                     },
                     {
                         data: 'user_name',
-                        name: 'name'
+                        name: 'user.name'
                     },
                     {
                         data: 'position',
@@ -129,10 +129,10 @@
                     {
                         data: 'website',
                         name: 'website'
-                    }, 
-                    {   
+                    },
+                    {
                         data: 'contractor_type_name',
-                        name: 'contractor_type.name' 
+                        name: 'contractor_type.name'
                     },
                     {
                         data: 'services',
