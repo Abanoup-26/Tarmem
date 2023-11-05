@@ -29,7 +29,9 @@ class BeneficiaryController extends Controller
         $beneficiaries = Beneficiary::with('building.organization.user', 'familyMembers.family_relation', 'beneficiaryBeneficiaryNeeds.unit')
             ->whereHas('building.organization.user', function ($query) use ($authUserId) {
                 $query->where('id', $authUserId);
-            })->where('family_id', null)
+            })->where('family_id', null)->whereHas('beneficiaryBeneficiaryNeeds', function ($query) {
+                $query->whereNotNull('id');
+            })
             ->get();
 
         return view('organization.beneficiaries', compact('beneficiaries'));

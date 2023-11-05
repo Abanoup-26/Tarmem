@@ -33,6 +33,7 @@
                                             <span class="d-block"> بيانات المستفيد</span>
                                         </a>
                                     </li>
+
                                     <li>
                                         <a class="nav-link inactive" href="#stepp-2">
                                             <i class="icofont-location-pin"></i>
@@ -525,6 +526,7 @@
 @endsection
 
 @section('scripts')
+    @parent
     <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
     <script src=" {{ asset('frontend/plugins/jquery-smartwizard/jquery.smartWizard.min.js') }}"></script>
     <script src=" {{ asset('frontend/plugins/jquery-smartwizard/custom-smartWizard.js') }}"></script>
@@ -719,7 +721,7 @@
     <script>
         function initializeDatepicker(selector) {
             $(selector).datepicker({
-                format: 'DD/MM/YYYY',
+                dateFormat: 'dd/mm/yy',
                 locale: 'en',
                 icons: {
                     up: 'fas fa-chevron-up',
@@ -730,9 +732,9 @@
             });
         }
         $(document).ready(function() {
-            initializeDatepicker("#birth_date");
-            initializeDatepicker("#marital_state_date");
-            initializeDatepicker("#family_birth_date");
+            initializeDatepicker(".form-group #birth_date");
+            initializeDatepicker(".form-group #marital_state_date");
+            initializeDatepicker(".form-group #family_birth_date");
             // Add more datepickers if needed
         });
     </script>
