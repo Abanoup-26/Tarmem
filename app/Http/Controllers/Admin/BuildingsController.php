@@ -75,9 +75,6 @@ class BuildingsController extends Controller
             $table->editColumn('buidling_age', function ($row) {
                 return $row->buidling_age ? $row->buidling_age : '';
             });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
             $table->editColumn('price_items', function ($row) {
                 return $row->price_items ? '<a href="' . $row->price_items->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });

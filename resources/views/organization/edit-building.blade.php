@@ -28,16 +28,16 @@
                             <div class="row">
                                 <div class="form-group col-md-4 mt-4">
                                     <label class="required mb-2 font-14 bold black"
-                                        for="name">{{ trans('cruds.building.fields.name') }}</label>
-                                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                        type="text" name="name" id="name"
-                                        value="{{ old('name', $building->name) }}" required>
-                                    @if ($errors->has('name'))
+                                        for="project_name">{{ trans('cruds.building.fields.project_name') }}</label>
+                                    <input class="form-control {{ $errors->has('project_name') ? 'is-invalid' : '' }}"
+                                        type="text" name="project_name" id="project_name"
+                                        value="{{ old('project_name', $building->project_name) }}" required>
+                                    @if ($errors->has('project_name'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('name') }}
+                                            {{ $errors->first('project_name') }}
                                         </div>
                                     @endif
-                                    <span class="help-block">{{ trans('cruds.building.fields.name_helper') }}</span>
+                                    <span class="help-block">{{ trans('cruds.building.fields.project_name_helper') }}</span>
                                 </div>
                                 <div class="form-group col-md-4 mt-4">
                                     <label
@@ -75,6 +75,7 @@
                                     <span
                                         class="help-block">{{ trans('cruds.building.fields.building_number_helper') }}</span>
                                 </div>
+
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4 mt-4">
@@ -105,22 +106,6 @@
                                     @endif
                                     <span class="help-block">{{ trans('cruds.building.fields.floor_count_helper') }}</span>
                                 </div>
-                                <div class="form-group col-md-4 mt-4">
-                                    <label class="required mb-2 font-14 bold black"
-                                        for="project_name">{{ trans('cruds.building.fields.project_name') }}</label>
-                                    <input class="form-control {{ $errors->has('project_name') ? 'is-invalid' : '' }}"
-                                        type="text" name="project_name" id="project_name"
-                                        value="{{ old('project_name', $building->project_name) }}" required>
-                                    @if ($errors->has('project_name'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('project_name') }}
-                                        </div>
-                                    @endif
-                                    <span
-                                        class="help-block">{{ trans('cruds.building.fields.project_name_helper') }}</span>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="form-group  col-md-4 mt-4">
                                     <label class="mb-2 font-14 bold black"
                                         for="building_photos">{{ trans('cruds.building.fields.building_photos') }}</label>
@@ -135,6 +120,10 @@
                                     <span
                                         class="help-block">{{ trans('cruds.building.fields.building_photos_helper') }}</span>
                                 </div>
+
+                            </div>
+                            <div class="row">
+
                                 <div class="form-group col-md-4 mt-4">
                                     <label class="required mb-2 font-14 bold black"
                                         for="buidling_age">{{ trans('cruds.building.fields.buidling_age') }}</label>

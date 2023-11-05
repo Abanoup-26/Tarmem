@@ -76,10 +76,7 @@ class StoreBuildingRequest extends FormRequest
                 'min:0',
                 'max:2147483647',
             ],
-            'name' => [
-                'string',
-                'required',
-            ],
+
         ];
     }
 }

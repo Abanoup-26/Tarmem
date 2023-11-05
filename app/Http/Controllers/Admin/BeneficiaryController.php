@@ -24,7 +24,7 @@ class BeneficiaryController extends Controller
         abort_if(Gate::denies('beneficiary_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Beneficiary::with(['illness_type', 'building'])->select(sprintf('%s.*', (new Beneficiary)->table));
+            $query = Beneficiary::with(['illness_type', 'building'])->whereNull('family_id')->select(sprintf('%s.*', (new Beneficiary)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -71,11 +71,14 @@ class BeneficiaryController extends Controller
     }
     public function change(Request $request)
     {
-        $beneficiaryFamilyPerson = Beneficiary::find($request->id);
-        $mainBeneficiary = Beneficiary::find($beneficiaryFamilyPerson->family_id);
+        $beneficiaryFamilyPerson = Beneficiary::findOrFail($request->id);
+
+        $mainBeneficiary = $beneficiaryFamilyPerson->MainBeneficiary;
+
 
         if ($beneficiaryFamilyPerson && $mainBeneficiary) {
             $beneficiaryFamilyPerson->apartment = 'B' . $mainBeneficiary->building_id . '-M' . $mainBeneficiary->id . '-' . 'P' . $beneficiaryFamilyPerson->id;
+            $beneficiaryFamilyPerson->family_id = null;
             $beneficiaryFamilyPerson->save();
             $mainBeneficiary->apartment = 'B' . $mainBeneficiary->building_id . '-M' . $mainBeneficiary->id .  '-Partially';
             $mainBeneficiary->save();

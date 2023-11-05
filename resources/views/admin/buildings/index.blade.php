@@ -16,9 +16,6 @@
                             {{ trans('cruds.building.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.building.fields.name') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.building.fields.building_number') }}
                         </th>
                         <th>
@@ -73,11 +70,6 @@
                     {
                         data: 'id',
                         name: 'id'
-                    },
-
-                    {
-                        data: 'name',
-                        name: 'name'
                     },
                     {
                         data: 'building_number',

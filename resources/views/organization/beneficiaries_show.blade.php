@@ -142,12 +142,6 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-lg-4  ">
-                                <!-- building_name -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">اسم المبني </span>
-                                    <span
-                                        class="font-20   text-primary text-start bold c4 ml-4">{{ $beneficiary->building->name }}</span>
-                                </div>
                                 <!-- building_project_name -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">اسم المشروع </span>

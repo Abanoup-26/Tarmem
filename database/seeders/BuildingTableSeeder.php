@@ -35,7 +35,6 @@ class BuildingTableSeeder extends Seeder
                 'updated_at' => now(),
                 'deleted_at' => null,
                 'buidling_age' => 10,
-                'name' => "الدمام",
             ],
             // Add more buildings as needed...
         ];

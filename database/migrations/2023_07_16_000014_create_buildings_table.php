@@ -24,7 +24,6 @@ class CreateBuildingsTable extends Migration
             $table->date('engineering_vist_date')->nullable();
             $table->text('project_name')->unique();
             $table->integer('buidling_age');
-            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });

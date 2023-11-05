@@ -99,6 +99,10 @@ class Beneficiary extends Model implements HasMedia
         return $this->hasMany(Beneficiary::class, 'family_id');
     }
 
+    public function MainBeneficiary()
+    {
+        return $this->belongsTo(Beneficiary::class, 'family_id', 'id');
+    }
     public function beneficiaryBeneficiaryNeeds()
     {
         return $this->hasMany(BeneficiaryNeed::class, 'beneficiary_id');

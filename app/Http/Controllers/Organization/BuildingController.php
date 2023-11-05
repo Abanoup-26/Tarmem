@@ -41,7 +41,7 @@ class BuildingController extends Controller
 
     public function show(Request $request)
     {
-        $building = Building::with('buildingBeneficiaries.beneficiaryBeneficiaryNeeds.unit', 'buildingBeneficiaries.illness_type', 'buildingBeneficiaries.beneficiaryBeneficiaryFamilies.illness_type', 'buildingBeneficiaries.beneficiaryBeneficiaryFamilies.familyrelation')->findOrFail($request->id);
+        $building = Building::with('buildingBeneficiaries.beneficiaryBeneficiaryNeeds.unit', 'buildingBeneficiaries.illness_type', 'buildingBeneficiaries.familyMembers.illness_type', 'buildingBeneficiaries.familyMembers.family_relation')->findOrFail($request->id);
         return view('organization.building-show', compact('building'));
     }
 
@@ -50,7 +50,6 @@ class BuildingController extends Controller
 
         // validate the form data 
         $data = $request->validate([
-            'name' => 'required',
             'project_name' => 'required|unique:buildings,project_name',
             'buidling_age' => 'required',
             'building_type' => 'required',
@@ -70,7 +69,6 @@ class BuildingController extends Controller
         }
         //create a new Building 
         $building = Building::create([
-            'name' => $data['name'],
             'project_name' => $data['project_name'],
             'buidling_age' => $data['buidling_age'],
             'building_type'  => $data['building_type'],
@@ -99,7 +97,6 @@ class BuildingController extends Controller
         $building = Building::findOrFail($request->id);
         // validate the form data 
         $updatedData = $request->validate([
-            'name' => 'required',
             'project_name' => 'required|unique:buildings,project_name,' . $request->id,
             'buidling_age' => 'required|numeric',
             'building_type' => 'required',
@@ -112,7 +109,6 @@ class BuildingController extends Controller
         ]);
         // update the building 
         $building->update([
-            'name' => $updatedData['name'],
             'project_name' => $updatedData['project_name'],
             'buidling_age' => $updatedData['buidling_age'],
             'building_type'  => $updatedData['building_type'],

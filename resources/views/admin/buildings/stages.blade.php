@@ -100,6 +100,8 @@
                 <li class="done">نتيجة المسح المبدئي</li>
                 <li class="done"> زيارة المسح الهندسي</li>
                 <li class="active">نتيجة المسح الهندسي</li>
+                <li>اعتماد الماليه</li>
+                <li>موافقة الرئيس التنفيذي</li>
                 <li> طلب عرض سعر من المقاولين</li>
                 <li>الموافقه على عرض السعر</li>
                 <li>الارسال للمانحين</li>
@@ -126,7 +128,7 @@
         </div>
     </div>
     <!--- End Finance Stage--->
-@elseif ($building->stages == 'Executive director' && $building->management_statuses == 'CEO')
+@elseif ($building->stages == 'Executive director' && $building->management_statuses == 'finances')
     <!---CEO Stage--->
     <div class="row mb-5">
         <div class="container">

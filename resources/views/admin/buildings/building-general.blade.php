@@ -2,8 +2,8 @@
     <div class="card-body">
         <div class="form-group container">
             <div class="row justify-content-between mb-3">
-                <div class="title"> {{ trans('cruds.building.fields.name') }} : <span class="sub-title">
-                        {{ $building->name }}</span>
+                <div class="title"> {{ trans('cruds.building.fields.project_name') }} :
+                    <span class="sub-title"> {{ $building->project_name }}</span>
                 </div>
                 <div class="title"> {{ trans('cruds.building.fields.building_number') }} :
                     <span class="sub-title">{{ $building->building_number }}</span>
@@ -26,9 +26,10 @@
                 <div class="title"> {{ trans('cruds.building.fields.buidling_age') }} :
                     <span class="sub-title"> {{ $building->buidling_age }}</span>
                 </div>
-                <div class="title"> {{ trans('cruds.building.fields.project_name') }} :
-                    <span class="sub-title"> {{ $building->project_name }}</span>
+                <div class="title">
+                    <span class="sub-title"> </span>
                 </div>
+
             </div>
             <div class="row justify-content-between mb-3">
                 <div class="title">{{ trans('cruds.building.fields.building_photos') }} :

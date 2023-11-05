@@ -18,12 +18,6 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-lg-4  ">
-                                <!-- building_name -->
-                                <div class="review-list mb-20">
-                                    <span class="font-14 bold c4 ml-4">اسم المبني </span>
-                                    <span
-                                        class="font-20   text-primary text-start bold c4 ml-4">{{ $building->name }}</span>
-                                </div>
                                 <!-- building_project_name -->
                                 <div class="review-list mb-20">
                                     <span class="font-14 bold c4 ml-4">اسم المشروع </span>
@@ -191,11 +185,7 @@
                                         </td>
                                         <td>{{ $beneficiary->address }}</td>
                                         <td>
-                                            @if ($beneficiary->illness_type)
-                                                {{ $beneficiary->illness_type->name }}
-                                            @else
-                                                null
-                                            @endif
+                                            {{ $beneficiary->illness_type ? $beneficiary->illness_type->name : '' }}
                                         </td>
                                         <td>{{ $beneficiary->illness_status ? \App\Models\Beneficiary::ILLNESS_STATUS_RADIO[$beneficiary->illness_status] : '' }}
                                         </td>

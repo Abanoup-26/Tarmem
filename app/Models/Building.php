@@ -77,7 +77,6 @@ class Building extends Model implements HasMedia
         'organization_id',
         'project_name',
         'buidling_age',
-        'name',
         'created_at',
         'updated_at',
         'deleted_at',

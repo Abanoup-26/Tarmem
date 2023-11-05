@@ -10,16 +10,6 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.building.fields.name') }}</label>
-                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $building->name) }}" required>
-                    @if($errors->has('name'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('name') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.building.fields.name_helper') }}</span>
-                </div>
-                <div class="form-group">
                     <label>{{ trans('cruds.building.fields.building_type') }}</label>
                     <select class="form-control {{ $errors->has('building_type') ? 'is-invalid' : '' }}" name="building_type"
                         id="building_type">

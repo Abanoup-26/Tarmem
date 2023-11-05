@@ -169,9 +169,7 @@
                                 @endif
                             @endcan
                             <!-- end Accept and Refuese and Review Building buttons--->
-
                         </div>
-
                         <!-- Research visit and Result  buttons--->
                         @can('research_stage')
                             @if ($building->stages == 'engineering' && $building->research_vist_date == null)
@@ -194,7 +192,6 @@
                         @endcan
                         <!-- End Research visit  buttons--->
                         <!-- engineering visit and Result  buttons--->
-
                         @can('engineering_stage')
                             @if ($building->stages == 'engineering_visit' && $building->engineering_vist_result == null)
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
@@ -202,7 +199,6 @@
                                 </button>
                             @endif
                         @endcan
-
                         <!--Finance Stage --->
                         @can('Finance_accreditation')
                             @if ($building->stages == 'Finances')
