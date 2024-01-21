@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'site_title' => 'trmem',
+    'site_title' => 'تـرمـيم',
 
 ];

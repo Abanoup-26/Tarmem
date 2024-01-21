@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html @if (app()->getLocale() == 'ar') dir="rtl" @endif>
 
-<head>
+<head >
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -22,21 +22,55 @@
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/dropzone.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_offline/css/perfect-scrollbar.min.css') }}">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    <style>
+        .dataTables_wrapper .dataTables_info {
+             color: black !important; /* Your desired text color */
+         }
+        .dataTables_wrapper .dataTables_length {
+             color: black !important; /* Your desired text color */
+         }
+        .dataTables_wrapper .dataTables_filter{
+             color: black !important; /* Your desired text color */
+             font-size: 16px !important ;
+             font-weight: bold;
+         }
+        .dataTables_wrapper thead th{
+            font-size: 16px !important ;
+            background-color: #092635;
+            color: white
+         }
+        .dataTables_wrapper tbody td {
+            font-size: 14px !important ;
+            font-weight: 400 !important;
+            padding: 2px !important ;
+            color: #183D3D
+        }
+        .card-header {
+            background-color: #1B4242 ;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: center;
+            color: #9EC8B9
+        }
+        .card-body {
+            background-color: #C7F0DB;
+        }
+     </style>
     @yield('styles')
 </head>
 
-<body class="c-app">
+<body class="c-app" style="background-color: #AAD9BB;">
     @include('partials.menu')
     <div class="c-wrapper">
-        <header class="c-header c-header-fixed px-3">
-            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
-                data-class="c-sidebar-show">
-                <i class="fas fa-fw fa-bars"></i>
+        <header class="c-header c-header-fixed px-3" style="background-color: #183D3D;" >
+            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" style="color: #008170 ;"
+                data-class="c-sidebar-show" >
+                <i class="fas fa-fw fa-bars" ></i>
             </button>
 
             <a class="c-header-brand d-lg-none" href="#">{{ trans('panel.site_title') }}</a>
 
-            <button class="c-header-toggler mfs-3 d-md-down-none" type="button" responsive="true">
+            <button class="c-header-toggler mfs-3 d-md-down-none" type="button" responsive="true" style="color: #008170;">
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
@@ -44,7 +78,8 @@
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">
+                            aria-haspopup="true" aria-expanded="false" style="color: #008170;"
+                            >
                             {{ strtoupper(app()->getLocale()) }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
@@ -59,7 +94,7 @@
 
                 <ul class="c-header-nav ml-auto">
                     <li class="c-header-nav-item dropdown notifications-menu">
-                        <a href="#" class="c-header-nav-link" data-toggle="dropdown">
+                        <a href="#" class="c-header-nav-link" data-toggle="dropdown" style="color: #008170;">
                             <i class="far fa-bell"></i>
                             @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
                             @if ($alertsCount > 0)

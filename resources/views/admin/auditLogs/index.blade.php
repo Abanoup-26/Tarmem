@@ -2,12 +2,12 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-header" >
         {{ trans('cruds.auditLog.title_singular') }} {{ trans('global.list') }}
     </div>
 
-    <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-AuditLog">
+    <div class="card-body" >
+        <table class=" table table-success table-striped table-hover ajaxTable datatable datatable-AuditLog">
             <thead>
                 <tr>
                     <th width="10">
